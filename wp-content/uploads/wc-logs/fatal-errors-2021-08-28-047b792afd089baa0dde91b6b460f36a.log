@@ -1,0 +1,52 @@
+2021-08-28T09:47:21+00:00 CRITICAL syntax error, unexpected 'public' (T_PUBLIC), expecting ';' or ',' in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/framework/elementor-extension/inc/general-extension.php on line 12
+
+2021-08-28T09:48:35+00:00 CRITICAL Uncaught Error: Call to a member function get_active_breakpoints() on null in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/class-helper.php:604
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/framework/elementor-extension/inc/general-extension.php(18): LaStudio_Kit_Helper->get_active_breakpoints()
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/framework/elementor-extension/inc/general-extension.php(120): LaStudioKit_Extension\Modules\General_Extensions->__construct()
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/framework/elementor-extension/elementor-extension.php(144): require('/Volumes/Busine...')
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-ele in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/class-helper.php on line 604
+
+2021-08-28T09:48:37+00:00 CRITICAL Uncaught Error: Call to a member function get_active_breakpoints() on null in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/class-helper.php:604
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/framework/elementor-extension/inc/general-extension.php(18): LaStudio_Kit_Helper->get_active_breakpoints()
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/framework/elementor-extension/inc/general-extension.php(120): LaStudioKit_Extension\Modules\General_Extensions->__construct()
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/framework/elementor-extension/elementor-extension.php(144): require('/Volumes/Busine...')
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-ele in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/class-helper.php on line 604
+
+2021-08-28T09:48:50+00:00 CRITICAL Uncaught Error: Call to a member function get_active_breakpoints() on null in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/class-helper.php:604
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/framework/elementor-extension/inc/general-extension.php(18): LaStudio_Kit_Helper->get_active_breakpoints()
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/framework/elementor-extension/inc/general-extension.php(120): LaStudioKit_Extension\Modules\General_Extensions->__construct()
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/framework/elementor-extension/elementor-extension.php(144): require('/Volumes/Busine...')
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-ele in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/class-helper.php on line 604
+
+2021-08-28T09:48:57+00:00 CRITICAL Uncaught Error: Call to a member function get_active_breakpoints() on null in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/class-helper.php:604
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/framework/elementor-extension/inc/general-extension.php(18): LaStudio_Kit_Helper->get_active_breakpoints()
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/framework/elementor-extension/inc/general-extension.php(120): LaStudioKit_Extension\Modules\General_Extensions->__construct()
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/framework/elementor-extension/elementor-extension.php(144): require('/Volumes/Busine...')
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-ele in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/class-helper.php on line 604
+
+2021-08-28T09:49:05+00:00 CRITICAL Uncaught Error: Call to a member function get_active_breakpoints() on null in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/class-helper.php:604
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/framework/elementor-extension/inc/general-extension.php(18): LaStudio_Kit_Helper->get_active_breakpoints()
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/framework/elementor-extension/inc/general-extension.php(120): LaStudioKit_Extension\Modules\General_Extensions->__construct()
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/framework/elementor-extension/elementor-extension.php(144): require('/Volumes/Busine...')
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-ele in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/class-helper.php on line 604
+
+2021-08-28T09:49:05+00:00 CRITICAL Uncaught Error: Call to a member function get_active_breakpoints() on null in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/class-helper.php:604
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/framework/elementor-extension/inc/general-extension.php(18): LaStudio_Kit_Helper->get_active_breakpoints()
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/framework/elementor-extension/inc/general-extension.php(120): LaStudioKit_Extension\Modules\General_Extensions->__construct()
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/framework/elementor-extension/elementor-extension.php(144): require('/Volumes/Busine...')
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-ele in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/class-helper.php on line 604
+
+2021-08-28T12:22:03+00:00 CRITICAL syntax error, unexpected '$css' (T_VARIABLE) in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/class-integration.php on line 822
+
+2021-08-28T12:22:04+00:00 CRITICAL syntax error, unexpected '$css' (T_VARIABLE) in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/class-integration.php on line 822
+
+2021-08-28T12:22:20+00:00 CRITICAL syntax error, unexpected '$css' (T_VARIABLE) in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/class-integration.php on line 822
+
+2021-08-28T12:22:31+00:00 CRITICAL syntax error, unexpected '$css' (T_VARIABLE) in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/class-integration.php on line 822
+
