@@ -149,6 +149,10 @@ if ( ! class_exists( 'LaStudio_Kit_Settings' ) ) {
 					'label' => esc_html__( 'Custom CSS', 'lastudio-kit' ),
 					'value' => 'custom_css',
 				],
+                [
+					'label' => esc_html__( 'Portfolio Content Type', 'lastudio-kit' ),
+					'value' => 'portfolio_content_type',
+				],
 			];
 
 			$active_extensions = $this->get( 'avaliable_extensions', $this->default_avaliable_extensions );

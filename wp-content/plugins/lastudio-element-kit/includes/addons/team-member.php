@@ -49,7 +49,7 @@ class LaStudioKit_Team_Member extends LaStudioKit_Base {
                 'wrap'              => '.lakit-team-member__list',
                 'column'            => '.lakit-team-member__item',
                 'inner-box'         => '.lakit-team-member__inner-box',
-                'inner-content'     => '.lakit-team-member__content',
+                'content'           => '.lakit-team-member__content',
                 'image_wrap'        => '.lakit-team-member__image',
                 'image_instance'    => '.lakit-team-member__image-instance',
                 'title'             => '.lakit-team-member__name',
@@ -71,6 +71,7 @@ class LaStudioKit_Team_Member extends LaStudioKit_Base {
                 'type-6' => esc_html__( 'Type 6', 'lastudio-kit' ),
                 'type-7' => esc_html__( 'Type 7', 'lastudio-kit' ),
                 'type-8' => esc_html__( 'Type 8', 'lastudio-kit' ),
+                'type-9' => esc_html__( 'Type 9', 'lastudio-kit' ),
             )
         );
 
@@ -671,7 +672,7 @@ class LaStudioKit_Team_Member extends LaStudioKit_Base {
                 'label' => esc_html__( 'Background Color', 'lastudio-kit' ),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} ' . $css_scheme['inner-content'] => 'background-color: {{VALUE}}',
+                    '{{WRAPPER}} ' . $css_scheme['content'] => 'background-color: {{VALUE}}',
                 ),
             )
         );
@@ -683,7 +684,7 @@ class LaStudioKit_Team_Member extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%', 'em' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} '  . $css_scheme['inner-content'] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} '  . $css_scheme['content'] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
             )
         );
@@ -695,7 +696,7 @@ class LaStudioKit_Team_Member extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%', 'em' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} '  . $css_scheme['inner-content'] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} '  . $css_scheme['content'] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
             )
         );
@@ -707,16 +708,27 @@ class LaStudioKit_Team_Member extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%', 'em' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} '  . $css_scheme['inner-content'] => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} '  . $css_scheme['content'] => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
             )
         );
+
+	    $this->add_group_control(
+		    Group_Control_Border::get_type(),
+		    array(
+			    'name'        => 'content_border',
+			    'label'       => esc_html__( 'Border', 'lastudio-kit' ),
+			    'placeholder' => '1px',
+			    'default'     => '1px',
+			    'selector'    => '{{WRAPPER}} ' . $css_scheme['content'],
+		    )
+	    );
 
         $this->add_group_control(
             Group_Control_Box_Shadow::get_type(),
             [
                 'name' => 'content_shadow',
-                'selector' => '{{WRAPPER}} ' . $css_scheme['inner-content'],
+                'selector' => '{{WRAPPER}} ' . $css_scheme['content'],
             ]
         );
 
@@ -977,7 +989,7 @@ class LaStudioKit_Team_Member extends LaStudioKit_Base {
         $this->start_controls_section(
             'section_position_style',
             array(
-                'label'      => esc_html__( 'Position', 'lastudio-kit' ),
+                'label'      => esc_html__( 'Position/Role', 'lastudio-kit' ),
                 'tab'        => Controls_Manager::TAB_STYLE,
                 'show_label' => false,
             )

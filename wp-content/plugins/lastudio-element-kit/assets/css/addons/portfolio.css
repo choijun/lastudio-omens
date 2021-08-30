@@ -1,0 +1,14 @@
+.elementor-lakit-portfolio .lakit-posts__inner-content{
+	display: flex;
+}
+.elementor-lakit-portfolio .lakit-posts.preset-grid-2 .lakit-posts__thumbnail + .lakit-posts__inner-content{
+	bottom: 0;
+	right: 0;
+	left: 0;
+	top: 0;
+	width: auto;
+	transform: none;
+}
+.elementor-lakit-portfolio .lakit-posts.preset-grid-2 .lakit-posts__inner-box:after{
+	background: none;
+}

@@ -1375,7 +1375,8 @@ class LaStudioKit_Icon_Box extends LaStudioKit_Base {
                     ),
                 ),
                 'selectors'  => array(
-                    '{{WRAPPER}} ' . $css_scheme['button_icon'] => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} ' . $css_scheme['button_icon'] . ' i' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} ' . $css_scheme['button_icon'] . ' svg'=> 'font-size: {{SIZE}}{{UNIT}};',
                 ),
                 'condition' => [
                     'icons__switch'   => 'yes',

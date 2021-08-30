@@ -52,3 +52,7 @@ ul#sub-accordion-section-colors .customize-control .customize-control-title {
 .customize-control .attachment-media-view .thumbnail-image {
     max-width: 200px;
 }
+.column-lakit_post_thumbs img {
+    max-width: 80px;
+    height: auto;
+}

@@ -1,0 +1,227 @@
+2021-08-30T09:33:48+00:00 CRITICAL Uncaught Error: Class 'Elementor\LaStudioKit_Posts' not found in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/addons/portfolio.php:19
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/class-integration.php(362): require()
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/class-integration.php(172): LaStudio_Kit_Integration->register_addon('/Volumes/Busine...', Object(Elementor\Widgets_Manager))
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(303): LaStudio_Kit_Integration->register_addons(Object(Elementor\Widgets_Manager))
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(327): WP_Hook->apply_filters('', Array)
+#4 /Volumes/Business/la-studioweb.com/public_html/omens.la-studiow in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/addons/portfolio.php on line 19
+
+2021-08-30T09:35:14+00:00 CRITICAL Cannot declare class Elementor\LaStudioKit_Posts, because the name is already in use in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/addons/posts.php on line 23
+
+2021-08-30T09:35:48+00:00 CRITICAL Cannot declare class Elementor\LaStudioKit_Posts, because the name is already in use in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/addons/posts.php on line 23
+
+2021-08-30T09:36:15+00:00 CRITICAL Cannot declare class Elementor\LaStudioKit_Posts, because the name is already in use in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/addons/posts.php on line 24
+
+2021-08-30T09:36:46+00:00 CRITICAL Cannot declare class Elementor\LaStudioKit_Posts, because the name is already in use in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/addons/posts.php on line 24
+
+2021-08-30T09:36:55+00:00 CRITICAL Cannot declare class Elementor\LaStudioKit_Posts, because the name is already in use in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/addons/posts.php on line 24
+
+2021-08-30T18:39:25+00:00 CRITICAL Uncaught Error: Class 'CX_Fonts_Manager' not found in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php:567
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(303): LaStudio_Kit->init_customizer('')
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(327): WP_Hook->apply_filters(NULL, Array)
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/plugin.php(470): WP_Hook->do_action(Array)
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-settings.php(556): do_action('after_setup_the...')
+#4 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-config.php(107): require_once('/Volumes/Busine...')
+#5 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-load.php(50): require_once('/Volumes/Busine...')
+#6 /Volumes/Business/l in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php on line 567
+
+2021-08-30T18:40:02+00:00 CRITICAL Uncaught Error: Class 'CX_Fonts_Manager' not found in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php:567
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(303): LaStudio_Kit->init_customizer('')
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(327): WP_Hook->apply_filters(NULL, Array)
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/plugin.php(470): WP_Hook->do_action(Array)
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-settings.php(556): do_action('after_setup_the...')
+#4 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-config.php(107): require_once('/Volumes/Busine...')
+#5 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-load.php(50): require_once('/Volumes/Busine...')
+#6 /Volumes/Business/l in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php on line 567
+
+2021-08-30T18:41:21+00:00 CRITICAL Uncaught Error: Class 'CX_Fonts_Manager' not found in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php:567
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(303): LaStudio_Kit->init_customizer('')
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(327): WP_Hook->apply_filters(NULL, Array)
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/plugin.php(470): WP_Hook->do_action(Array)
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-settings.php(556): do_action('after_setup_the...')
+#4 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-config.php(107): require_once('/Volumes/Busine...')
+#5 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-load.php(50): require_once('/Volumes/Busine...')
+#6 /Volumes/Business/l in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php on line 567
+
+2021-08-30T18:42:30+00:00 CRITICAL Uncaught Error: Class 'CX_Fonts_Manager' not found in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php:567
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(303): LaStudio_Kit->init_customizer('')
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(327): WP_Hook->apply_filters(NULL, Array)
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/plugin.php(470): WP_Hook->do_action(Array)
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-settings.php(556): do_action('after_setup_the...')
+#4 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-config.php(107): require_once('/Volumes/Busine...')
+#5 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-load.php(50): require_once('/Volumes/Busine...')
+#6 /Volumes/Business/l in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php on line 567
+
+2021-08-30T18:44:52+00:00 CRITICAL Uncaught Error: Class 'CX_Fonts_Manager' not found in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php:574
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(303): LaStudio_Kit->init_customizer('')
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(327): WP_Hook->apply_filters(NULL, Array)
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/plugin.php(470): WP_Hook->do_action(Array)
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-settings.php(556): do_action('after_setup_the...')
+#4 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-config.php(107): require_once('/Volumes/Busine...')
+#5 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-load.php(50): require_once('/Volumes/Busine...')
+#6 /Volumes/Business/l in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php on line 574
+
+2021-08-30T18:49:49+00:00 CRITICAL Uncaught Error: Class 'CX_Fonts_Manager' not found in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php:570
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(303): LaStudio_Kit->init_customizer('')
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(327): WP_Hook->apply_filters(NULL, Array)
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/plugin.php(470): WP_Hook->do_action(Array)
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-settings.php(556): do_action('after_setup_the...')
+#4 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-config.php(107): require_once('/Volumes/Busine...')
+#5 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-load.php(50): require_once('/Volumes/Busine...')
+#6 /Volumes/Business/l in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php on line 570
+
+2021-08-30T18:49:58+00:00 CRITICAL Uncaught Error: Class 'CX_Fonts_Manager' not found in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php:570
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(303): LaStudio_Kit->init_customizer('')
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(327): WP_Hook->apply_filters(NULL, Array)
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/plugin.php(470): WP_Hook->do_action(Array)
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-settings.php(556): do_action('after_setup_the...')
+#4 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-config.php(107): require_once('/Volumes/Busine...')
+#5 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-load.php(50): require_once('/Volumes/Busine...')
+#6 /Volumes/Business/l in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php on line 570
+
+2021-08-30T18:52:07+00:00 CRITICAL Uncaught Error: Class 'CX_Fonts_Manager' not found in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php:568
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(303): LaStudio_Kit->init_customizer('')
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(327): WP_Hook->apply_filters(NULL, Array)
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/plugin.php(470): WP_Hook->do_action(Array)
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-settings.php(556): do_action('after_setup_the...')
+#4 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-config.php(107): require_once('/Volumes/Busine...')
+#5 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-load.php(50): require_once('/Volumes/Busine...')
+#6 /Volumes/Business/l in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php on line 568
+
+2021-08-30T18:53:22+00:00 CRITICAL Uncaught Error: Class 'CX_Fonts_Manager' not found in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php:568
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(303): LaStudio_Kit->init_customizer('')
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(327): WP_Hook->apply_filters(NULL, Array)
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/plugin.php(470): WP_Hook->do_action(Array)
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-settings.php(556): do_action('after_setup_the...')
+#4 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-config.php(107): require_once('/Volumes/Busine...')
+#5 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-load.php(50): require_once('/Volumes/Busine...')
+#6 /Volumes/Business/l in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php on line 568
+
+2021-08-30T18:54:22+00:00 CRITICAL Uncaught Error: Class 'CX_Fonts_Manager' not found in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php:568
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(303): LaStudio_Kit->init_customizer('')
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(327): WP_Hook->apply_filters(NULL, Array)
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/plugin.php(470): WP_Hook->do_action(Array)
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-settings.php(556): do_action('after_setup_the...')
+#4 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-config.php(107): require_once('/Volumes/Busine...')
+#5 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-load.php(50): require_once('/Volumes/Busine...')
+#6 /Volumes/Business/l in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php on line 568
+
+2021-08-30T18:56:07+00:00 CRITICAL Uncaught Error: Class 'CX_Fonts_Manager' not found in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php:568
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(303): LaStudio_Kit->init_customizer('')
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(327): WP_Hook->apply_filters(NULL, Array)
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/plugin.php(470): WP_Hook->do_action(Array)
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-settings.php(556): do_action('after_setup_the...')
+#4 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-config.php(107): require_once('/Volumes/Busine...')
+#5 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-load.php(50): require_once('/Volumes/Busine...')
+#6 /Volumes/Business/l in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php on line 568
+
+2021-08-30T19:01:23+00:00 CRITICAL Uncaught Error: Class 'CX_Fonts_Manager' not found in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php:568
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(303): LaStudio_Kit->init_customizer('')
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(327): WP_Hook->apply_filters(NULL, Array)
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/plugin.php(470): WP_Hook->do_action(Array)
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-settings.php(556): do_action('after_setup_the...')
+#4 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-config.php(107): require_once('/Volumes/Busine...')
+#5 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-load.php(50): require_once('/Volumes/Busine...')
+#6 /Volumes/Business/l in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php on line 568
+
+2021-08-30T19:01:44+00:00 CRITICAL Uncaught Error: Class 'CX_Fonts_Manager' not found in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php:568
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(303): LaStudio_Kit->init_customizer('')
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(327): WP_Hook->apply_filters(NULL, Array)
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/plugin.php(470): WP_Hook->do_action(Array)
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-settings.php(556): do_action('after_setup_the...')
+#4 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-config.php(107): require_once('/Volumes/Busine...')
+#5 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-load.php(50): require_once('/Volumes/Busine...')
+#6 /Volumes/Business/l in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php on line 568
+
+2021-08-30T19:03:33+00:00 CRITICAL Uncaught Error: Class 'CX_Fonts_Manager' not found in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php:568
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(303): LaStudio_Kit->init_customizer('')
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(327): WP_Hook->apply_filters(NULL, Array)
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/plugin.php(470): WP_Hook->do_action(Array)
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-settings.php(556): do_action('after_setup_the...')
+#4 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-config.php(107): require_once('/Volumes/Busine...')
+#5 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-load.php(50): require_once('/Volumes/Busine...')
+#6 /Volumes/Business/l in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php on line 568
+
+2021-08-30T19:04:32+00:00 CRITICAL Uncaught Error: Class 'CX_Fonts_Manager' not found in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php:568
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(303): LaStudio_Kit->init_customizer('')
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(327): WP_Hook->apply_filters(NULL, Array)
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/plugin.php(470): WP_Hook->do_action(Array)
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-settings.php(556): do_action('after_setup_the...')
+#4 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-config.php(107): require_once('/Volumes/Busine...')
+#5 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-load.php(50): require_once('/Volumes/Busine...')
+#6 /Volumes/Business/l in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php on line 568
+
+2021-08-30T19:05:54+00:00 CRITICAL Uncaught Error: Class 'CX_Customizer' not found in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php:576
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(303): LaStudio_Kit->init_customizer('')
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(327): WP_Hook->apply_filters(NULL, Array)
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/plugin.php(470): WP_Hook->do_action(Array)
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-settings.php(556): do_action('after_setup_the...')
+#4 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-config.php(107): require_once('/Volumes/Busine...')
+#5 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-load.php(50): require_once('/Volumes/Busine...')
+#6 /Volumes/Business/la-s in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php on line 576
+
+2021-08-30T19:07:05+00:00 CRITICAL Uncaught Error: Class 'CX_Customizer' not found in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php:576
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(303): LaStudio_Kit->init_customizer('')
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(327): WP_Hook->apply_filters(NULL, Array)
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/plugin.php(470): WP_Hook->do_action(Array)
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-settings.php(556): do_action('after_setup_the...')
+#4 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-config.php(107): require_once('/Volumes/Busine...')
+#5 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-load.php(50): require_once('/Volumes/Busine...')
+#6 /Volumes/Business/la-s in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php on line 576
+
+2021-08-30T19:08:05+00:00 CRITICAL Uncaught Error: Class 'CX_Customizer' not found in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php:576
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(303): LaStudio_Kit->init_customizer('')
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(327): WP_Hook->apply_filters(NULL, Array)
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/plugin.php(470): WP_Hook->do_action(Array)
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-settings.php(556): do_action('after_setup_the...')
+#4 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-config.php(107): require_once('/Volumes/Busine...')
+#5 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-load.php(50): require_once('/Volumes/Busine...')
+#6 /Volumes/Business/la-s in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php on line 576
+
+2021-08-30T19:09:17+00:00 CRITICAL Uncaught Error: Class 'CX_Customizer' not found in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php:576
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(303): LaStudio_Kit->init_customizer('')
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(327): WP_Hook->apply_filters(NULL, Array)
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/plugin.php(470): WP_Hook->do_action(Array)
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-settings.php(556): do_action('after_setup_the...')
+#4 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-config.php(107): require_once('/Volumes/Busine...')
+#5 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-load.php(50): require_once('/Volumes/Busine...')
+#6 /Volumes/Business/la-s in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php on line 576
+
+2021-08-30T19:10:51+00:00 CRITICAL Uncaught Error: Class 'LaStudioKit_Extension\Module' not found in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/class-integration.php:96
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php(188): LaStudio_Kit_Integration->init()
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(303): LaStudio_Kit->init('')
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(327): WP_Hook->apply_filters(NULL, Array)
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/plugin.php(470): WP_Hook->do_action(Array)
+#4 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-settings.php(578): do_action('init')
+#5 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-config.php(107): require_once( in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/includes/class-integration.php on line 96
+
+2021-08-30T19:13:02+00:00 CRITICAL Uncaught Error: Class 'CX_Fonts_Manager' not found in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php:568
+Stack trace:
+#0 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(303): LaStudio_Kit->init_customizer('')
+#1 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/class-wp-hook.php(327): WP_Hook->apply_filters(true, Array)
+#2 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-includes/plugin.php(470): WP_Hook->do_action(Array)
+#3 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-settings.php(556): do_action('after_setup_the...')
+#4 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-config.php(107): require_once('/Volumes/Busine...')
+#5 /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-load.php(50): require_once('/Volumes/Busine...')
+#6 /Volumes/Business/l in /Volumes/Business/la-studioweb.com/public_html/omens.la-studioweb.com/wp-content/plugins/lastudio-element-kit/lastudio-element-kit.php on line 568
+

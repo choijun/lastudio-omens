@@ -52,6 +52,10 @@ abstract class LaStudioKit_Base extends Widget_Base
         return '';
     }
 
+    protected function get_lakit_name(){
+        return str_replace('lakit-', '', $this->get_name());
+    }
+
     public function get_title()
     {
         return 'LaStudioKit ' . $this->get_widget_title();
@@ -1002,6 +1006,21 @@ abstract class LaStudioKit_Base extends Widget_Base
             )
         );
 
+	    $this->_add_control(
+		    'carousel_overflow',
+		    array(
+			    'label' => esc_html__('Show Hidden Items', 'lastudio-kit'),
+			    'type' => Controls_Manager::SWITCHER,
+			    'label_on' => esc_html__('Yes', 'lastudio-kit'),
+			    'label_off' => esc_html__('No', 'lastudio-kit'),
+			    'return_value' => 'yes',
+			    'default' => '',
+			    'selectors' => array(
+				    '{{WRAPPER}} .swiper-container' => 'overflow: inherit',
+			    ),
+		    )
+	    );
+
         $this->_add_control(
             'carousel_fluid_width',
             array(
@@ -1625,7 +1644,7 @@ abstract class LaStudioKit_Base extends Widget_Base
             array(
                 'label' => esc_html__('Horizontal Position by', 'lastudio-kit'),
                 'type' => Controls_Manager::SELECT,
-                'default' => 'left',
+                'default' => 'right',
                 'options' => array(
                     'left' => esc_html__('Left', 'lastudio-kit'),
                     'right' => esc_html__('Right', 'lastudio-kit'),

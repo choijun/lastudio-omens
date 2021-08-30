@@ -15,13 +15,6 @@ if(has_post_thumbnail()){
         list( $thumb_src, $thumb_width, $thumb_height ) = $thumbnail_obj;
         if( $thumb_width > 0 && $thumb_height > 0 ) {
             $thumb_css_style .= 'padding-bottom:' . round( ($thumb_height/$thumb_width) * 100, 2 ) . '%;';
-            if ( class_exists( 'Jetpack' ) && Jetpack::is_module_active( 'photon' ) ) {
-                $photon_args = array(
-                    'resize' => $thumb_width . ',' . $thumb_height
-                );
-                $thumb_src = wp_get_attachment_url( get_post_thumbnail_id() );
-                $thumb_src = jetpack_photon_url( $thumb_src, $photon_args );
-            }
         }
     }
 }
@@ -52,7 +45,7 @@ $post_link = get_the_permalink();
                 if($excerpt_length > 0){
                     echo sprintf(
                         '<p class="lastudio-team-member__desc">%1$s</p>',
-                        la_excerpt(intval( $excerpt_length ))
+                        lastudio_kit_helper()->get_excerpt(intval( $excerpt_length ))
                     );
                 }
                 ?>

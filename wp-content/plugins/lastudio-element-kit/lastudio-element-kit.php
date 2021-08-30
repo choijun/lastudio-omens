@@ -98,7 +98,7 @@ if(!function_exists('LaStudio_Kit')){
             add_action( 'after_setup_theme', array( $this, 'includes' ), 4 );
 
             // init customizer
-            add_action( 'after_setup_theme', array( $this, 'init_customizer' ), 10 );
+            add_action( 'after_setup_theme', array( $this, 'init_customizer' ), 0 );
 
             // Internationalize the text strings used.
             add_action( 'init', array( $this, 'lang' ), -999 );
@@ -558,17 +558,18 @@ if(!function_exists('LaStudio_Kit')){
         }
 
         public function init_customizer(){
+
             // Init CX_Customizer
             $customizer_options = [
                 'prefix'         => 'lakit',
                 'path'          => $this->plugin_path( 'includes/framework/customizer/' ),
                 'capability'    => 'edit_theme_options',
                 'type'          => 'theme_mod',
-                'fonts_manager' => new CX_Fonts_Manager( ['prefix' => 'lakit'] ),
+                'fonts_manager' => new \CX_Fonts_Manager( ['prefix' => 'lakit'] ),
                 'options'       => []
             ];
 
-            $this->customizer = new CX_Customizer( apply_filters('lastudio-kit/theme/customizer/options', $customizer_options) );
+            $this->customizer = new \CX_Customizer( apply_filters('lastudio-kit/theme/customizer/options', $customizer_options) );
         }
 
     }

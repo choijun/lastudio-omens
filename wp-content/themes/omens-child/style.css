@@ -14,6 +14,12 @@ License URI: 	  licence/GPL.txt
 Text Domain:    omens-child
 Domain Path:    /languages/
 */
+body.page-id-306 {
+  --theme-body-font-family: "Acumin Pro", Sans-serif;
+  --theme-heading-font-family: "Acumin Pro", Sans-serif;
+  --theme-heading-font-weight: 700;
+}
+
 section#comments {
   padding-top: 50px;
 }

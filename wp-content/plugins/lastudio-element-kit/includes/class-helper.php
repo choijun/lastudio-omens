@@ -857,6 +857,32 @@ if ( ! class_exists( 'LaStudio_Kit_Helper' ) ) {
             return $classes;
         }
 
+        public static function get_excerpt( $length = 30 ){
+	        global $post;
+
+	        // Check for custom excerpt
+	        if ( has_excerpt( $post->ID ) ) {
+		        $output = wp_trim_words( strip_shortcodes( $post->post_excerpt ), $length );
+	        }
+
+	        // No custom excerpt
+	        else {
+
+		        // Check for more tag and return content if it exists
+		        if ( strpos( $post->post_content, '<!--more-->' ) || strpos( $post->post_content, '<!--nextpage-->' ) ) {
+			        $output = apply_filters( 'the_content', get_the_content() );
+		        }
+
+		        // No more tag defined
+		        else {
+			        $output = wp_trim_words( strip_shortcodes( $post->post_content ), $length );
+		        }
+
+	        }
+
+	        return $output;
+        }
+
 	}
 
 }

@@ -1718,6 +1718,11 @@
             LaStudioKits.initMasonry($scope);
         });
 
+        elementor.hooks.addAction('frontend/element_ready/lakit-portfolio.default', function ($scope) {
+            LaStudioKits.initCarousel($scope);
+            LaStudioKits.initMasonry($scope);
+        });
+
         elementor.hooks.addAction('frontend/element_ready/lakit-images-layout.default', function ($scope) {
             LaStudioKits.initCarousel($scope);
             LaStudioKits.initMasonry($scope);

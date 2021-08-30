@@ -78,7 +78,6 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
 
             add_action( 'wp_enqueue_scripts', array( $this, 'frontend_enqueue' ) );
 
-
             $this->sys_messages = apply_filters( 'lastudio-kit/popups_sys_messages', array(
                 'invalid_mail'                => esc_html__( 'Please, provide valid mail', 'lastudio-kit' ),
                 'mailchimp'                   => esc_html__( 'Please, set up MailChimp API key and List ID', 'lastudio-kit' ),
@@ -113,6 +112,8 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
                     'url'  => $mega_menu['url'],
                 ]);
             }
+
+            add_action( 'init', [ $this, 'register_portfolio_content_type' ] );
 		}
 
 		/**
@@ -358,10 +359,9 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
             $class = 'LaStudioKit_' . $class;
 			$class = sprintf( 'Elementor\%s', $class );
 
-			require $file;
+			require_once $file;
 
 			if ( class_exists( $class ) ) {
-
 				$widgets_manager->register_widget_type( new $class );
 			}
 		}
@@ -810,8 +810,6 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
 				}
 			}
 
-
-
 			arsort($breakpoints);
 
 			$column_css = '.elementor-column.lakit-col-width-auto-__DEVICE__{width:auto!important}.elementor-column.lakit-col-width-auto-__DEVICE__.lakit-col-align-left{margin-right:auto}.elementor-column.lakit-col-width-auto-__DEVICE__.lakit-col-align-right{margin-left:auto}.elementor-column.lakit-col-width-auto-__DEVICE__.lakit-col-align-center{margin-left:auto;margin-right:auto}';
@@ -1028,6 +1026,35 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
 
             return $global_post_template;
         }
+
+		public function register_portfolio_content_type(){
+			$avaliable_extension = lastudio_kit_settings()->get('avaliable_extensions', []);
+			if(!empty($avaliable_extension['portfolio_content_type']) && filter_var($avaliable_extension['portfolio_content_type'], FILTER_VALIDATE_BOOLEAN)){
+				register_post_type( 'la_portfolio', apply_filters('lastudio-kit/admin/portoflio/args', [
+					'label'                 => __( 'Portfolio', 'lastudio-kit' ),
+					'supports'              => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
+					'taxonomies'            => [ 'post_tag' ],
+					'menu_icon'             => 'dashicons-portfolio',
+					'public'                => true,
+					'menu_position'         => 8,
+					'can_export'            => true,
+					'has_archive'           => true,
+					'exclude_from_search'   => false,
+					'rewrite'               => array( 'slug' => 'portfolio' )
+				]));
+				register_taxonomy( 'la_portfolio_category', 'la_portfolio', apply_filters('lastudio-kit/admin/portoflio_cat/args', [
+					'hierarchical'      => true,
+					'show_in_nav_menus' => true,
+					'labels'            => array(
+						'name'          => __( 'Portfolio Categories', 'lastudio-kit' ),
+						'singular_name' => __( 'Portfolio Category', 'lastudio-kit' )
+					),
+					'query_var'         => true,
+					'show_admin_column' => true,
+					'rewrite'           => array('slug' => 'portfolio-category')
+				]));
+			}
+		}
 
 	}
 

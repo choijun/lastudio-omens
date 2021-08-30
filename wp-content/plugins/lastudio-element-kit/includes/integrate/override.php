@@ -291,3 +291,24 @@ add_action('elementor/element/icon/section_style_icon/before_section_end', funct
         ]
     );
 }, 10 );
+
+/**
+ * Modify Spacer
+ */
+add_action('elementor/element/spacer/section_spacer/before_section_end', function( $element ){
+
+    $element->add_control(
+        'full_height',
+        [
+	        'label'        => esc_html__( '100% Height', 'lastudio-kit' ),
+	        'type'         => \Elementor\Controls_Manager::SWITCHER,
+	        'label_on'     => esc_html__( 'Yes', 'lastudio-kit' ),
+	        'label_off'    => esc_html__( 'No', 'lastudio-kit' ),
+	        'return_value' => 'yes',
+	        'selectors' => [
+		        '{{WRAPPER}}, {{WRAPPER}} .elementor-widget-container, {{WRAPPER}} .elementor-spacer, {{WRAPPER}} .elementor-spacer, .elementor-spacer-inner' => 'height: 100%',
+	        ],
+        ]
+    );
+
+}, 10 );
