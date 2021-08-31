@@ -45,7 +45,7 @@ if($icon_position == 'lefttitle' || $icon_position == 'righttitle'){
 
 echo sprintf('<div %1$s>', $this->get_render_attribute_string('infobox_wrapper') );
     echo $this->get_main_icon( sprintf('<div class="lakit-iconbox__box_header elementor-animation-%1$s"><div class="lakit-iconbox__box_icon icon_pos_%2$s">', esc_attr($icons_hover_animation), esc_attr($icon_position) )  . '%s' . sprintf('</div>%1$s</div>', $box_title) );
-    echo $this->get_main_image( sprintf('<div class="lakit-iconbox__box_header"><div class="lakit-iconbox__box_icon icon_pos_%1$s">', esc_attr($icon_position))  . '%s' . sprintf('</div>%1$s</div>', $box_title) );
+    echo $this->get_main_image( sprintf('<div class="lakit-iconbox__box_header elementor-animation-%1$s"><div class="lakit-iconbox__box_icon icon_pos_%2$s">', esc_attr($icons_hover_animation), esc_attr($icon_position))  . '%s' . sprintf('</div>%1$s</div>', $box_title) );
 
     echo '<div class="lakit-iconbox__box_body">';
 

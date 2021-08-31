@@ -238,6 +238,7 @@ class Group_Control_Box_Style extends Group_Control_Base {
 			'selectors' => array(
 				'{{SELECTOR}}' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 			),
+			'responsive' => true,
 			'condition' => array(
 				'box_border!' => '',
 			),
@@ -259,6 +260,7 @@ class Group_Control_Box_Style extends Group_Control_Base {
 			'label'      => esc_html__( 'Border Radius', 'lastudio-kit' ),
 			'type'       => Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', '%' ),
+			'responsive' => true,
 			'selectors'  => array(
 				'{{SELECTOR}}' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 			),

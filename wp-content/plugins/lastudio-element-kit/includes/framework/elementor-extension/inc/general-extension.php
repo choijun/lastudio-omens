@@ -80,6 +80,18 @@ class General_Extensions {
                     ),
                 )
             );
+	        $stack->add_control(
+		        '_w_fullright',
+		        [
+			        'label' => __( 'Wide widget on the right', 'lastudio-kit' ),
+			        'type' => Controls_Manager::SWITCHER,
+			        'default' => '',
+			        'prefix_class' => '',
+			        'label_on' => __('Yes', 'lastudio-kit'),
+			        'label_off' => __('No', 'lastudio-kit'),
+			        'return_value' => 'widget_full_right',
+		        ]
+	        );
         }
     }
 

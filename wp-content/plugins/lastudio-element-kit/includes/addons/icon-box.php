@@ -1152,6 +1152,16 @@ class LaStudioKit_Icon_Box extends LaStudioKit_Base {
         $this->_end_controls_tab();
 
         $this->_end_controls_tabs();
+
+	    $this->_add_control(
+		    'icon_box__style',
+		    array(
+			    'label'     => esc_html__( 'Styles', 'lastudio-kit' ),
+			    'type'      => Controls_Manager::HEADING,
+			    'separator' => 'before',
+		    )
+	    );
+
         $this->_add_responsive_control(
             'icon_size',
             [
@@ -1210,7 +1220,7 @@ class LaStudioKit_Icon_Box extends LaStudioKit_Base {
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} ' . $css_scheme['header_box_icon'] => 'transform: rotate({{SIZE}}{{UNIT}});',
+                    '{{WRAPPER}} ' . $css_scheme['header_box_icon'] => 'transform: rotate({{SIZE}}deg);',
                 ],
             ]
         );

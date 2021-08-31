@@ -12,3 +12,6 @@
 .elementor-lakit-portfolio .lakit-posts.preset-grid-2 .lakit-posts__inner-box:after{
 	background: none;
 }
+.elementor-lakit-portfolio .lakit-posts__inner-content-inner {
+	width: 100%;
+}
