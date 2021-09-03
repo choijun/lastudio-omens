@@ -1221,6 +1221,27 @@ abstract class LaStudioKit_Base extends Widget_Base
             )
         );
 
+        $disable_content_effect_c = [];
+        if($enable_carousel){
+	        $disable_content_effect_c = [
+		        'enable_carousel' => 'yes'
+            ];
+        }
+
+        $this->_add_control(
+            'carousel_disable_content_effect',
+            array(
+                'label' => esc_html__('Disable Content Effect', 'lastudio-kit'),
+                'description' => esc_html__('If available', 'lastudio-kit'),
+                'label_on' => esc_html__('Yes', 'lastudio-kit'),
+                'label_off' => esc_html__('No', 'lastudio-kit'),
+                'type' => Controls_Manager::SWITCHER,
+                'return_value' => 'slide-no-animation',
+                'prefix_class' => '',
+                'condition' => $disable_content_effect_c
+            )
+        );
+
 	    $this->_add_control(
 		    'carousel_enable_linear_effect',
 		    array(

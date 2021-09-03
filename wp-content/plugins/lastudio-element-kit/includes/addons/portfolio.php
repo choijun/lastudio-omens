@@ -364,6 +364,21 @@ class LaStudioKit_Portfolio extends LaStudioKit_Posts {
 			)
 		);
 
+		$this->_add_control(
+			'enable_right_btn',
+			[
+				'label'     => esc_html__( 'Enable Right Button', 'lastudio-kit' ),
+				'type'      => Controls_Manager::SWITCHER,
+				'label_on'  => esc_html__( 'Yes', 'lastudio-kit' ),
+				'label_off' => esc_html__( 'No', 'lastudio-kit' ),
+				'default'   => '',
+				'prefix_class' => 'lakit--portfolio-btn-right-',
+				'condition' => [
+					'show_more' => 'yes',
+				]
+			]
+		);
+
 		$this->_add_responsive_control(
 			'inner_content_padding',
 			array(

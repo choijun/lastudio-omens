@@ -79,6 +79,17 @@ class LaStudioKit_Advanced_Carousel extends LaStudioKit_Base {
             )
         );
 
+	    $repeater->add_control(
+		    'item_icon',
+		    [
+			    'label'            => __( 'Icon', 'lastudio-kit' ),
+			    'type'             => Controls_Manager::ICONS,
+			    'fa4compatibility' => 'icon',
+			    'skin'             => 'inline',
+			    'label_block'      => false,
+		    ]
+	    );
+
         $repeater->add_control(
             'item_title',
             array(
@@ -337,7 +348,10 @@ class LaStudioKit_Advanced_Carousel extends LaStudioKit_Base {
                 'items'          => '.lakit-carousel__content',
                 'items_title'    => '.lakit-carousel__content .lakit-carousel__item-title',
                 'items_text'     => '.lakit-carousel__content .lakit-carousel__item-text',
+                'items_icon'     => '.lakit-carousel__item-icon',
+                'items_icon_inner' => '.lakit-icon-inner',
                 'items_button'   => '.elementor-button',
+                'button_icon'    => '.elementor-button .btn-icon',
                 'banner'         => '.lakit-banner',
                 'banner_content' => '.lakit-banner__content',
                 'banner_overlay' => '.lakit-banner__overlay',
@@ -538,6 +552,61 @@ class LaStudioKit_Advanced_Carousel extends LaStudioKit_Base {
             25
         );
 
+	    $this->_add_responsive_control(
+		    'items_alignment',
+		    array(
+			    'label'   => esc_html__( 'Alignment', 'lastudio-kit' ),
+			    'type'    => Controls_Manager::CHOOSE,
+			    'default' => 'left',
+			    'options' => array(
+				    'left'    => array(
+					    'title' => esc_html__( 'Left', 'lastudio-kit' ),
+					    'icon'  => 'eicon-text-align-left',
+				    ),
+				    'center' => array(
+					    'title' => esc_html__( 'Center', 'lastudio-kit' ),
+					    'icon'  => 'eicon-text-align-center',
+				    ),
+				    'right' => array(
+					    'title' => esc_html__( 'Right', 'lastudio-kit' ),
+					    'icon'  => 'eicon-text-align-right',
+				    ),
+			    ),
+			    'selectors'  => array(
+				    '{{WRAPPER}} ' . $css_scheme['items'] => 'text-align: {{VALUE}};',
+			    ),
+		    ),
+		    25
+	    );
+
+	    $this->_add_control(
+		    'enable_zoom_on_hover',
+		    array(
+			    'label'     => esc_html__( 'Enable Zoom on hover', 'lastudio-kit' ),
+			    'type'      => Controls_Manager::SWITCHER,
+			    'return_value' => 'lakit--enable-zoom-hover',
+			    'default'   => '',
+			    'prefix_class' => ''
+		    )
+	    );
+	    $this->_add_responsive_control(
+		    'content_zoom_level',
+		    [
+			    'label' => esc_html__( 'Level', 'lastudio-kit' ),
+			    'type' => Controls_Manager::SLIDER,
+			    'range' => [
+				    'px' => [
+					    'min' => 0.5,
+					    'max' => 2.0,
+					    'step' => 0.1
+				    ],
+			    ],
+			    'selectors' => [
+				    '{{WRAPPER}}' => '--lakit-content-zoom-lv: {{SIZE}}',
+			    ],
+		    ]
+	    );
+
         $this->_start_controls_tabs( 'tabs_item_style' );
 
         $this->_start_controls_tab(
@@ -576,6 +645,45 @@ class LaStudioKit_Advanced_Carousel extends LaStudioKit_Base {
             ),
             100
         );
+
+	    $this->_add_responsive_control(
+		    'items_padding',
+		    array(
+			    'label'      => esc_html__( 'Padding', 'lastudio-kit' ),
+			    'type'       => Controls_Manager::DIMENSIONS,
+			    'size_units' => array( 'px', '%', 'em', 'vw', 'vh' ),
+			    'selectors'  => array(
+				    '{{WRAPPER}} ' . $css_scheme['items'] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+			    ),
+		    ),
+		    50
+	    );
+
+	    $this->_add_responsive_control(
+		    'items_margin',
+		    array(
+			    'label'      => esc_html__( 'Margin', 'lastudio-kit' ),
+			    'type'       => Controls_Manager::DIMENSIONS,
+			    'size_units' => array( 'px', '%', 'em', 'vw', 'vh' ),
+			    'selectors'  => array(
+				    '{{WRAPPER}} ' . $css_scheme['items'] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+			    ),
+		    ),
+		    50
+	    );
+
+	    $this->_add_responsive_control(
+		    'items_border_radius',
+		    array(
+			    'label'      => esc_html__( 'Border Radius', 'lastudio-kit' ),
+			    'type'       => Controls_Manager::DIMENSIONS,
+			    'size_units' => array( 'px', '%' ),
+			    'selectors'  => array(
+				    '{{WRAPPER}} ' . $css_scheme['items'] => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+			    ),
+		    ),
+		    75
+	    );
 
         $this->_end_controls_tab();
 
@@ -616,76 +724,48 @@ class LaStudioKit_Advanced_Carousel extends LaStudioKit_Base {
             100
         );
 
+	    $this->_add_responsive_control(
+		    'items_padding_hover',
+		    array(
+			    'label'      => esc_html__( 'Padding', 'lastudio-kit' ),
+			    'type'       => Controls_Manager::DIMENSIONS,
+			    'size_units' => array( 'px', '%', 'em', 'vw', 'vh' ),
+			    'selectors'  => array(
+				    '{{WRAPPER}} .lakit-carousel__item:hover ' . $css_scheme['items'] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+			    ),
+		    ),
+		    50
+	    );
+
+	    $this->_add_responsive_control(
+		    'items_margin_hover',
+		    array(
+			    'label'      => esc_html__( 'Margin', 'lastudio-kit' ),
+			    'type'       => Controls_Manager::DIMENSIONS,
+			    'size_units' => array( 'px', '%', 'em', 'vw', 'vh' ),
+			    'selectors'  => array(
+				    '{{WRAPPER}} .lakit-carousel__item:hover ' . $css_scheme['items'] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+			    ),
+		    ),
+		    50
+	    );
+
+	    $this->_add_responsive_control(
+		    'items_border_radius_hover',
+		    array(
+			    'label'      => esc_html__( 'Border Radius', 'lastudio-kit' ),
+			    'type'       => Controls_Manager::DIMENSIONS,
+			    'size_units' => array( 'px', '%' ),
+			    'selectors'  => array(
+				    '{{WRAPPER}} .lakit-carousel__item:hover ' . $css_scheme['items'] => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+			    ),
+		    ),
+		    75
+	    );
+
         $this->_end_controls_tab();
 
         $this->_end_controls_tabs();
-
-        $this->_add_responsive_control(
-            'items_alignment',
-            array(
-                'label'   => esc_html__( 'Alignment', 'lastudio-kit' ),
-                'type'    => Controls_Manager::CHOOSE,
-                'default' => 'left',
-                'options' => array(
-                    'left'    => array(
-                        'title' => esc_html__( 'Left', 'lastudio-kit' ),
-                        'icon'  => 'eicon-text-align-left',
-                    ),
-                    'center' => array(
-                        'title' => esc_html__( 'Center', 'lastudio-kit' ),
-                        'icon'  => 'eicon-text-align-center',
-                    ),
-                    'right' => array(
-                        'title' => esc_html__( 'Right', 'lastudio-kit' ),
-                        'icon'  => 'eicon-text-align-right',
-                    ),
-                ),
-                'separator' => 'before',
-                'selectors'  => array(
-                    '{{WRAPPER}} ' . $css_scheme['items'] => 'text-align: {{VALUE}};',
-                ),
-            ),
-            25
-        );
-
-        $this->_add_responsive_control(
-            'items_padding',
-            array(
-                'label'      => esc_html__( 'Padding', 'lastudio-kit' ),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => array( 'px', '%', 'em', 'vw', 'vh' ),
-                'selectors'  => array(
-                    '{{WRAPPER}} ' . $css_scheme['items'] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ),
-            ),
-            50
-        );
-
-        $this->_add_responsive_control(
-            'items_margin',
-            array(
-                'label'      => esc_html__( 'Margin', 'lastudio-kit' ),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => array( 'px', '%', 'em', 'vw', 'vh' ),
-                'selectors'  => array(
-                    '{{WRAPPER}} ' . $css_scheme['items'] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ),
-            ),
-            50
-        );
-
-        $this->_add_responsive_control(
-            'items_border_radius',
-            array(
-                'label'      => esc_html__( 'Border Radius', 'lastudio-kit' ),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => array( 'px', '%' ),
-                'selectors'  => array(
-                    '{{WRAPPER}} ' . $css_scheme['items'] => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ),
-            ),
-            75
-        );
 
         $this->_end_controls_section();
 
@@ -820,6 +900,167 @@ class LaStudioKit_Advanced_Carousel extends LaStudioKit_Base {
         $this->_end_controls_tab();
 
         $this->_end_controls_tabs();
+
+        $this->_end_controls_section();
+
+	    $this->_start_controls_section(
+		    'section_icon_style',
+		    array(
+			    'label'      => esc_html__( 'Item Icon', 'lastudio-kit' ),
+			    'tab'        => Controls_Manager::TAB_STYLE,
+		    )
+	    );
+
+	    $this->_add_responsive_control(
+		    'item_icon_size',
+		    [
+			    'label' => esc_html__( 'Size', 'lastudio-kit' ),
+			    'type' => Controls_Manager::SLIDER,
+			    'range' => [
+				    'px' => [
+					    'min' => 6,
+					    'max' => 300,
+				    ],
+			    ],
+			    'selectors' => [
+				    '{{WRAPPER}} ' . $css_scheme['items_icon_inner'] => 'font-size: {{SIZE}}{{UNIT}};',
+			    ],
+		    ]
+	    );
+	    $this->_add_responsive_control(
+		    'item_icon_padding',
+		    array(
+			    'label'      => esc_html__( 'Padding', 'lastudio-kit' ),
+			    'type'       => Controls_Manager::DIMENSIONS,
+			    'size_units' => array( 'px', '%', 'em' ),
+			    'selectors'  => array(
+				    '{{WRAPPER}} ' . $css_scheme['items_icon_inner'] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+			    ),
+		    ),
+		    50
+	    );
+	    $this->_add_responsive_control(
+		    'item_icon_margin',
+		    array(
+			    'label'      => esc_html__( 'Margin', 'lastudio-kit' ),
+			    'type'       => Controls_Manager::DIMENSIONS,
+			    'size_units' => array( 'px', '%', 'em' ),
+			    'selectors'  => array(
+				    '{{WRAPPER}} ' . $css_scheme['items_icon_inner'] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+			    ),
+		    ),
+		    50
+	    );
+
+	    $this->_start_controls_tabs( 'tabs_item_icon' );
+	    $this->_start_controls_tab(
+		    'tab_item_icon_normal',
+		    [
+			    'label' => esc_html__( 'Normal', 'lastudio-kit' ),
+		    ]
+	    );
+	    $this->_add_control(
+		    'item_icon_color',
+		    [
+			    'label' => esc_html__( 'Color', 'lastudio-kit' ),
+			    'type' => Controls_Manager::COLOR,
+			    'selectors' => [
+				    '{{WRAPPER}} ' . $css_scheme['items_icon_inner'] => 'color: {{VALUE}};',
+			    ],
+		    ]
+	    );
+	    $this->_add_control(
+		    'item_icon_bgcolor',
+		    [
+			    'label' => esc_html__( 'Background Color', 'lastudio-kit' ),
+			    'type' => Controls_Manager::COLOR,
+			    'selectors' => [
+				    '{{WRAPPER}} ' . $css_scheme['items_icon_inner'] => 'background-color: {{VALUE}};',
+			    ],
+		    ]
+	    );
+	    $this->_add_group_control(
+		    Group_Control_Border::get_type(),
+		    [
+			    'name' => 'item_icon_border',
+			    'label' => esc_html__( 'Border', 'lastudio-kit' ),
+			    'selector' => '{{WRAPPER}} ' . $css_scheme['items_icon_inner'],
+		    ]
+	    );
+	    $this->_add_responsive_control(
+		    'item_icon_radius',
+		    [
+			    'label' =>esc_html__( 'Border Radius', 'lastudio-kit' ),
+			    'type' => Controls_Manager::DIMENSIONS,
+			    'size_units' => [ 'px'],
+			    'selectors' => [
+				    '{{WRAPPER}} ' . $css_scheme['items_icon_inner'] =>  'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+			    ],
+		    ]
+	    );
+	    $this->_add_group_control(
+		    Group_Control_Box_Shadow::get_type(),
+		    [
+			    'name' => 'item_icon_shadow',
+			    'selector' => '{{WRAPPER}} ' . $css_scheme['items_icon_inner'],
+		    ]
+	    );
+
+	    $this->_end_controls_tab();
+	    $this->_start_controls_tab(
+		    'tab_item_icon_hover',
+		    [
+			    'label' => esc_html__( 'Hover', 'lastudio-kit' ),
+		    ]
+	    );
+	    $this->_add_control(
+		    'item_icon_color_hover',
+		    [
+			    'label' => esc_html__( 'Color', 'lastudio-kit' ),
+			    'type' => Controls_Manager::COLOR,
+			    'selectors' => [
+				    '{{WRAPPER}} .lakit-carousel__item:hover ' . $css_scheme['items_icon_inner'] => 'color: {{VALUE}}',
+			    ],
+		    ]
+	    );
+	    $this->_add_control(
+		    'item_icon_bgcolor_hover',
+		    [
+			    'label' => esc_html__( 'Background Color', 'lastudio-kit' ),
+			    'type' => Controls_Manager::COLOR,
+			    'selectors' => [
+				    '{{WRAPPER}} .lakit-carousel__item:hover ' . $css_scheme['items_icon_inner'] => 'background-color: {{VALUE}};',
+			    ],
+		    ]
+	    );
+	    $this->_add_group_control(
+		    Group_Control_Border::get_type(),
+		    [
+			    'name' => 'item_icon_border_hover',
+			    'label' => esc_html__( 'Border', 'lastudio-kit' ),
+			    'selector' => '{{WRAPPER}} .lakit-carousel__item:hover ' . $css_scheme['items_icon_inner'],
+		    ]
+	    );
+	    $this->_add_responsive_control(
+		    'item_icon_radius_hover',
+		    [
+			    'label' =>esc_html__( 'Border Radius', 'lastudio-kit' ),
+			    'type' => Controls_Manager::DIMENSIONS,
+			    'size_units' => [ 'px'],
+			    'selectors' => [
+				    '{{WRAPPER}} .lakit-carousel__item:hover ' . $css_scheme['items_icon_inner'] =>  'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+			    ],
+		    ]
+	    );
+	    $this->_add_group_control(
+		    Group_Control_Box_Shadow::get_type(),
+		    [
+			    'name' => 'item_icon_shadow_hover',
+			    'selector' => '{{WRAPPER}} .lakit-carousel__item:hover ' . $css_scheme['items_icon_inner'],
+		    ]
+	    );
+	    $this->_end_controls_tab();
+	    $this->_end_controls_tabs();
 
         $this->_end_controls_section();
 
@@ -1054,6 +1295,69 @@ class LaStudioKit_Advanced_Carousel extends LaStudioKit_Base {
             )
         );
 
+	    $this->_add_control(
+		    'show_btn_hover',
+		    array(
+			    'label'     => esc_html__( 'Show Button On Hover', 'lastudio-kit' ),
+			    'type'      => Controls_Manager::SWITCHER,
+			    'default'   => '',
+			    'prefix_class' => 'lakit--show-btn-hover-'
+		    )
+	    );
+
+	    $this->_add_icon_control(
+		    'btn_icon',
+		    [
+			    'label'       => __( 'Add Icon', 'lastudio-kit' ),
+			    'type'        => Controls_Manager::ICON,
+			    'file'        => '',
+			    'skin'        => 'inline',
+			    'label_block' => false
+		    ]
+	    );
+
+	    $this->_add_control(
+		    'btn_icon_position',
+		    array(
+			    'label'     => esc_html__( 'Icon Position', 'lastudio-kit' ),
+			    'type'      => Controls_Manager::SELECT,
+			    'options'   => array(
+				    'row-reverse' => esc_html__( 'Before Text', 'lastudio-kit' ),
+				    'row'         => esc_html__( 'After Text', 'lastudio-kit' ),
+			    ),
+			    'default'   => 'row',
+			    'selectors' => array(
+				    '{{WRAPPER}} ' . $css_scheme['button_icon'] => 'flex-direction: {{VALUE}}',
+			    ),
+		    )
+	    );
+
+	    $this->add_responsive_control(
+		    'btn_icon_size',
+		    array(
+			    'label' => esc_html__( 'Icon Size', 'lastudio-kit' ),
+			    'type'  => Controls_Manager::SLIDER,
+			    'size_units' => array( 'px', '%', 'em', 'vw', 'vh' ),
+			    'selectors' => array(
+				    '{{WRAPPER}} ' . $css_scheme['button_icon'] => 'font-size: {{SIZE}}{{UNIT}};',
+			    ),
+		    )
+	    );
+
+	    $this->_add_responsive_control(
+		    'button_icon_padding',
+		    array(
+			    'label'      => esc_html__( 'Padding', 'lastudio-kit' ),
+			    'type'       => Controls_Manager::DIMENSIONS,
+			    'size_units' => array( 'px', '%', 'em' ),
+			    'selectors'  => array(
+				    '{{WRAPPER}} ' . $css_scheme['button_icon'] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+			    ),
+			    'separator' => 'after',
+		    ),
+		    50
+	    );
+
         $this->_add_group_control(
             Group_Control_Typography::get_type(),
             array(
@@ -1099,7 +1403,6 @@ class LaStudioKit_Advanced_Carousel extends LaStudioKit_Base {
                 'selectors'  => array(
                     '{{WRAPPER}} ' . $css_scheme['items_button'] => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
-                'separator' => 'after',
             ),
             75
         );
@@ -1265,6 +1568,15 @@ class LaStudioKit_Advanced_Carousel extends LaStudioKit_Base {
 
     }
 
+	protected function _loop_icon( $format ){
+		$item = $this->_processed_item;
+		return $this->_get_icon_setting( $item['item_icon'], $format );
+	}
+
+	protected function _btn_icon( $format ){
+    	$settings = $this->get_settings_for_display();
+		return $this->_get_icon_setting( $settings['selected_btn_icon'], $format );
+	}
 
     /**
      * Get item template content.

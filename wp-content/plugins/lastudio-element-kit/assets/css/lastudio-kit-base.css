@@ -15,6 +15,7 @@
 	--lakit-vheader-width: 300px;
 	--lakit-adminbar-height: 0px;
 	--lakit-header-height: 0px;
+	--lakit-content-zoom-lv: 1;
 }
 .lastudio-kit {
 	--lakit-carousel-padding-left: 0;
@@ -951,6 +952,14 @@ span.lakit-btn-more-icon {
 	color: var(--lakit-primary-color);
 	text-decoration: underline
 }
+
+.lakit-masonry-wrapper{
+	margin-left: calc( -1 * var(--lakit-gcol-left-space) );
+	margin-right: calc( -1 * var(--lakit-gcol-left-space) );
+}
+.lakit-masonry-wrapper .col-row {
+	margin: 0;
+}
 .lakit-masonry_filter {
 	display: flex;
 	flex-flow: row;
@@ -1020,8 +1029,60 @@ span.lakit-btn-more-icon {
 .elementor-editor-active .lakit-site-wrapper > .elementor-location-header:not(.elementor-edit-area-active) .elementor-sticky.elementor-sticky__spacer.lakit--transparency-yes{
 	display: none;
 }
+.btn-icon svg,
 .lakit-arrow svg {
 	width: 1em;
 	height: auto;
 	vertical-align: middle;
+}
+.elementor-button .btn-icon{
+	line-height: 0;
+}
+.lakit-icon-inner {
+	display: inline-block;
+	line-height: 1;
+	vertical-align: middle;
+	transition: all .3s;
+}
+.lakit-icon-inner svg {
+	height: 1em;
+	width: 1em;
+	vertical-align: middle;
+	display: block;
+}
+.lakit--show-btn-hover-yes .lakit-carousel__item .elementor-button {
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(20px);
+}
+.lakit--show-btn-hover-yes .lakit-carousel__item:hover .elementor-button{
+	opacity: 1;
+	visibility: inherit;
+	transform: translateY(0);
+}
+.lakit-carousel--simple .lakit-carousel__content{
+	transition: all .2s;
+}
+.lakit--enable-zoom-hover .lakit-carousel--simple .lakit-carousel__content{
+	position: relative;
+}
+.lakit--enable-zoom-hover .lakit-carousel--simple .lakit-carousel__content > * {
+	z-index: 1;
+	position: relative;
+}
+.lakit--enable-zoom-hover .lakit-carousel--simple .lakit-carousel__content:before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	background: inherit;
+	transition: all .2s;
+	border: inherit;
+	box-shadow: inherit;
+	border-radius: inherit;
+}
+.lakit--enable-zoom-hover .lakit-carousel--simple .lakit-carousel__item:hover .lakit-carousel__content:before {
+	transform: scale(var(--lakit-content-zoom-lv));
 }

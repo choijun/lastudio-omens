@@ -73,6 +73,8 @@ class LaStudioKit_Testimonials extends LaStudioKit_Base {
                 'type-5' => esc_html__( 'Type 5', 'lastudio-kit' ),
                 'type-6' => esc_html__( 'Type 6', 'lastudio-kit' ),
                 'type-7' => esc_html__( 'Type 7', 'lastudio-kit' ),
+                'type-8' => esc_html__( 'Type 8', 'lastudio-kit' ),
+                'type-9' => esc_html__( 'Type 9', 'lastudio-kit' ),
             )
         );
 
@@ -209,23 +211,17 @@ class LaStudioKit_Testimonials extends LaStudioKit_Base {
             )
         );
 
-        $this->add_responsive_control(
-            'item_space',
-            [
-                'label' => esc_html__( 'Columns Gap', 'lastudio-kit' ),
-                'type' => Controls_Manager::SLIDER,
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 80,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} ' . $css_scheme['item'] => 'padding-right: {{SIZE}}{{UNIT}}; padding-left: {{SIZE}}{{UNIT}}',
-                    '{{WRAPPER}} ' => '--lakit-carousel-item-top-space: {{SIZE}}{{UNIT}}; --lakit-carousel-item-right-space: {{SIZE}}{{UNIT}};--lakit-carousel-item-bottom-space: {{SIZE}}{{UNIT}};--lakit-carousel-item-left-space: {{SIZE}}{{UNIT}};--lakit-gcol-top-space: {{SIZE}}{{UNIT}}; --lakit-gcol-right-space: {{SIZE}}{{UNIT}};--lakit-gcol-bottom-space: {{SIZE}}{{UNIT}};--lakit-gcol-left-space: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
+	    $this->_add_responsive_control(
+		    'item_space',
+		    array(
+			    'label'       => esc_html__( 'Column Padding', 'lastudio-kit' ),
+			    'type'        => Controls_Manager::DIMENSIONS,
+			    'selectors'   => array(
+				    '{{WRAPPER}} ' . $css_scheme['item'] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				    '{{WRAPPER}} '                         => '--lakit-carousel-item-top-space: {{TOP}}{{UNIT}}; --lakit-carousel-item-right-space: {{RIGHT}}{{UNIT}};--lakit-carousel-item-bottom-space: {{BOTTOM}}{{UNIT}};--lakit-carousel-item-left-space: {{LEFT}}{{UNIT}};--lakit-gcol-top-space: {{TOP}}{{UNIT}}; --lakit-gcol-right-space: {{RIGHT}}{{UNIT}};--lakit-gcol-bottom-space: {{BOTTOM}}{{UNIT}};--lakit-gcol-left-space: {{LEFT}}{{UNIT}};',
+			    ),
+		    )
+	    );
 
         $this->add_group_control(
             Group_Control_Background::get_type(),

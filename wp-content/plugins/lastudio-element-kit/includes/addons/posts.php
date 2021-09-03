@@ -469,6 +469,7 @@ if(!class_exists('LaStudioKit_Posts')) {
 						'before_title'  => esc_html__( 'Before Title', 'lastudio-kit' ),
 						'after_title'   => esc_html__( 'After Title', 'lastudio-kit' ),
 						'after_content' => esc_html__( 'After Content', 'lastudio-kit' ),
+						'after_button'  => esc_html__( 'After Button', 'lastudio-kit' ),
 					],
 					'default'   => 'before_title',
 					'condition' => [
@@ -499,6 +500,7 @@ if(!class_exists('LaStudioKit_Posts')) {
 						'before_title'  => esc_html__( 'Before Title', 'lastudio-kit' ),
 						'after_title'   => esc_html__( 'After Title', 'lastudio-kit' ),
 						'after_content' => esc_html__( 'After Content', 'lastudio-kit' ),
+						'after_button'  => esc_html__( 'After Button', 'lastudio-kit' ),
 					],
 					'default'   => 'after_title',
 					'condition' => [

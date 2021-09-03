@@ -25,6 +25,8 @@
         }
     }
 
+    $btn_icon =  $this->_btn_icon('<span class="btn-icon">%s</span>');
+
 ?><div class="lakit-carousel__item swiper-slide">
 	<div class="lakit-carousel__item-inner">
         <?php if(empty($img) && $content_type == 'template') :?>
@@ -37,11 +39,14 @@
 		echo '<div class="lakit-carousel__content">';
 			switch ( $content_type ) {
 				case 'default':
+
+					echo $this->_loop_icon( '<div class="lakit-carousel__item-icon"><div class="lakit-icon-inner">%s</div></div>' );
+
 					$title  = $this->_loop_item( array( 'item_title' ) );
 					$text   = $this->_loop_item( array( 'item_text' ), '<div class="lakit-carousel__item-text">%s</div>' );
                     $button = '';
-                    if(!empty($a_link_attribute) && !empty($item_settings['item_button_text'])){
-                        $button = sprintf('<a class="elementor-button elementor-size-md lakit-carousel__item-button" %1$s>%2$s</a>', $a_link_attribute, $item_settings['item_button_text']);
+                    if(!empty($a_link_attribute) && ( !empty($item_settings['item_button_text']) || !empty($btn_icon) )){
+                        $button = sprintf('<a class="elementor-button elementor-size-md lakit-carousel__item-button" %1$s><span>%2$s</span>%3$s</a>', $a_link_attribute, $item_settings['item_button_text'], $btn_icon);
                     }
 
 					$title_format = '<%1$s class="lakit-carousel__item-title">%2$s</%1$s>';

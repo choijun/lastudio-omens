@@ -828,6 +828,7 @@
                 .on('lastudio-kit/masonry/calculate-item-sizes', function (e, $isotope_container, need_relayout) {
                     var masonrySettings = $isotope_container.data('lakitmasonry_layouts') || false,
                         $isotopeInstance = $isotope_container.find($isotope_container.data('lakitmasonry_wrap'));
+
                     if (masonrySettings !== false) {
                         var win_w = $(window).width(),
                             selector = $isotope_container.data('lakitmasonry_itemselector');

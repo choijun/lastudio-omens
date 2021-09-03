@@ -149,6 +149,13 @@ if(empty($post_format)){
             );
         }
 
+        if($meta1_pos == 'after_button'){
+            $this->_load_template( $this->_get_global_template( 'loop-meta1' ) );
+        }
+        if($meta2_pos == 'after_button'){
+            $this->_load_template( $this->_get_global_template( 'loop-meta2' ) );
+        }
+
         echo '</div>';
         echo '</div>';
 
