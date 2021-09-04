@@ -16,6 +16,7 @@ global $rs_preview_mode;
 global $rs_js_collection;
 global $rs_css_collection;
 global $rs_revicons;
+global $rs_youtube_api_loaded;
 
 $rs_double_jquery_script = false;
 $rs_material_icons_css = false;
@@ -26,6 +27,7 @@ $rs_preview_mode = false;
 $rs_js_collection = array('revapi' => array(), 'js' => array(), 'minimal' => '');
 $rs_css_collection = array();
 $rs_revicons = false;
+$rs_youtube_api_loaded = false;
 
 class RevSliderOutput extends RevSliderFunctions {
 	
@@ -246,6 +248,11 @@ class RevSliderOutput extends RevSliderFunctions {
 	 * defines if javascript is changed as its pushed to the footer or not
 	 **/
 	private $full_js = true;
+
+	/**
+	 * defines if this slider has in any way a youtube layer or slide that is used
+	 **/
+	private $youtube_exists = false;
 	
 	/**
 	 * stands for JavaScript Tab Addition and defines how many tabs there should be added to the JavaScript prints to make everything better looking in HTML
@@ -818,10 +825,10 @@ class RevSliderOutput extends RevSliderFunctions {
 			
 			echo $this->add_custom_navigation_css();
 			echo $this->get_material_icons_css();
-			
+			echo $this->add_youtube_api_html();
 			echo $this->close_slider_wrapper_div();
 			echo $this->add_unfloat_html();
-			
+
 			$this->add_modal_font_icons();
 			
 			do_action('revslider_add_slider_base_post', $this);
@@ -975,6 +982,29 @@ class RevSliderOutput extends RevSliderFunctions {
 		}
 		
 		return apply_filters('revslider_add_unfloat_html', $r, $this);
+	}
+	
+	
+	/**
+	 * check if the youtube api needs to be added, this should only be done once for all sliders
+	 * @since: 6.5.7
+	 **/
+	public function add_youtube_api_html(){
+		global $rs_youtube_api_loaded;
+		
+		$r = '';
+
+		if($rs_youtube_api_loaded === true) return $r; //already loaded
+		if($this->youtube_exists !== true) return $r; //no layer or slide used it
+
+		//check global option if enabled
+		$gs = $this->get_global_settings();
+		if($this->_truefalse($this->get_val($gs, array('script', 'ytapi'), true)) === true){
+			$r = RS_T4.'<script src="https://www.youtube.com/iframe_api"></script>'."\n";
+			$rs_youtube_api_loaded = true;
+		}
+		
+		return apply_filters('revslider_add_youtube_api_html', $r, $this);
 	}
 	
 	
@@ -1517,6 +1547,7 @@ class RevSliderOutput extends RevSliderFunctions {
 			}else{
 				//additional background params
 				$bgFit = $slide->get_param(array('bg', 'fit'), 'cover'); //$this->slider->get_param(array('def', 'background', 'fit'), 'cover')
+				if(!in_array($bgFit, array('cover', 'contain', 'percentage', 'auto'))) $bgFit = 'cover';
 				$return['f'] = ($bgFit == 'percentage') ? intval($slide->get_param(array('bg', 'fitX'), '100')).'% '.intval($slide->get_param(array('bg', 'fitY'), '100')).'%' : $bgFit; //$this->slider->get_param(array('def', 'background', 'fitX'), '100') $this->slider->get_param(array('def', 'background', 'fitY'), '100')
 				$return['r'] = $slide->get_param(array('bg', 'repeat'), 'no-repeat'); //$this->slider->get_param(array('def', 'background', 'repeat'), 'no-repeat')
 			}
@@ -2047,7 +2078,8 @@ class RevSliderOutput extends RevSliderFunctions {
 			case 'streamyoutubeboth':
 				$vid = (in_array($video_type, array('streamyoutube', 'streamyoutubeboth'), true)) ? $this->slide->get_param(array('bg', 'youtube'), '') : $vid; //change $vid to the stream!
 				$vid = ($this->get_val($layer, array('media', 'videoFromStream'), false) === true) ? $this->slide->get_param(array('bg', 'youtube'), '') : $vid;
-				
+				$this->youtube_exists = (empty($vid)) ? $this->youtube_exists : true;
+
 				return (empty($vid)) ?  false : true;
 			break;
 			case 'vimeo':
@@ -4712,6 +4744,7 @@ rs-module .material-icons {
 					$vid = $my_v_ret['v'];
 				}
 				
+				$this->youtube_exists = (empty($vid)) ? $this->youtube_exists : true;
 				$data['ytid'] = $vid;
 				$data['vatr'] = 'version=3&amp;enablejsapi=1&amp;html5=1&amp;'.$vargs;
 				if(!in_array($sp, array('1', 1), true)) $data['video']['sp'] = $sp;
@@ -5476,6 +5509,7 @@ rs-module .material-icons {
 				if($youtube_id === '' && $vimeo_id === '' && $html_mpeg === '') return false;
 				
 				if($youtube_id !== ''){
+					$this->youtube_exists = true;
 					$arguments = $slide->get_param(array('bg', 'video', 'args'), RevSliderFront::YOUTUBE_ARGUMENTS);
 					$arguments = (empty($arguments)) ? RevSliderFront::YOUTUBE_ARGUMENTS : $arguments;
 					if($mute_video === false){
@@ -5520,6 +5554,7 @@ rs-module .material-icons {
 				$youtube_id = $slide->get_param(array('bg', 'youtube'), '');
 				if($youtube_id == '') return false;
 				
+				$this->youtube_exists = true;
 				if(strpos($youtube_id, 'http') !== false){ //check if full URL
 					parse_str(parse_url($youtube_id, PHP_URL_QUERY), $my_v_ret); //we have full URL, split it to ID
 					$youtube_id = $my_v_ret['v'];

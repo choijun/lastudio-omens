@@ -79,6 +79,10 @@
 #the_container._audio_sel_ .form_collector .form_inner._nsfa_,
 #the_container._button_sel_ .form_collector .form_inner._nsfb_,
 #the_container._object_sel_ .form_collector .form_inner._nsfo_,
+#the_container._layer_in_column_sel_._text_sel_ ._nsftbsic_,
+#the_container._layer_in_column_sel_._shape_sel_ ._nsftbsic_,
+#the_container._layer_in_column_sel_._button_sel_ ._nsftbsic_,
+#the_container._layer_in_column_sel_._object_sel_ ._nsftbsic_,
 
 ._column_sel_ ._nsfc_,
 ._row_sel_ ._nsfr_,

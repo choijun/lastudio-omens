@@ -129,7 +129,8 @@ abstract class LaStudioKit_Base extends Widget_Base
      */
     public function _get_render_template($name = null)
     {
-        return lastudio_kit()->get_template($this->get_name() . '/render/' . $name . '.php');
+	    $widget_name = str_replace(['lakit-', 'lastudio-kit-'], '', $this->get_name());
+        return lastudio_kit()->get_template($widget_name . '/render/' . $name . '.php');
     }
 
     /**
@@ -139,7 +140,8 @@ abstract class LaStudioKit_Base extends Widget_Base
      */
     public function _get_edit_template($name = null)
     {
-        return lastudio_kit()->get_template($this->get_name() . '/edit/' . $name . '.php');
+	    $widget_name = str_replace(['lakit-', 'lastudio-kit-'], '', $this->get_name());
+        return lastudio_kit()->get_template($widget_name . '/edit/' . $name . '.php');
     }
 
     /**
@@ -1204,6 +1206,19 @@ abstract class LaStudioKit_Base extends Widget_Base
         );
 
         $this->_add_control(
+            'carousel_equality',
+            array(
+                'label' => esc_html__('Item Equality', 'lastudio-kit'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Yes', 'lastudio-kit'),
+                'label_off' => esc_html__('No', 'lastudio-kit'),
+                'return_value' => 'lakit-carousel-equalheight',
+                'default' => '',
+                'prefix_class' => ''
+            )
+        );
+
+        $this->_add_control(
             'carousel_effect',
             array(
                 'label' => esc_html__('Effect', 'lastudio-kit'),
@@ -2064,6 +2079,8 @@ abstract class LaStudioKit_Base extends Widget_Base
                     '2' => '2 width',
                     '3' => '3 width',
                     '4' => '4 width',
+                    '5' => '5 width',
+                    '6' => '6 width',
                     '0-5' => '1/2 width'
                 ),
             )

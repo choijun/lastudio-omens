@@ -69,6 +69,9 @@ body:not(.elementor-editor-active) .elementor-location-header .elementor-sticky.
 .lakit-carousel.lakit-equal-cols .swiper-wrapper {
 	align-items: stretch;
 }
+.lakit-carousel-equalheight .swiper-slide{
+	height: auto;
+}
 .col-row {
 	display: flex;
 	flex-wrap: wrap;

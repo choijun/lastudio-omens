@@ -3,6 +3,9 @@
 	--lakit-tabs-h-align: flex-start;
 	--lakit-tabs-v-align: flex-start;
 }
+.lakit_tab-full-yes {
+	--lakit-tabs-h-align: stretch;
+}
 .elementor-widget-tabs .elementor-tabs .elementor-tab-content, .elementor-widget-tabs .elementor-tabs .elementor-tab-title, .elementor-widget-tabs .elementor-tabs .elementor-tabs-content-wrapper {
 	border: none
 }
@@ -692,7 +695,4 @@
 }
 .lakit-tabs__control-inner {
 	transition: padding-left .3s, padding-right .3s;
-}
-.lakit-tabs__label-text {
-	white-space: nowrap;
 }

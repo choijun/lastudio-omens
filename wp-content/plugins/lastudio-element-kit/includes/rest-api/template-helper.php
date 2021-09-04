@@ -108,10 +108,7 @@ class Template_Helper {
         $style_depends = array_unique( $this->depended_styles );
 
         foreach ( $script_depends as $script ) {
-            if( $tag = $this->get_script_uri_by_handler( $script ) ){
-                $template_scripts[ $script ] = $tag;
-            }
-
+	        $this->get_script_uri_by_handler( $script, $template_scripts );
         }
 
         foreach ( $style_depends as $style ) {
@@ -271,13 +268,23 @@ class Template_Helper {
 
     /**
      * [get_script_uri_by_handler description]
-     * @param  [type] $handler [description]
+     * @param  string $handler [description]
+     * @param  array $template_scripts [description]
+     * @param  boolean $inDeep [description]
      * @return [type]          [description]
      */
-    public function get_script_uri_by_handler( $handler ) {
+    public function get_script_uri_by_handler( $handler, &$template_scripts, $inDeep = true ) {
         global $wp_scripts;
 
         if ( isset( $wp_scripts->registered[ $handler ] ) ) {
+
+        	if( !empty($wp_scripts->registered[$handler]->deps) ){
+        		foreach ( $wp_scripts->registered[$handler]->deps as $dep ) {
+			        if($inDeep){
+				        $this->get_script_uri_by_handler( $dep, $template_scripts, false );
+			        }
+		        }
+	        }
 
             $src = $wp_scripts->registered[ $handler ]->src;
 
@@ -285,10 +292,8 @@ class Template_Helper {
                 $src = $wp_scripts->base_url . $src;
             }
 
-            return $src;
+	        $template_scripts[ $handler ] = $src;
         }
-
-        return false;
     }
 
     /**

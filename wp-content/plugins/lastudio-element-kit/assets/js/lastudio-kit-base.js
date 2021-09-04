@@ -942,7 +942,7 @@
             return new Promise(function (resolve, reject) {
                 var tag = document.createElement('link');
 
-                tag.id = style;
+                tag.id = style + '-css';
                 tag.rel = 'stylesheet';
                 tag.href = uri;
                 tag.type = 'text/css';
@@ -969,6 +969,7 @@
                 var tag = document.createElement('script');
 
                 tag.src = uri;
+                tag.id = script + '-js';
                 tag.async = async;
                 tag.onload = function () {
                     resolve(script);
@@ -988,6 +989,7 @@
             });
         },
         elementorFrontendInit: function ($container) {
+            $(window).trigger('elementor/frontend/init');
             $container.find('[data-element_type]').each(function () {
                 var $this = $(this),
                     elementType = $this.data('element_type');
@@ -997,6 +999,7 @@
                 }
 
                 try {
+
                     if ('widget' === elementType) {
                         elementType = $this.data('widget_type');
                         window.elementorFrontend.hooks.doAction('frontend/element_ready/widget', $this, $);
@@ -1185,11 +1188,15 @@
                         templateStyles = response['template_styles'];
 
                     for (var scriptHandler in templateScripts) {
-                        LaStudioKits.addedAssetsPromises.push(LaStudioKits.loadScriptAsync(scriptHandler, templateScripts[scriptHandler], '', true));
+                        if($( '#' + scriptHandler + '-js').length == 0){
+                            LaStudioKits.addedAssetsPromises.push(LaStudioKits.loadScriptAsync(scriptHandler, templateScripts[scriptHandler], '', true));
+                        }
                     }
 
                     for (var styleHandler in templateStyles) {
-                        LaStudioKits.addedAssetsPromises.push(LaStudioKits.loadStyle(styleHandler, templateStyles[styleHandler]));
+                        if($('#' + styleHandler + '-css').length == 0) {
+                            LaStudioKits.addedAssetsPromises.push(LaStudioKits.loadStyle(styleHandler, templateStyles[styleHandler]));
+                        }
                     }
 
                     Promise.all(LaStudioKits.addedAssetsPromises).then(function (value) {
@@ -1581,11 +1588,15 @@
                     template_metadata = response['template_metadata'];
 
                 for (var scriptHandler in templateScripts) {
-                    LaStudioKits.addedAssetsPromises.push(LaStudioKits.loadScriptAsync(scriptHandler, templateScripts[scriptHandler], '', true));
+                    if($( '#' + scriptHandler + '-js').length == 0) {
+                        LaStudioKits.addedAssetsPromises.push(LaStudioKits.loadScriptAsync(scriptHandler, templateScripts[scriptHandler], '', true));
+                    }
                 }
 
                 for (var styleHandler in templateStyles) {
-                    LaStudioKits.addedAssetsPromises.push(LaStudioKits.loadStyle(styleHandler, templateStyles[styleHandler]));
+                    if($( '#' + styleHandler + '-css').length == 0) {
+                        LaStudioKits.addedAssetsPromises.push(LaStudioKits.loadStyle(styleHandler, templateStyles[styleHandler]));
+                    }
                 }
 
                 document.querySelectorAll('body:not(.elementor-editor-active) div[data-lakit_ajax_loadtemplate][data-cache-id="' + template_id + '"]:not(.template-loaded)').forEach(function (elm) {

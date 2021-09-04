@@ -1251,6 +1251,15 @@ if(!class_exists('LaStudioKit_Posts')) {
 					'show_label' => false,
 				)
 			);
+			$this->_add_control(
+				'show_btn_hover',
+				[
+					'label'   => __( 'Show Button When Hover', 'lastudio-kit' ),
+					'type'    => Controls_Manager::SWITCHER,
+					'default' => '',
+					'prefix_class' => 'lakit--button-hover-',
+				]
+			);
 
 			$this->_add_control(
 				'button_icon_position',

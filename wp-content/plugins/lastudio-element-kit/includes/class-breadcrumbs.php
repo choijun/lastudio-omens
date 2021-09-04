@@ -459,7 +459,7 @@ if (!class_exists('LaStudio_Kit_Breadcrumbs')) {
          * @since 1.1.5 $prepend parameter.
          *
          */
-        public function _add_item($format = 'link_format', $label, $url = '', $class = '', $prepend = false)
+        public function _add_item( $format = 'link_format', $label = '', $url = '', $class = '', $prepend = false)
         {
 
             $title = esc_attr(wp_strip_all_tags($label));

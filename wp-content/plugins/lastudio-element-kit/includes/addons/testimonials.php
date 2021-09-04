@@ -173,6 +173,37 @@ class LaStudioKit_Testimonials extends LaStudioKit_Base {
 			    'dynamic' => array( 'active' => true ),
 		    )
 	    );
+	    $repeater->add_control(
+		    'bg_color',
+		    [
+			    'label' => __( 'Background Color', 'lastudio-kit' ),
+			    'type' => Controls_Manager::COLOR,
+			    'selectors' => [
+				    '{{WRAPPER}} {{CURRENT_ITEM}} ' . $css_scheme['item_inner'] => 'background-color: {{VALUE}}',
+			    ],
+		    ]
+	    );
+	    $repeater->add_control(
+		    'name_color',
+		    [
+			    'label' => __( 'Name Color', 'lastudio-kit' ),
+			    'type' => Controls_Manager::COLOR,
+			    'selectors' => [
+				    '{{WRAPPER}} {{CURRENT_ITEM}} ' . $css_scheme['name'] => 'color: {{VALUE}}',
+			    ],
+		    ]
+	    );
+
+		$repeater->add_control(
+		    'role_color',
+		    [
+			    'label' => __( 'Name Color', 'lastudio-kit' ),
+			    'type' => Controls_Manager::COLOR,
+			    'selectors' => [
+				    '{{WRAPPER}} {{CURRENT_ITEM}} ' . $css_scheme['position'] => 'color: {{VALUE}}',
+			    ],
+		    ]
+	    );
 
         $this->add_control(
             'item_list',

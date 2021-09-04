@@ -740,7 +740,7 @@ class RevSliderData {
 		$transitions = '{
 			"basic":{ "icon":"aspect_ratio",
 				"fade":{
-					"notransition":{"title":"*clear* No Transition"},
+					"notransition":{"title":"*clear* No Transition","speed":"10","in":{"o":1},"out":{"a":false, "o":1}},
 					"fade":{"title":"*opacity* Fade In","in":{"o":0},"out":{"a":false}},
 					"crossfade":{"title":"*opacity* Cross Fade","in":{"o":0}},
 					"fadethroughdark":{"title":"*dark_mode* Via Dark","in":{"o":0},"out":{"a":false,"o":0},"p":"dark"},

@@ -11,6 +11,7 @@ $item_image = apply_filters('lakit_wp_get_attachment_image_url', $item_image);
 
 $post_classes = ['lakit-testimonials__item'];
 $el_class = $this->_loop_item( array( 'el_class' ), '%s' );
+$el_class = $this->_loop_item( array( '_id' ), 'elementor-repeater-item-%s' );
 if(!empty($el_class)){
     $post_classes[] = $el_class;
 }

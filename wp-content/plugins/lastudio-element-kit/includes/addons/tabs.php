@@ -746,6 +746,21 @@ class LaStudioKit_Tabs extends LaStudioKit_Base {
             )
         );
 
+	    $this->_add_control(
+		    'text_wrap',
+		    array(
+			    'label'       => esc_html__( 'Text Wrap', 'lastudio-kit' ),
+			    'type'        => Controls_Manager::SELECT,
+			    'default'     => 'nowrap',
+			    'options' => array(
+				    'normal' => esc_html__( 'Normal', 'lastudio-kit' ),
+				    'nowrap' => esc_html__( 'No Wrap', 'lastudio-kit' ),
+			    ),
+			    'selectors' => array(
+				    '{{WRAPPER}} '. $css_scheme['label'] => 'white-space: {{VALUE}}',
+			    ),
+		    )
+	    );
         $this->_start_controls_tabs( 'tabs_control_styles' );
 
         $this->_start_controls_tab(

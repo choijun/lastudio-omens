@@ -200,8 +200,10 @@ class Products_Renderer extends Base_Products_Renderer {
 		$terms = [];
 		foreach ( $this->settings[ $prefix . 'include_term_ids' ] as $id ) {
 			$term_data = get_term_by( 'term_taxonomy_id', $id );
-			$taxonomy = $term_data->taxonomy;
-			$terms[ $taxonomy ][] = $id;
+			if($term_data){
+				$taxonomy = $term_data->taxonomy;
+				$terms[ $taxonomy ][] = $id;
+			}
 		}
 		$tax_query = [];
 		foreach ( $terms as $taxonomy => $ids ) {

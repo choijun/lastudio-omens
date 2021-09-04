@@ -314,6 +314,17 @@ class LaStudioKit_Portfolio extends LaStudioKit_Posts {
 				]
 			)
 		);
+		$this->_add_control(
+			'content_width_auto',
+			[
+				'label'   => __( 'Enable auto width', 'lastudio-kit' ),
+				'type'    => Controls_Manager::SWITCHER,
+				'default' => '',
+				'selectors'  => array(
+					'{{WRAPPER}} ' . $css_scheme['inner-content'] => 'width: auto',
+				),
+			]
+		);
 
 		$this->_add_responsive_control(
 			'inner_content_alignment',
