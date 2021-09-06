@@ -304,7 +304,18 @@
             var $e1 = $('.lakit--is-vheader > .elementor-location-header > .elementor-section-wrap > .elementor-top-section:first-child > .elementor-container'),
                 $p1 = $('.lakit-site-wrapper');
 
+            var deviceList = ['widescreen', 'desktop', 'laptop', 'tablet_extra', 'tablet', 'mobile_extra', 'mobile'];
+            var vhAttr = $p1.attr('class').match(/\blakit-vheader--hide([^\s]*)/);
+
+
             if($e1.length){
+                if (vhAttr !== null && vhAttr[1]) {
+                    var hideOnDevices = deviceList.splice(deviceList.indexOf(vhAttr));
+                    if(hideOnDevices.includes(elementorFrontend.getCurrentDeviceMode())){
+                        $e1.trigger('lakit_sticky:detach');
+                        return;
+                    }
+                }
                 if($e1.outerHeight() < $p1.outerHeight()){
                     $e1.lakit_sticky({
                         parent: $p1,
@@ -328,6 +339,10 @@
         else {
             lakit_recall_header_sticky();
         }
+
+        $(window).on('resize', function (){
+            lakit_recall_header_sticky();
+        })
 
     } );
 

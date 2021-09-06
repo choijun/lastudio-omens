@@ -31,6 +31,9 @@ body:not(.lakit--js-ready) .lakit-hamburger-panel__instance {
 	justify-content: center;
 	align-items: center
 }
+.lakit-hamburger-panel__icon [class*=lastudioicon-] {
+	vertical-align: inherit;
+}
 .lakit-hamburger-panel__icon.icon-active {
 	display: none
 }
@@ -287,4 +290,11 @@ html.lakit-hamburger-panel-visible {
 	to {
 		transform: rotate(359deg)
 	}
+}
+
+[data-elementor-device-mode="laptop"] .lakit--is-vheader.lakit-vheader--hidelaptop,
+[data-elementor-device-mode="tablet"] .lakit--is-vheader.lakit-vheader--hidetablet,
+[data-elementor-device-mode="mobile_extra"] .lakit--is-vheader.lakit-vheader--hidemobile_extra,
+[data-elementor-device-mode="mobile"] .lakit--is-vheader.lakit-vheader--hidemobile{
+	--lakit-vheader-width: 0px;
 }

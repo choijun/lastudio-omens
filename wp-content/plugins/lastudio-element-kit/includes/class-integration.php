@@ -819,7 +819,7 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
 			$css .= $widget_align_desktop_css;
 			foreach ($breakpoints as $device_name => $device_value){
 				$css .= str_replace('__DEVICE__', $device_name, $widget_align_css);
-				$css .= sprintf('@media(max-width: %1$spx){%2$s}', $device_value + 1, str_replace('__DEVICE__', $device_name, $column_css));
+				$css .= sprintf('@media(max-width: %1$spx){%2$s}', $device_value, str_replace('__DEVICE__', $device_name, $column_css));
 			}
 
 		    return $css;

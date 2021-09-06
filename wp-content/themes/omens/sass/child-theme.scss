@@ -39,9 +39,22 @@ body.page-id-306 {
   --theme-heading-font-weight: 700;
 }
 
+.elementor-lakit-portfolio .preset-list-2{
+  .lakit-posts__inner-content-inner {
+    width: 535px;
+    max-width: 100%;
+  }
+  .lakit-posts__item:nth-child(2n){
+    .lakit-posts__inner-content{
+      justify-content: flex-end;
+    }
+  }
+}
+
 section#comments {
   padding-top: 50px;
 }
+
 
 .elementor-lakit-post-content{
   .wp-block-image.alignfull img,

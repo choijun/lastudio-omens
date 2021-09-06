@@ -182,6 +182,24 @@ class Group_Control_Box_Style extends Group_Control_Base {
 			),
 		);
 
+		$fields['box_line_height'] = array(
+			'label'      => esc_html__( 'Line Height', 'lastudio-kit' ),
+			'type'       => Controls_Manager::SLIDER,
+			'size_units' => array(
+				'px', 'em', 'rem',
+			),
+			'responsive' => true,
+			'range'      => array(
+				'px' => array(
+					'min' => 0,
+					'max' => 500,
+				),
+			),
+			'selectors'  => array(
+				'{{SELECTOR}}'        => 'line-height: {{SIZE}}{{UNIT}}',
+			),
+		);
+
 		$fields['box_size'] = array(
 			'label'      => esc_html__( 'Box Size', 'lastudio-kit' ),
 			'type'       => Controls_Manager::SLIDER,
