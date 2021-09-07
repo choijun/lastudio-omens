@@ -180,6 +180,16 @@
         return typeof navigator !== "undefined" && (/(lighthouse|gtmetrix)/i.test(navigator.userAgent.toLocaleLowerCase()) || /mozilla\/5\.0 \(x11; linux x86_64\)/i.test(navigator.userAgent.toLocaleLowerCase()));
     };
 
+    LaStudio.global.calculateAspectRatioFit = function (srcWidth, srcHeight, maxWidth, maxHeight) {
+        var ratio = Math.min(maxWidth / (Math.max(srcWidth, maxWidth)), maxHeight / (Math.max(srcHeight, maxHeight))),
+            _n_w = srcWidth*ratio,
+            _n_h = srcHeight*ratio;
+        return {
+            width: _n_w,
+            height: _n_h
+        }
+    }
+
     LaStudio.global.hasClass = function (elm, cls) {
         return (' ' + elm.className + ' ').indexOf(' ' + cls + ' ') > -1;
     };
@@ -1337,6 +1347,55 @@
                 e.preventDefault();
                 $document.trigger('LaStudio:Component:Popup:Close');
             })
+            .on('click', '.elementor-lakit-portfolio.enable-pf-lightbox .lakit-posts__inner-box', function (e){
+                var $this = $(this),
+                    tpl = '',
+                    imgSize = {};
+
+                if( $('.post-thumbnail', $this).length > 0 ){
+                    e.preventDefault();
+                    tpl += '<div class="lakit-ppc--img">' + $('.post-thumbnail', $this).html() + '</div>';
+                    tpl += '<div class="lakit-ppc--content">' + $('.lakit-posts__inner-content-inner', $this).html() + '</div>';
+
+                    imgSize = LaStudio.global.calculateAspectRatioFit($('.post-thumbnail img', $this).attr('width'), $('.post-thumbnail img', $this).attr('height'), (window.innerWidth * 0.8), (window.innerHeight * 0.8))
+                }
+                else{
+                    return true;
+                }
+
+                var $content = $('<div class="lakit-ppc"></div>').html(tpl);
+
+                var show_popup = function () {
+                    if ($.featherlight.close() !== undefined) {
+                        $.featherlight.close();
+                    }
+
+                    $.featherlight($content, {
+                        persist: 'shared',
+                        type: 'jquery',
+                        background: '<div class="featherlight featherlight-loading"><div class="featherlight-outer"><button class="featherlight-close-icon featherlight-close" aria-label="Close"><i class="lastudioicon-e-remove"></i></button><div class="featherlight-content"><div class="featherlight-inner"><div class="la-loader spinner3"><div class="dot1"></div><div class="dot2"></div><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div><div class="cube1"></div><div class="cube2"></div><div class="cube3"></div><div class="cube4"></div></div></div></div></div><div class="custom-featherlight-overlay"></div></div>',
+                        beforeOpen: function (evt) {
+                            $('body').addClass('body-pf-gallery');
+                        },
+                        afterOpen: function (evt){
+                            $('.lakit-ppc').css({
+                                width: imgSize.width,
+                                '--imageRatio': imgSize.width / imgSize.height
+                            });
+                        },
+                        afterClose: function (evt) {
+                            $('body').removeClass('body-pf-gallery');
+                        }
+                    });
+                };
+
+                if ($.isFunction($.fn.featherlight)) {
+                    show_popup();
+                } else {
+                    LaStudio.global.loadDependencies([LaStudio.global.loadJsFile('featherlight')], show_popup);
+                }
+
+            })
     };
 
     LaStudio.core.Blog = function ($sidebar_inner) {
@@ -1690,16 +1749,6 @@
 (function ($) {
     'use strict';
 
-    function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
-        var ratio = Math.min(maxWidth / (Math.max(srcWidth, maxWidth)), maxHeight / (Math.max(srcHeight, maxHeight))),
-            _n_w = srcWidth*ratio,
-            _n_h = srcHeight*ratio;
-        return {
-            width: _n_w,
-            height: _n_h
-        }
-    }
-
     $(function () {
         $(document).on('LaStudio:Component:Popup:beforeOpen', function (evt, $instance){
             if($instance.type === "iframe"){
@@ -1709,7 +1758,7 @@
                     $videoEl.attr('src', $instance.target);
                     var videoTagRef = $videoEl[0];
                     videoTagRef.addEventListener('loadedmetadata', function(e){
-                        var _size = calculateAspectRatioFit(videoTagRef.videoWidth, videoTagRef.videoHeight, (window.innerWidth * 0.9), (window.innerHeight * 0.9))
+                        var _size = LaStudio.global.calculateAspectRatioFit(videoTagRef.videoWidth, videoTagRef.videoHeight, (window.innerWidth * 0.9), (window.innerHeight * 0.9))
                         $instance.$instance.addClass('featherlight--cvideo').css({
                             '--video-ratio': videoTagRef.videoHeight / videoTagRef.videoWidth,
                             '--video-naturalWidth': _size.width + 'px',

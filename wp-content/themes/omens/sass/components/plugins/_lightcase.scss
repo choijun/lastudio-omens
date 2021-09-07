@@ -150,3 +150,54 @@ color: #fff;
 .la-global-message.featherlight-inner {
   padding: 30px;
 }
+
+.lakit-ppc.featherlight-inner {
+  position: relative;
+}
+.lakit-ppc--content {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%);
+  color: #fff;
+  padding: 50px 50px;
+}
+.lakit-ppc--content *,
+.lakit-ppc--content .lakit-posts__meta,
+.lakit-ppc--content .lakit-posts__meta * {
+  color: inherit;
+}
+.lakit-ppc--content .lakit-posts__title{
+  font-size: var(--theme-h3-font-size);
+  margin: 0;
+  font-weight: normal;
+}
+.body-pf-gallery .featherlight-content {
+  max-width: none;
+  max-height: none;
+}
+html.with-featherlight {
+  overflow: hidden;
+}
+
+@media(max-width: 880px){
+  .lakit-ppc--content {
+    padding: 20px;
+  }
+  .lakit-ppc.featherlight-inner {
+    width: 100% !important;
+  }
+  .body-pf-gallery .featherlight-content {
+    margin: 0;
+  }
+  .featherlight .featherlight-close-icon {
+    left: calc(50% - 25px);
+    right: auto;
+    top: auto;
+    bottom: -50px;
+    width: 40px;
+    height: 40px;
+    line-height: 38px;
+    font-size: 14px;
+  }
+}

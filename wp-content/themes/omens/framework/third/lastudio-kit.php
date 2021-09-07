@@ -97,3 +97,21 @@ if(!function_exists('bakerfreh_lakit_change_postformat_icon')){
         return $icon;
     }
 }
+
+/**
+ * Modify Divider - Weight control
+ */
+add_action('elementor/element/lakit-portfolio/section_settings/before_section_end', function( $element ){
+	$element->add_control(
+		'enable_portfolio_lightbox',
+		[
+			'label'     => esc_html__( 'Enable Lightbox', 'lastudio-kit' ),
+			'type'      => \Elementor\Controls_Manager::SWITCHER,
+			'label_on'  => esc_html__( 'Yes', 'lastudio-kit' ),
+			'label_off' => esc_html__( 'No', 'lastudio-kit' ),
+			'default'   => '',
+			'return_value' => 'enable-pf-lightbox',
+			'prefix_class' => '',
+		]
+	);
+}, 10 );
