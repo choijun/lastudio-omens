@@ -407,7 +407,7 @@ class LaStudioKit_Images_Layout extends LaStudioKit_Base {
                     ),
                 ),
                 'selectors' => array(
-                    '{{WRAPPER}}' => '--lakit-carousel-item-left-space: {{SIZE}}{{UNIT}};--lakit-carousel-item-right-space: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}}' => '--lakit-carousel-item-left-space: {{SIZE}}{{UNIT}};--lakit-carousel-item-right-space: {{SIZE}}{{UNIT}};--lakit-gcol-left-space: {{SIZE}}{{UNIT}};--lakit-gcol-right-space: {{SIZE}}{{UNIT}};',
                     '{{WRAPPER}} ' . $css_scheme['item']          => 'padding: {{SIZE}}{{UNIT}};',
                     '{{WRAPPER}} ' . $css_scheme['list_container'] . ':not(.swiper-wrapper)' => 'margin-left: -{{SIZE}}{{UNIT}};margin-right: -{{SIZE}}{{UNIT}};',
                 )

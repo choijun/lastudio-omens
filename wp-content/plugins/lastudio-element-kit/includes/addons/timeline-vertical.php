@@ -186,6 +186,77 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
             )
         );
 
+	    $repeater->add_control(
+		    'item_cstyle',
+		    array(
+			    'label'     => esc_html__( 'Custom Style', 'lastudio-kit' ),
+			    'type'      => Controls_Manager::HEADING,
+			    'separator' => 'before',
+		    )
+	    );
+	    $repeater->add_control(
+		    'item_bgcolor',
+		    [
+			    'label' => __( 'Background Color', 'lastudio-kit' ),
+			    'type' => Controls_Manager::COLOR,
+			    'selectors' => [
+				    '{{WRAPPER}} {{CURRENT_ITEM}} ' . $css_scheme['card'] => 'background-color: {{VALUE}}',
+				    '{{WRAPPER}} {{CURRENT_ITEM}} ' . $css_scheme['card_inner'] => 'background-color: {{VALUE}}',
+				    '{{WRAPPER}} {{CURRENT_ITEM}} ' . $css_scheme['card_arrow'] => 'background-color: {{VALUE}}',
+			    ],
+		    ]
+	    );
+	    $repeater->add_control(
+		    'item_titlecolor',
+		    [
+			    'label' => __( 'Title Color', 'lastudio-kit' ),
+			    'type' => Controls_Manager::COLOR,
+			    'selectors' => [
+				    '{{WRAPPER}} {{CURRENT_ITEM}} ' . $css_scheme['card_title'] => 'color: {{VALUE}}',
+			    ],
+		    ]
+	    );
+	    $repeater->add_control(
+		    'item_stitlecolor',
+		    [
+			    'label' => __( 'SubTitle Color', 'lastudio-kit' ),
+			    'type' => Controls_Manager::COLOR,
+			    'selectors' => [
+				    '{{WRAPPER}} {{CURRENT_ITEM}} ' . $css_scheme['card_subtitle'] => 'color: {{VALUE}}',
+			    ],
+		    ]
+	    );
+	    $repeater->add_control(
+		    'item_metacolor',
+		    [
+			    'label' => __( 'Meta Color', 'lastudio-kit' ),
+			    'type' => Controls_Manager::COLOR,
+			    'selectors' => [
+				    '{{WRAPPER}} {{CURRENT_ITEM}} ' . $css_scheme['item_meta'] => 'color: {{VALUE}}',
+			    ],
+		    ]
+	    );
+	    $repeater->add_control(
+		    'item_desccolor',
+		    [
+			    'label' => __( 'Description Color', 'lastudio-kit' ),
+			    'type' => Controls_Manager::COLOR,
+			    'selectors' => [
+				    '{{WRAPPER}} {{CURRENT_ITEM}} ' . $css_scheme['card_desc'] => 'color: {{VALUE}}',
+			    ],
+		    ]
+	    );
+	    $repeater->add_control(
+		    'item_pointcolor',
+		    [
+			    'label' => __( 'Point Color', 'lastudio-kit' ),
+			    'type' => Controls_Manager::COLOR,
+			    'selectors' => [
+				    '{{WRAPPER}} {{CURRENT_ITEM}} ' . $css_scheme['item_point_content'] => 'color: {{VALUE}}',
+			    ],
+		    ]
+	    );
+
         $this->_add_control(
             'cards_list',
             array(
@@ -471,7 +542,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
                 'label'       => esc_html__( 'Border', 'lastudio-kit' ),
                 'placeholder' => '1px',
                 'default'     => '1px',
-                'selector'    => '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card'] . ',' . '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card_arrow'],
+                'selector'    => '{{WRAPPER}} ' . $css_scheme['card'] . ',' . '{{WRAPPER}} ' . $css_scheme['card_arrow'],
             )
         );
 
@@ -482,8 +553,8 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card']       => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card_inner'] => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};overflow:hidden;'
+                    '{{WRAPPER}} ' . $css_scheme['card']       => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} ' . $css_scheme['card_inner'] => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};overflow:hidden;'
                 ),
             )
         );
@@ -495,7 +566,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card_inner'] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} ' . $css_scheme['card_inner'] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
                 'separator'  => 'after'
             )
@@ -516,9 +587,9 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
                 'label'     => esc_html__( 'Background', 'lastudio-kit' ),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card']       => 'background-color: {{VALUE}}',
-                    '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card_inner'] => 'background-color: {{VALUE}}',
-                    '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card_arrow'] => 'background-color: {{VALUE}}',
+                    '{{WRAPPER}} ' . $css_scheme['card']       => 'background-color: {{VALUE}}',
+                    '{{WRAPPER}} ' . $css_scheme['card_inner'] => 'background-color: {{VALUE}}',
+                    '{{WRAPPER}} ' . $css_scheme['card_arrow'] => 'background-color: {{VALUE}}',
                 ),
             )
         );
@@ -527,7 +598,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
             Group_Control_Box_Shadow::get_type(),
             array(
                 'name'     => 'cards_box_shadow_normal',
-                'selector' => '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card'],
+                'selector' => '{{WRAPPER}} '. $css_scheme['card'],
             )
         );
 
@@ -647,15 +718,15 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
                     'unit' => 'px',
                 ),
                 'selectors'  => array(
-                    '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card_arrow'] => 'width:{{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} ' . $css_scheme['card_arrow'] => 'width:{{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
                     '{{WRAPPER}} .lakit-vtimeline--align-center ' . $css_scheme['item'] . ':nth-child(odd) ' . $css_scheme['card_arrow'] => 'margin-left:calc( -{{SIZE}}{{UNIT}} / 2 );',
                     '{{WRAPPER}} .lakit-vtimeline--align-center ' . $css_scheme['item'] . ':nth-child(even) ' . $css_scheme['card_arrow'] => 'margin-left:calc( -{{SIZE}}{{UNIT}} / 2 );',
                     '(desktop){{WRAPPER}} .lakit-vtimeline--align-center ' . $css_scheme['item'] . ':nth-child(odd) ' . $css_scheme['card_arrow'] => 'margin-right:calc( -{{SIZE}}{{UNIT}} / 2 );',
                     '(desktop){{WRAPPER}} .lakit-vtimeline--align-center ' . $css_scheme['item'] . ':nth-child(even) ' . $css_scheme['card_arrow'] => 'margin-left:calc( -{{SIZE}}{{UNIT}} / 2 );',
                     '(desktop) .rtl {{WRAPPER}} .lakit-vtimeline--align-center ' . $css_scheme['item'] . ':nth-child(odd) ' . $css_scheme['card_arrow'] => 'margin-left:calc( -{{SIZE}}{{UNIT}} / 2 );',
                     '(desktop) .rtl {{WRAPPER}} .lakit-vtimeline--align-center ' . $css_scheme['item'] . ':nth-child(even) ' . $css_scheme['card_arrow'] => 'margin-right:calc( -{{SIZE}}{{UNIT}} / 2 );',
-                    '{{WRAPPER}} .lakit-vtimeline--align-left ' . $css_scheme['item'] . ' ' . $css_scheme['card_arrow'] => 'margin-left:calc( -{{SIZE}}{{UNIT}} / 2 );',
-                    '{{WRAPPER}} .lakit-vtimeline--align-right ' . $css_scheme['item'] . ' ' . $css_scheme['card_arrow'] => 'margin-right:calc( -{{SIZE}}{{UNIT}} / 2 );',
+                    '{{WRAPPER}} .lakit-vtimeline--align-left ' . $css_scheme['card_arrow'] => 'margin-left:calc( -{{SIZE}}{{UNIT}} / 2 );',
+                    '{{WRAPPER}} .lakit-vtimeline--align-right ' . $css_scheme['card_arrow'] => 'margin-right:calc( -{{SIZE}}{{UNIT}} / 2 );',
                 ),
             )
         );
@@ -746,7 +817,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
             Group_Control_Typography::get_type(),
             array(
                 'name'     => 'meta_typography',
-                'selector' => '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['item_meta'],
+                'selector' => '{{WRAPPER}} ' . $css_scheme['item_meta'],
             )
         );
 
@@ -755,7 +826,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
             array(
                 'name'        => 'meta_border',
                 'label'       => esc_html__( 'Border', 'lastudio-kit' ),
-                'selector'    => '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['item_meta'],
+                'selector'    => '{{WRAPPER}} ' . $css_scheme['item_meta'],
             )
         );
 
@@ -766,7 +837,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['item_meta'] => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    '{{WRAPPER}} ' . $css_scheme['item_meta'] => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
                 ),
             )
         );
@@ -778,7 +849,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['item_meta'] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} ' . $css_scheme['item_meta'] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
             )
         );
@@ -790,7 +861,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['item_meta'] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} ' . $css_scheme['item_meta'] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
                 'separator'  => 'after'
             )
@@ -811,7 +882,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
                 'label'     => esc_html__( 'Color', 'lastudio-kit' ),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['item_meta'] => 'color: {{VALUE}}',
+                    '{{WRAPPER}} ' . $css_scheme['item_meta'] => 'color: {{VALUE}}',
                 ),
             )
         );
@@ -822,7 +893,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
                 'label'     => esc_html__( 'Background Color', 'lastudio-kit' ),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['item_meta'] => 'background-color: {{VALUE}}',
+                    '{{WRAPPER}} ' . $css_scheme['item_meta'] => 'background-color: {{VALUE}}',
                 ),
             )
         );
@@ -831,7 +902,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
             Group_Control_Box_Shadow::get_type(),
             array(
                 'name'     => 'meta_normal_box_shadow',
-                'selector' => '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['item_meta'],
+                'selector' => '{{WRAPPER}} ' . $css_scheme['item_meta'],
             )
         );
 
@@ -961,7 +1032,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card_content'] => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    '{{WRAPPER}} ' . $css_scheme['card_content'] => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
                 ),
             )
         );
@@ -973,7 +1044,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card_content'] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} ' . $css_scheme['card_content'] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
                 'separator'  => 'after'
             )
@@ -994,7 +1065,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
                 'label'     => esc_html__( 'Background Color', 'lastudio-kit' ),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card_content'] => 'background-color: {{VALUE}}',
+                    '{{WRAPPER}} ' . $css_scheme['card_content'] => 'background-color: {{VALUE}}',
                 ),
             )
         );
@@ -1003,7 +1074,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
             Group_Control_Box_Shadow::get_type(),
             array(
                 'name'     => 'card_content_normal_shadow',
-                'selector' => '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card_content'],
+                'selector' => '{{WRAPPER}} ' . $css_scheme['card_content'],
             )
         );
 
@@ -1125,8 +1196,8 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
                     'unit' => 'px',
                 ),
                 'selectors'  => array(
-                    '{{WRAPPER}} .lakit-vtimeline--align-top ' . $css_scheme['item'] . ' ' . $css_scheme['card_arrow']    => 'margin-top: {{SIZE}}{{UNIT}};',
-                    '{{WRAPPER}} .lakit-vtimeline--align-bottom ' . $css_scheme['item'] . ' ' . $css_scheme['card_arrow'] => 'margin-bottom: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-vtimeline--align-top ' . $css_scheme['card_arrow']    => 'margin-top: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-vtimeline--align-bottom ' . $css_scheme['card_arrow'] => 'margin-bottom: {{SIZE}}{{UNIT}};',
                 ),
                 'condition'  => array(
                     'vertical_alignment!' => 'middle'
@@ -1141,7 +1212,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
             Group_Control_Typography::get_type(),
             array(
                 'name'     => 'card_title_typography',
-                'selector' => '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card_title'],
+                'selector' => '{{WRAPPER}} ' . $css_scheme['card_title'],
             )
         );
 
@@ -1152,7 +1223,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card_title'] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} ' . $css_scheme['card_title'] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
                 'separator'  => 'after'
             )
@@ -1173,7 +1244,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
                 'label'     => esc_html__( 'Color', 'lastudio-kit' ),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card_title'] => 'color: {{VALUE}}',
+                    '{{WRAPPER}} ' . $css_scheme['card_title'] => 'color: {{VALUE}}',
                 ),
             )
         );
@@ -1230,7 +1301,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
             Group_Control_Typography::get_type(),
             array(
                 'name'     => 'card_subtitle_typography',
-                'selector' => '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card_subtitle'],
+                'selector' => '{{WRAPPER}} ' . $css_scheme['card_subtitle'],
             )
         );
 
@@ -1241,7 +1312,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card_subtitle'] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} ' . $css_scheme['card_subtitle'] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
                 'separator'  => 'after'
             )
@@ -1262,7 +1333,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
                 'label'     => esc_html__( 'Color', 'lastudio-kit' ),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card_subtitle'] => 'color: {{VALUE}}',
+                    '{{WRAPPER}} ' . $css_scheme['card_subtitle'] => 'color: {{VALUE}}',
                 ),
             )
         );
@@ -1319,7 +1390,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
             Group_Control_Typography::get_type(),
             array(
                 'name'     => 'card_desc_typography',
-                'selector' => '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card_desc'],
+                'selector' => '{{WRAPPER}} ' . $css_scheme['card_desc'],
             )
         );
 
@@ -1330,7 +1401,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card_desc'] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} ' . $css_scheme['card_desc'] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
                 'separator'  => 'after'
             )
@@ -1351,7 +1422,7 @@ class LaStudioKit_Timeline_Vertical extends LaStudioKit_Base {
                 'label'     => esc_html__( 'Color', 'lastudio-kit' ),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} ' . $css_scheme['item'] . ' ' . $css_scheme['card_desc'] => 'color: {{VALUE}}',
+                    '{{WRAPPER}} ' . $css_scheme['card_desc'] => 'color: {{VALUE}}',
                 ),
             )
         );

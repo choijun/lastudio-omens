@@ -280,9 +280,6 @@
 	margin-right: -20px;
 	font-weight: bold
 }
-.lakit-progress-bar-type-3 .lakit-progress-bar__wrapper {
-	height: 6px
-}
 .lakit-progress-bar-type-3 .lakit-progress-bar__title {
 	justify-content: inherit;
 	-webkit-justify-content: inherit;
@@ -295,9 +292,6 @@
 .lakit-progress-bar-type-4 .lakit-progress-bar__percent {
 	margin-left: 20px
 }
-.lakit-progress-bar-type-4 .lakit-progress-bar__wrapper {
-	height: 10px
-}
 .lakit-progress-bar-type-5 .lakit-progress-bar__title {
 	margin-bottom: 5px;
 	align-self: flex-start
@@ -307,9 +301,6 @@
 }
 .lakit-progress-bar-type-6 .lakit-progress-bar__title {
 	align-self: flex-start
-}
-.lakit-progress-bar-type-6 .lakit-progress-bar__wrapper {
-	height: 60px
 }
 .lakit-progress-bar-type-6 .lakit-progress-bar__status {
 	margin-left: 10px

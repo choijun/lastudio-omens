@@ -197,7 +197,7 @@ class LaStudioKit_Testimonials extends LaStudioKit_Base {
 		$repeater->add_control(
 		    'role_color',
 		    [
-			    'label' => __( 'Name Color', 'lastudio-kit' ),
+			    'label' => __( 'Role Color', 'lastudio-kit' ),
 			    'type' => Controls_Manager::COLOR,
 			    'selectors' => [
 				    '{{WRAPPER}} {{CURRENT_ITEM}} ' . $css_scheme['position'] => 'color: {{VALUE}}',
