@@ -484,7 +484,9 @@ body:not(.elementor-editor-active) .elementor-location-header .elementor-sticky.
 	color: #fff;
 	font-weight: 500;
 	padding: 0.8em 1.2em;
-	display: inline-block
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 .lakit_position_top_left {
 	top: 0;

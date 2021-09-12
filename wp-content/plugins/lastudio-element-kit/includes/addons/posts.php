@@ -1161,6 +1161,17 @@ if(!class_exists('LaStudioKit_Posts')) {
 					]
 				)
 			);
+			$this->_add_responsive_control(
+				'excerpt_width',
+				array(
+					'label'      => esc_html__( 'Width', 'lastudio' ),
+					'type'       => Controls_Manager::SLIDER,
+					'size_units' => ['px', '%'],
+					'selectors'  => array(
+						'{{WRAPPER}} ' . $css_scheme['excerpt'] => 'width: {{SIZE}}{{UNIT}};',
+					),
+				)
+			);
 
 			$this->_add_control(
 				'excerpt_bg',

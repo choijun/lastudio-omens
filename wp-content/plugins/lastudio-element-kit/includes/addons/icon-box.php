@@ -471,6 +471,20 @@ class LaStudioKit_Icon_Box extends LaStudioKit_Base {
                 'return_value' => 'yes',
             ]
         );
+	    $this->_add_control(
+		    'badge_in_header',
+		    [
+			    'label' => esc_html__( 'Badge In Header', 'lastudio-kit' ),
+			    'type' => Controls_Manager::SWITCHER,
+			    'label_on' => esc_html__( 'Yes', 'lastudio-kit' ),
+			    'label_off' => esc_html__( 'No', 'lastudio-kit' ),
+			    'return_value' => 'yes',
+			    'condition' => [
+				    'enable_header_icon!' => 'none',
+				    'badge_control' => 'yes'
+			    ]
+		    ]
+	    );
         $this->_add_control(
             'badge_title',
             [
@@ -1747,9 +1761,39 @@ class LaStudioKit_Icon_Box extends LaStudioKit_Base {
                 'selectors'  => array(
                     '{{WRAPPER}} ' . $css_scheme['badge'] => '    -webkit-text-fill-color: transparent;-webkit-text-stroke-width: {{SIZE}}{{UNIT}};-webkit-text-stroke-color: currentColor;',
                 ),
+                'condition' => [
+	                'enable_badge_text_outline' => 'yes'
+                ]
             )
         );
 
+	    $this->_add_responsive_control(
+		    'badge_width',
+		    array(
+			    'label'      => esc_html__( 'Width', 'lastudio' ),
+			    'type'       => Controls_Manager::SLIDER,
+			    'size_units' => array(
+				    'px'
+			    ),
+			    'selectors'  => array(
+				    '{{WRAPPER}} ' . $css_scheme['badge'] => 'width: {{SIZE}}{{UNIT}};',
+			    ),
+		    )
+	    );
+
+	    $this->_add_responsive_control(
+		    'badge_height',
+		    array(
+			    'label'      => esc_html__( 'Height', 'lastudio' ),
+			    'type'       => Controls_Manager::SLIDER,
+			    'size_units' => array(
+				    'px'
+			    ),
+			    'selectors'  => array(
+				    '{{WRAPPER}} ' . $css_scheme['badge'] => 'height: {{SIZE}}{{UNIT}};',
+			    ),
+		    )
+	    );
 
         $this->_add_responsive_control(
             'badge_padding',
@@ -1759,6 +1803,18 @@ class LaStudioKit_Icon_Box extends LaStudioKit_Base {
                 'size_units' => [ 'px', '%', 'em' ],
                 'selectors' => [
                     '{{WRAPPER}} ' . $css_scheme['badge'] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->_add_responsive_control(
+            'badge_margin',
+            [
+                'label' => esc_html__( 'Margin', 'lastudio-kit' ),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => [ 'px', '%', 'em' ],
+                'selectors' => [
+                    '{{WRAPPER}} ' . $css_scheme['badge'] => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );

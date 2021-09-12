@@ -51,6 +51,10 @@
         &:hover{
           color: var(--lakit-section-link-hover-color) !important;
         }
+        svg,
+        i{
+          color: inherit;
+        }
       }
       .elementor-widget-text-editor,
       .elementor-heading-title{

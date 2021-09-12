@@ -134,7 +134,7 @@ if(!class_exists('Omens_WooCommerce_Config')){
                 add_action( 'wp', array( $this, 'set_page_when_active_catalog_mode' ) );
 
                 if( omens_get_option('catalog_mode_price', 'off') == 'on' ){
-                    remove_action('woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_price');
+                    //remove_action('woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_price');
                     remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_price');
                     add_filter('woocommerce_catalog_orderby', array( $this, 'remove_sortby_price_in_toolbar_when_active_catalog' ));
                     add_filter('woocommerce_default_catalog_orderby_options', array( $this, 'remove_sortby_price_in_toolbar_when_active_catalog' ));

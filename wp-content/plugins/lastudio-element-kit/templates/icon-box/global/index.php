@@ -43,9 +43,17 @@ if($icon_position == 'lefttitle' || $icon_position == 'righttitle'){
     $box_title = $this->_get_html( 'title_text', '<' . $title_tag  . ' class="lakit-iconbox__title">%s</' . $title_tag  . '>' );
 }
 
+$badge_in_header = filter_var( $this->get_settings_for_display('badge_in_header'), FILTER_VALIDATE_BOOLEAN);
+$badge_header_html = '';
+if($badge_in_header){
+	$badge_header_html = $this->get_badge();
+}
+
+
+
 echo sprintf('<div %1$s>', $this->get_render_attribute_string('infobox_wrapper') );
-    echo $this->get_main_icon( sprintf('<div class="lakit-iconbox__box_header elementor-animation-%1$s"><div class="lakit-iconbox__box_icon icon_pos_%2$s">', esc_attr($icons_hover_animation), esc_attr($icon_position) )  . '%s' . sprintf('</div>%1$s</div>', $box_title) );
-    echo $this->get_main_image( sprintf('<div class="lakit-iconbox__box_header elementor-animation-%1$s"><div class="lakit-iconbox__box_icon icon_pos_%2$s">', esc_attr($icons_hover_animation), esc_attr($icon_position))  . '%s' . sprintf('</div>%1$s</div>', $box_title) );
+    echo $this->get_main_icon( sprintf('<div class="lakit-iconbox__box_header elementor-animation-%1$s"><div class="lakit-iconbox__box_icon icon_pos_%2$s">', esc_attr($icons_hover_animation), esc_attr($icon_position) )  . '%s' . sprintf('</div>%1$s%2$s</div>', $box_title, $badge_header_html) );
+    echo $this->get_main_image( sprintf('<div class="lakit-iconbox__box_header elementor-animation-%1$s"><div class="lakit-iconbox__box_icon icon_pos_%2$s">', esc_attr($icons_hover_animation), esc_attr($icon_position))  . '%s' . sprintf('</div>%1$s%2$s</div>', $box_title, $badge_header_html) );
 
     echo '<div class="lakit-iconbox__box_body">';
 
@@ -74,5 +82,7 @@ echo sprintf('<div %1$s>', $this->get_render_attribute_string('infobox_wrapper')
     echo '</div>';
     echo $this->get_water_icon('<div class="lakit-iconbox__icon-hover">%s</div>');
     echo $this->get_overlay_image('<figure class="lakit-iconbox__image-hover">%s</figure>');
-    echo $this->get_badge();
+    if(!$badge_in_header){
+    	echo $this->get_badge();
+    }
 echo '</div>';

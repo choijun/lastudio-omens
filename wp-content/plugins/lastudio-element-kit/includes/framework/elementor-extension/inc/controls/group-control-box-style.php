@@ -221,7 +221,7 @@ class Group_Control_Box_Style extends Group_Control_Base {
 			'label'      => esc_html__( 'Box Height', 'lastudio-kit' ),
 			'type'       => Controls_Manager::SLIDER,
 			'size_units' => array(
-				'px', 'em',
+				'px', 'em', '%',
 			),
 			'range'      => array(
 				'px' => array(
