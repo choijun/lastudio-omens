@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       LA-Studio Element Kit for Elementor
  * Description:       This plugin helps you to add custom size units into padding/setting of common widgets for Elementor
- * Version:           1.1.0
+ * Version:           1.1.2
  * Author:            LA-Studio
  * Author URI:        https://la-studioweb.com/
  * License:           GPL-2.0+
@@ -58,7 +58,7 @@ if(!function_exists('LaStudio_Kit')){
          *
          * @var string
          */
-        private $version = '1.1.0';
+        private $version = '1.1.2';
 
         /**
          * Framework component
@@ -70,6 +70,12 @@ if(!function_exists('LaStudio_Kit')){
         public $module_loader = null;
 
         public $modules_manager;
+
+
+	    /**
+	     * @var LaStudio_Kit_Ajax_Manager $ajax_manager;
+	     */
+        public $ajax_manager;
 
         /**
          * Holder for current Customizer module instance.
@@ -98,7 +104,7 @@ if(!function_exists('LaStudio_Kit')){
             add_action( 'after_setup_theme', array( $this, 'includes' ), 4 );
 
             // init customizer
-            add_action( 'after_setup_theme', array( $this, 'init_customizer' ), 0 );
+            add_action( 'after_setup_theme', array( $this, 'init_customizer' ), 6 );
 
             // Internationalize the text strings used.
             add_action( 'init', array( $this, 'lang' ), -999 );
@@ -118,11 +124,14 @@ if(!function_exists('LaStudio_Kit')){
 
             add_action('elementor/element/after_section_end', array( $this, 'add_size_units' ), 10, 2);
 
+            // Register handle ajax global
+
             // Register activation and deactivation hook.
             register_activation_hook( __FILE__, array( $this, 'activation' ) );
             register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
 
-            require_once $this->plugin_path( 'includes/framework/customizer/controls/responsive/responsive.php' );
+            // Load handle ajax
+	        $this->ajax_manager = new LaStudio_Kit_Ajax_Manager();
         }
 
         /**
@@ -467,6 +476,21 @@ if(!function_exists('LaStudio_Kit')){
         }
 
         public function autoload( $class ) {
+
+        	$mappings = [
+        		'LaStudio_Kit_Ajax_Manager' => 'includes/modules/ajax/manager.php',
+	        ];
+
+        	if( array_key_exists( $class, $mappings ) ){
+		        if ( ! class_exists( $class ) ) {
+			        $filename = $this->plugin_path($mappings[$class]);
+			        if ( is_readable( $filename ) ) {
+				        include( $filename );
+			        }
+		        }
+		        return;
+	        }
+
             if ( 0 !== strpos( $class, 'LaStudioKitThemeBuilder' ) ) {
                 return;
             }

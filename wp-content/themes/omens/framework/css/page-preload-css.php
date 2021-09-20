@@ -59,7 +59,9 @@ if (!defined('ABSPATH')) {
     transition: all .3s ease-in-out;
     -webkit-transition: all .3s ease-in-out;
     visibility: hidden;
-    z-index: 5
+    z-index: 5;
+    background-color: #fff;
+    color: #181818;
 }
 .la-image-loading .content {
     position: absolute;
@@ -338,23 +340,7 @@ if (!defined('ABSPATH')) {
 .site-loading.body-loaded .la-loader-ss:before {
     width: 0
 }
-body:not(.body-completely-loaded) .lahb-nav-wrap .menu ul {
-    display: none;
-}
-<?php
-$page_loading_bgcolor = omens_get_option('page_loading_bgcolor', '#fff');
-$page_loading_textcolor = omens_get_option('page_loading_textcolor', '#181818');
-?>
-.la-image-loading{
-    background: <?php echo esc_attr($page_loading_bgcolor); ?>;
-    color: <?php echo esc_attr($page_loading_textcolor); ?>;
-}
-.lahb-mobiles-view .lahb-element.lahb-element--placeholder,
-.lahb-mobiles-view .lahb-element.lahb-element--placeholder2 {
-    width: 30px;
-    height: 100%;
-}
-<?php if( omens_get_option('catalog_mode', 'off') == 'on' && omens_get_option('catalog_mode_price', 'off') == 'on' ){ ?>
+<?php if( omens_string_to_bool( omens_get_theme_mod('catalog_mode') ) && omens_string_to_bool( omens_get_theme_mod('catalog_mode_price') ) ){ ?>
 .woocommerce .product-price,
 .woocommerce span.price,
 .woocommerce div.price,

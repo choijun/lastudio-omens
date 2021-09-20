@@ -7,7 +7,6 @@
 	--theme-secondary-color: #272727;
 	--theme-three-color: #A0A0A0;
 	--theme-body-font-color: #555;
-	--theme-heading-font-color: #272727;
 	--theme-link-color: #272727;
 	--theme-link-hover-color: #FD6363;
 	--header-height: 110px;
@@ -21,9 +20,7 @@
 	--theme-h5-font-size: 22px;
 	--theme-h6-font-size: 20px;
 	--theme-body-font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Poppins, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	--theme-heading-font-family: 'Rubik', sans-serif;
 	--theme-three-font-family: 'Rubik', sans-serif;
-	--theme-heading-font-weight: 500;
 	--theme-three-font-weight: 400;
 	--theme-header-vertical-width: 370px;
 	--theme-header-vertical-width-small: 370px;
@@ -38,6 +35,13 @@
 	--theme-newsletter-popup-height: 430px;
 	--item_info: 100px;
 	--adminbar-height: 0;
+	--theme-heading-font-color: #272727;
+	--theme-heading-font-weight: 500;
+	--theme-heading-font-family: 'Rubik', sans-serif;
+	--theme-heading-font-style: inherit;
+	--theme-heading-font-line-height: 1.2;
+	--theme-heading-font-spacing: 0;
+	--theme-heading-font-align: inherit;
 }
 
 @media(max-width: $screen-sm-max){

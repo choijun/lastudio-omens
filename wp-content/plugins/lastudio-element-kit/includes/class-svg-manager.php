@@ -192,7 +192,7 @@ if ( ! class_exists( 'LaStudio_Kit_SVG_Manager' ) ) {
             if(!empty($custom_fonts)){
                 foreach ($custom_fonts as $custom_font){
                     if(!empty($custom_font['name']) && !empty($custom_font['title']) && !isset($fonts[$custom_font['title']])){
-                        $fonts[$custom_font['title']] = 'custom';
+                        $fonts[$custom_font['name']] = 'custom';
                     }
                 }
             }

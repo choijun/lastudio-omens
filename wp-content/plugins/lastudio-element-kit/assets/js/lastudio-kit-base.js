@@ -32,7 +32,6 @@
 
     var LaStudioKits = {
         log: function (...data){
-            var args = Array.prototype.slice.call(arguments)
             console.log(...data);
         },
         addedScripts: {},
@@ -677,9 +676,7 @@
                         var $response;
 
                         if(israw){
-                            var jsoncontent = JSON.parse(res);
-                            var contentraw = jsoncontent['template_content'];
-                            $response = $('<div></div>').html(contentraw);
+                            $response = $('<div></div>').html(res);
                         }
                         else{
                             $response = $(res);
@@ -740,30 +737,54 @@
 
                     if( ajaxType == 'load_widget' ){
                         var _tmpURL = url_request;
-                        url_request = LaStudioKits.addQueryArg(LaStudioKitSettings.widgetApiUrl, 'template_id', templateId);
-                        url_request = LaStudioKits.addQueryArg(url_request, 'widget_id', widgetId);
-                        url_request = LaStudioKits.addQueryArg(url_request, 'dev', LaStudioKitSettings.devMode);
-                        url_request = LaStudioKits.addQueryArg(url_request, pagedKey, LaStudioKits.getUrlParameter(pagedKey, _tmpURL));
-                        url_request = LaStudioKits.addQueryArg(url_request, 'lakitpagedkey', pagedKey);
+                        url_request = window.LaStudioKitSettings.ajaxUrl;
+                        var reqData = {
+                            'action': 'lakit_ajax',
+                            '_nonce': window.LaStudioKitSettings.ajaxNonce,
+                            'actions': JSON.stringify({
+                                'elementor_widget' : {
+                                    'action': 'elementor_widget',
+                                    'data': {
+                                        'template_id': templateId,
+                                        'widget_id' : widgetId,
+                                        'dev': window.LaStudioKitSettings.devMode
+                                    }
+                                }
+                            }),
+                        };
+                        reqData[pagedKey] = LaStudioKits.getUrlParameter(pagedKey, _tmpURL);
+                        reqData['lakitpagedkey'] = pagedKey;
+
+                        url_request = LaStudioKits.removeURLParameter(url_request, '_');
+
+                        var ajaxOpts = {
+                            url: url_request,
+                            type: "POST",
+                            cache: true,
+                            dataType: 'html',
+                            ajax_request_id: templateId + '_' + widgetId + '_' + pagedKey + '_' + LaStudioKits.getUrlParameter(pagedKey, _tmpURL),
+                            data: reqData,
+                            success: function (resp) {
+                                var res = JSON.parse(resp);
+                                var response = res.data.responses.elementor_widget.data.template_content;
+                                success_func(response, true);
+                            }
+                        };
                     }
+                    else{
 
-                    url_request = LaStudioKits.removeURLParameter(url_request, '_');
-
-                    var ajaxOpts = {
-                        url: url_request,
-                        type: "GET",
-                        cache: true,
-                        dataType: 'html',
-                        ajax_request_id: LaStudioKits.getUrlParameter(pagedKey, url_request),
-                        success: function (res) {
-                            if(ajaxType == 'load_widget'){
-                                success_func(res, true);
+                        url_request = LaStudioKits.removeURLParameter(url_request, '_');
+                        var ajaxOpts = {
+                            url: url_request,
+                            type: "GET",
+                            cache: true,
+                            dataType: 'html',
+                            ajax_request_id: LaStudioKits.getUrlParameter(pagedKey, url_request),
+                            success: function (resp) {
+                                success_func(resp, false);
                             }
-                            else{
-                                success_func(res, false);
-                            }
-                        }
-                    };
+                        };
+                    }
 
                     $.ajax(ajaxOpts)
 
@@ -988,8 +1009,11 @@
                 document.head.appendChild(tag);
             });
         },
-        elementorFrontendInit: function ($container) {
-            $(window).trigger('elementor/frontend/init');
+        elementorFrontendInit: function ($container, reinit_trigger) {
+            if(reinit_trigger){
+                $(window).trigger('elementor/frontend/init');
+            }
+            $container.removeClass('need-reinit-js');
             $container.find('[data-element_type]').each(function () {
                 var $this = $(this),
                     elementType = $this.data('element_type');
@@ -1062,6 +1086,10 @@
                 $html = $('html'),
                 settings = $panel.data('settings') || {};
 
+                if (!settings['ajaxTemplate']) {
+                    LaStudioKits.elementorFrontendInit($inner, true);
+                }
+
             if ('ontouchend' in window || 'ontouchstart' in window) {
                 $toggleButton.on('touchstart', function (event) {
                     scrollOffset = $(window).scrollTop();
@@ -1082,11 +1110,7 @@
                             $panel_old.addClass('open-state');
                         }, 10);
                         $html.addClass('lakit-hamburger-panel-visible');
-                        LaStudioKits.elementorFrontendInit($inner);
 
-                        if (settings['ajaxTemplate']) {
-                            LaStudioKits.ajaxLoadTemplate($panelContent, $panel);
-                        }
                     } else {
                         $panel.removeClass('open-state');
                         $panel_old.removeClass('open-state');
@@ -1101,11 +1125,6 @@
                         $panel.addClass('open-state');
                         $panel_old.addClass('open-state');
                         $html.addClass('lakit-hamburger-panel-visible');
-                        LaStudioKits.elementorFrontendInit($inner);
-
-                        if (settings['ajaxTemplate']) {
-                            LaStudioKits.ajaxLoadTemplate($panelContent, $panel);
-                        }
                     } else {
                         $panel.removeClass('open-state');
                         $panel_old.removeClass('open-state');
@@ -1148,81 +1167,6 @@
 
                 event.stopPropagation();
             });
-        },
-        /**
-         * [ajaxLoadTemplate description]
-         * @param  {[Object]} $panelContent [jQuery Object]
-         * @param  {[Object]} $target [jQuery Object]
-         * @return {[type]}        [description]
-         */
-        ajaxLoadTemplate: function ($panelContent, $target) {
-            var $contentHolder = $panelContent,
-                templateLoaded = $contentHolder.data('template-loaded') || false,
-                templateId = $contentHolder.data('template-id'),
-                loader = $('.lakit-tpl-panel-loader', $contentHolder);
-
-            if (templateLoaded) {
-                return false;
-            }
-
-            $(document).trigger('lastudio-kit/ajax-load-template/before', {
-                target: $target,
-                contentHolder: $contentHolder
-            });
-
-            $contentHolder.data('template-loaded', true);
-
-            $.ajax({
-                type: 'GET',
-                url: window.LaStudioKitSettings.templateApiUrl,
-                dataType: 'json',
-                data: {
-                    'id': templateId,
-                    'current_url': window.location.href,
-                    'current_url_no_search': window.location.href.replace(window.location.search, ''),
-                    'dev': window.LaStudioKitSettings.devMode
-                },
-                success: function (response, textStatus, jqXHR) {
-                    var templateContent = response['template_content'],
-                        templateScripts = response['template_scripts'],
-                        templateStyles = response['template_styles'];
-
-                    for (var scriptHandler in templateScripts) {
-                        if($( '#' + scriptHandler + '-js').length == 0){
-                            LaStudioKits.addedAssetsPromises.push(LaStudioKits.loadScriptAsync(scriptHandler, templateScripts[scriptHandler], '', true));
-                        }
-                    }
-
-                    for (var styleHandler in templateStyles) {
-                        if($('#' + styleHandler + '-css').length == 0) {
-                            LaStudioKits.addedAssetsPromises.push(LaStudioKits.loadStyle(styleHandler, templateStyles[styleHandler]));
-                        }
-                    }
-
-                    Promise.all(LaStudioKits.addedAssetsPromises).then(function (value) {
-                        loader.remove();
-                        $contentHolder.append(templateContent);
-                        LaStudioKits.elementorFrontendInit($contentHolder);
-
-                        $(document).trigger('lastudio-kit/ajax-load-template/after', {
-                            target: $target,
-                            contentHolder: $contentHolder,
-                            response: response
-                        });
-                    }, function (reason) {
-                        console.log(`An error occurred while insert the asset resources, however we still need to insert content. Reason detail: "${reason}"`);
-                        loader.remove();
-                        $contentHolder.append(templateContent);
-                        LaStudioKits.elementorFrontendInit($contentHolder);
-
-                        $(document).trigger('lastudio-kit/ajax-load-template/after', {
-                            target: $target,
-                            contentHolder: $contentHolder,
-                            response: response
-                        });
-                    });
-                }
-            });//end
         },
         wooCard: function ($scope) {
             if (window.LaStudioKitEditor && window.LaStudioKitEditor.activeSection) {
@@ -1555,18 +1499,50 @@
         },
 
         ajaxTemplateHelper: {
+
+            need_reinit_js : false,
+
+            template_processed : {},
+
+            template_processed_count : 0,
+
+            template_loaded : [],
+
+            total_template : 0,
+
             processInsertData: function ($el, templateContent, template_id){
+
+                LaStudioKits.ajaxTemplateHelper.template_processed_count++;
+
                 if (templateContent) {
                     $el.html(templateContent);
-                    LaStudioKits.elementorFrontendInit($el);
-
                     if($el.find('div[data-lakit_ajax_loadtemplate]:not(.template-loaded,.is-loading)').length){
                         LaStudioKits.log('found template in ajax content');
                         LaStudioKits.ajaxTemplateHelper.init();
                     }
                 }
-                $('.elementor-motion-effects-element').trigger('resize');
-                $('body').trigger('jetpack-lazy-images-load');
+
+                if(LaStudioKits.ajaxTemplateHelper.template_processed_count >= LaStudioKits.ajaxTemplateHelper.total_template && LaStudioKits.ajaxTemplateHelper.need_reinit_js){
+
+                    LaStudioKits.ajaxTemplateHelper.need_reinit_js = false;
+
+                    Promise.all(LaStudioKits.addedAssetsPromises).then(function (value) {
+                        $(window).trigger('elementor/frontend/init');
+                        LaStudioKits.elementorFrontendInit($('.need-reinit-js[data-lakit_ajax_loadtemplate="true"]'), false);
+                        $('.elementor-motion-effects-element').trigger('resize');
+                        $('body').trigger('jetpack-lazy-images-load');
+                    }, function (reason){
+                        LaStudioKits.log(`An error occurred while insert the asset resources, however we still need to insert content. Reason detail: "${reason}"`);
+                        $(window).trigger('elementor/frontend/init');
+                        LaStudioKits.elementorFrontendInit($('.need-reinit-js[data-lakit_ajax_loadtemplate="true"]'), false);
+                        $('.elementor-motion-effects-element').trigger('resize');
+                        $('body').trigger('jetpack-lazy-images-load');
+                    });
+
+                    $('.elementor-motion-effects-element').trigger('resize');
+                    $('body').trigger('jetpack-lazy-images-load');
+                }
+
                 $(document).trigger('lastudio-kit/ajax-load-template/after', {
                     target_id: template_id,
                     contentHolder: $el,
@@ -1574,12 +1550,7 @@
                 });
             },
             elementorContentRender: function ( $el, templateContent, template_id ){
-                Promise.all(LaStudioKits.addedAssetsPromises).then(function (value) {
-                    LaStudioKits.ajaxTemplateHelper.processInsertData($el, templateContent, template_id);
-                }, function (reason){
-                    LaStudioKits.log(`An error occurred while insert the asset resources, however we still need to insert content. Reason detail: "${reason}"`);
-                    LaStudioKits.ajaxTemplateHelper.processInsertData($el, templateContent, template_id);
-                })
+                LaStudioKits.ajaxTemplateHelper.processInsertData($el, templateContent, template_id);
             },
             templateRenderCallback: function ( response, template_id ){
                 var templateContent = response['template_content'],
@@ -1602,7 +1573,8 @@
                 document.querySelectorAll('body:not(.elementor-editor-active) div[data-lakit_ajax_loadtemplate][data-cache-id="' + template_id + '"]:not(.template-loaded)').forEach(function (elm) {
                     elm.classList.remove('is-loading');
                     elm.classList.add('template-loaded');
-                    LaStudioKits.ajaxTemplateHelper.elementorContentRender($(elm), templateContent, template_id);
+                    elm.classList.add('need-reinit-js');
+                    LaStudioKits.ajaxTemplateHelper.processInsertData($(elm), templateContent, template_id);
                 });
 
                 var wpbar = document.querySelectorAll('#wp-admin-bar-elementor_edit_page ul');
@@ -1617,6 +1589,13 @@
                 }
             },
             init: function (){
+
+                LaStudioKits.ajaxTemplateHelper.need_reinit_js = false;
+                LaStudioKits.ajaxTemplateHelper.template_loaded = [];
+                LaStudioKits.ajaxTemplateHelper.template_processed_count = 0;
+                LaStudioKits.ajaxTemplateHelper.total_template = 0;
+                LaStudioKits.ajaxTemplateHelper.template_processed = {};
+
                 var templates = document.querySelectorAll('body:not(.elementor-editor-active) div[data-lakit_ajax_loadtemplate]:not(.template-loaded)');
                 if (templates.length) {
                     var template_ids = [];
@@ -1630,6 +1609,49 @@
                             el.setAttribute('data-cache-id', _cache_key);
                         }
                     });
+
+                    var arr_ids = [], _idx1 = 0, _idx2 = 0, _bk = 6;
+
+                    var ajaxCalling = function (template_ids){
+                        window.duytest = Date.now();
+                        $.ajax({
+                            type: 'POST',
+                            url: window.LaStudioKitSettings.ajaxUrl,
+                            dataType: 'json',
+                            data: {
+                                'action': 'lakit_ajax',
+                                '_nonce': window.LaStudioKitSettings.ajaxNonce,
+                                'actions': JSON.stringify({
+                                    'elementor_template' : {
+                                        'action': 'elementor_template',
+                                        'data': {
+                                            'template_ids': template_ids,
+                                            'current_url': window.location.href,
+                                            'current_url_no_search': window.location.href.replace(window.location.search, ''),
+                                            'dev': window.LaStudioKitSettings.devMode
+                                        }
+                                    }
+                                }),
+                            },
+                            success: function (resp, textStatus, jqXHR) {
+                                var responses = resp.data.responses.elementor_template.data;
+                                $.each( responses, function( templateId, response ) {
+                                    var cached_key = 'lakitTpl_' + templateId;
+                                    var browserCacheKey = LaStudioKits.localCache.cache_key + '_' + LaStudioKits.localCache.hashCode(templateId);
+                                    LaStudioKits.localCache.set(cached_key, response);
+                                    LaStudioKits.ajaxTemplateHelper.templateRenderCallback(response, templateId);
+                                    try{
+                                        LaStudioKits.log('setup browser cache for ' + browserCacheKey);
+                                        localStorage.setItem(browserCacheKey, JSON.stringify(response));
+                                        localStorage.setItem(browserCacheKey + ':ts', Date.now());
+                                    }
+                                    catch (ajax_ex1){
+                                        LaStudioKits.log('Cannot setup browser cache', ajax_ex1);
+                                    }
+                                });
+                            }
+                        });
+                    }
 
                     template_ids.forEach(function (templateId){
                         var cached_key = 'lakitTpl_' + templateId;
@@ -1654,34 +1676,6 @@
 
                             var browserCacheKey = LaStudioKits.localCache.cache_key + '_' + LaStudioKits.localCache.hashCode(templateId);
                             var expiry = LaStudioKits.localCache.timeout;
-                            var ajaxData = {
-                                'id': templateId,
-                                'current_url': window.location.href,
-                                'current_url_no_search': window.location.href.replace(window.location.search, ''),
-                                'dev': window.LaStudioKitSettings.devMode
-                            }
-
-                            var ajaxCalling = function (){
-                                $.ajax({
-                                    type: 'GET',
-                                    url: window.LaStudioKitSettings.templateApiUrl,
-                                    dataType: 'json',
-                                    data: ajaxData,
-                                    success: function (response, textStatus, jqXHR) {
-                                        LaStudioKits.localCache.set(cached_key, response);
-                                        LaStudioKits.ajaxTemplateHelper.templateRenderCallback(response, templateId);
-                                        try{
-                                            LaStudioKits.log('setup browser cache for ' + browserCacheKey);
-                                            localStorage.setItem(browserCacheKey, JSON.stringify(response));
-                                            localStorage.setItem(browserCacheKey + ':ts', Date.now());
-                                        }
-                                        catch (ajax_ex1){
-                                            LaStudioKits.log('Cannot setup browser cache');
-                                        }
-                                    }
-                                });
-                            }
-
                             try{
                                 var browserCached = localStorage.getItem(browserCacheKey);
                                 var browserWhenCached = localStorage.getItem(browserCacheKey + ':ts');
@@ -1701,15 +1695,42 @@
                                     }
                                 }
                                 LaStudioKits.log('run ajaxCalling() for ' + templateId);
-                                ajaxCalling();
+                                _idx1++;
+                                if(_idx1 > _bk){
+                                    _idx1 = 0;
+                                    _idx2++;
+                                }
+                                if( "undefined" == typeof arr_ids[_idx2] ) {
+                                    arr_ids[_idx2] = [];
+                                }
+                                arr_ids[_idx2].push(templateId);
+                                LaStudioKits.ajaxTemplateHelper.template_loaded.push(templateId);
                             }
                             catch (ajax_ex) {
                                 LaStudioKits.log('Cannot setup browser cache ajaxCalling() for ' + templateId);
-                                ajaxCalling();
+                                _idx1++;
+                                if(_idx1 == _bk){
+                                    _idx1 = 0;
+                                    _idx2++;
+                                }
+                                if( "undefined" == typeof arr_ids[_idx2] ) {
+                                    arr_ids[_idx2] = [];
+                                }
+                                arr_ids[_idx2].push(templateId);
+                                LaStudioKits.ajaxTemplateHelper.template_loaded.push(templateId);
                             }
                         }
 
                     });
+
+                    LaStudioKits.ajaxTemplateHelper.total_template = templates.length;
+
+                    if(arr_ids.length){
+                        LaStudioKits.ajaxTemplateHelper.need_reinit_js = true;
+                        arr_ids.forEach(function (arr_id){
+                            ajaxCalling(arr_id);
+                        });
+                    }
                 }
             }
         }
@@ -1717,40 +1738,40 @@
 
     $(window).on('elementor/frontend/init', function () {
 
-        elementor.hooks.addAction('frontend/element_ready/lakit-advanced-carousel.default', function ($scope) {
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/lakit-advanced-carousel.default', function ($scope) {
             LaStudioKits.initCarousel($scope);
         });
 
-        elementor.hooks.addAction('frontend/element_ready/lakit-slides.default', function ($scope) {
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/lakit-slides.default', function ($scope) {
             LaStudioKits.initCarousel($scope);
         });
 
-        elementor.hooks.addAction('frontend/element_ready/lakit-posts.default', function ($scope) {
-            LaStudioKits.initCarousel($scope);
-            LaStudioKits.initMasonry($scope);
-        });
-
-        elementor.hooks.addAction('frontend/element_ready/lakit-portfolio.default', function ($scope) {
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/lakit-posts.default', function ($scope) {
             LaStudioKits.initCarousel($scope);
             LaStudioKits.initMasonry($scope);
         });
 
-        elementor.hooks.addAction('frontend/element_ready/lakit-images-layout.default', function ($scope) {
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/lakit-portfolio.default', function ($scope) {
             LaStudioKits.initCarousel($scope);
             LaStudioKits.initMasonry($scope);
         });
 
-        elementor.hooks.addAction('frontend/element_ready/lakit-team-member.default', function ($scope) {
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/lakit-images-layout.default', function ($scope) {
             LaStudioKits.initCarousel($scope);
             LaStudioKits.initMasonry($scope);
         });
 
-        elementor.hooks.addAction('frontend/element_ready/lakit-testimonials.default', function ($scope) {
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/lakit-team-member.default', function ($scope) {
             LaStudioKits.initCarousel($scope);
             LaStudioKits.initMasonry($scope);
         });
 
-        elementor.hooks.addAction('frontend/element_ready/lakit-search.default', function ($scope) {
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/lakit-testimonials.default', function ($scope) {
+            LaStudioKits.initCarousel($scope);
+            LaStudioKits.initMasonry($scope);
+        });
+
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/lakit-search.default', function ($scope) {
             LaStudioKits.onSearchSectionActivated($scope);
             $(document).on('click', function (event) {
 
@@ -1778,32 +1799,32 @@
             });
         });
 
-        elementor.hooks.addAction('frontend/element_ready/lakit-hamburger-panel.default', function ($scope) {
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/lakit-hamburger-panel.default', function ($scope) {
             LaStudioKits.hamburgerPanel($scope);
         });
 
-        elementor.hooks.addAction('frontend/element_ready/lakit-menucart.default', function ($scope) {
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/lakit-menucart.default', function ($scope) {
             LaStudioKits.wooCard($scope);
         });
 
-        elementor.hooks.addAction('frontend/element_ready/lakit-animated-box.default', function ($scope) {
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/lakit-animated-box.default', function ($scope) {
             LaStudioKits.animatedBoxHandler($scope);
         });
 
-        elementor.hooks.addAction('frontend/element_ready/lakit-wooproducts.default', function ($scope) {
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/lakit-wooproducts.default', function ($scope) {
             LaStudioKits.initCarousel($scope);
             LaStudioKits.initMasonry($scope);
         });
 
-        elementor.hooks.addAction('frontend/element_ready/lakit-wooproduct-images.default', function ($scope) {
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/lakit-wooproduct-images.default', function ($scope) {
             LaStudioKits.wooGallery($scope);
         });
 
-        elementor.hooks.addAction('frontend/element_ready/lakit-wooproduct-datatabs.default', function ($scope) {
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/lakit-wooproduct-datatabs.default', function ($scope) {
             LaStudioKits.wooTabs($scope);
         });
 
-        elementor.hooks.addAction('frontend/element_ready/section', function ($scope) {
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/section', function ($scope) {
             if( $scope.hasClass('elementor-top-section') ) {
                 $scope.trigger('lastudio-kit/section/calculate-container-width');
             }

@@ -4,6 +4,9 @@
 .lakit-carousel--simple .lakit-carousel__item:hover .lakit-carousel__item-img {
   transform: scale(1.1);
 }
+.lakit-adv-custom-img-height-true .lakit-carousel--simple .lakit-carousel__item:hover .lakit-carousel__item-img {
+  transform: translate(-50%,-50%) scale(1.1);
+}
 
 .elementor-widget-wrap>.elementor-widget:not(:last-child){
   margin-bottom: 0;

@@ -32,7 +32,7 @@ $this->add_render_attribute('infobox_wrapper', 'class', $box_classes);
 
 $title_tag = lastudio_kit_helper()->validate_html_tag( $this->get_settings_for_display('title_size') );
 
-if(filter_var($show_global_link, FILTER_VALIDATE_BOOLEAN) && !filter_var($enable_btn, FILTER_VALIDATE_BOOLEAN) && !empty($global_link['url'])){
+if(filter_var($show_global_link, FILTER_VALIDATE_BOOLEAN)){
     $this->add_render_attribute( 'infobox_wrapper', [
         'data-lakit-element-link' => json_encode($global_link),
         'style' => 'cursor: pointer'
@@ -48,7 +48,6 @@ $badge_header_html = '';
 if($badge_in_header){
 	$badge_header_html = $this->get_badge();
 }
-
 
 
 echo sprintf('<div %1$s>', $this->get_render_attribute_string('infobox_wrapper') );

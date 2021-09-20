@@ -207,10 +207,10 @@ if(!class_exists('Omens_Theme_Class')){
 
             // Declare WooCommerce support.
             add_theme_support( 'woocommerce' );
-            if(omens_get_option('woocommerce_gallery_zoom') == 'yes'){
+            if( omens_string_to_bool( omens_get_theme_mod('woocommerce_gallery_zoom') ) ){
                 add_theme_support( 'wc-product-gallery-zoom');
             }
-            if(omens_get_option('woocommerce_gallery_lightbox') == 'yes'){
+            if( omens_string_to_bool( omens_get_theme_mod('woocommerce_gallery_lightbox') ) ){
                 add_theme_support( 'wc-product-gallery-lightbox');
             }
 
@@ -423,7 +423,7 @@ if(!class_exists('Omens_Theme_Class')){
 
             $dependencies = array( 'jquery', 'js-cookie', 'jquery-featherlight');
 
-            if (omens_get_option('page_loading_animation', 'off') == 'on') {
+	        if( omens_string_to_bool( omens_get_theme_mod('page_preloader') ) ){
                 $dependencies[] = 'pace';
             }
 
@@ -487,8 +487,6 @@ if(!class_exists('Omens_Theme_Class')){
          */
         public function localize_array() {
 
-            $header_sticky_offset = omens_get_option('header_sticky_offset');
-
             $template_cache = omens_string_to_bool(omens_get_option('template_cache'));
 
             $array = array(
@@ -497,7 +495,7 @@ if(!class_exists('Omens_Theme_Class')){
                     'wishlist_nonce' => wp_create_nonce('wishlist_nonce'),
                     'compare_nonce' => wp_create_nonce('compare_nonce')
                 ),
-                'single_ajax_add_cart' => omens_string_to_bool(omens_get_option('single_ajax_add_cart', 'off')),
+                'single_ajax_add_cart' => omens_string_to_bool( omens_get_theme_mod('single_ajax_add_cart') ),
                 'i18n' => array(
                     'backtext' => esc_attr_x('Back', 'front-view', 'omens'),
                     'compare' => array(
@@ -542,24 +540,6 @@ if(!class_exists('Omens_Theme_Class')){
                     '360' => false,
                     'content_type' => false
                 )),
-                'mobile_bar' => esc_attr(omens_get_option('enable_header_mb_footer_bar_sticky', 'always')),
-                'header_sticky_offset' => esc_attr(!empty($header_sticky_offset['height']) ? absint($header_sticky_offset['height']) : 0),
-                'templateApiUrl'  => get_rest_url(null, 'lastudio-api/v1/elementor-template'),
-                'menuItemsApiUrl'  => get_rest_url(null, 'lastudio-api/v1/get-menu-items'),
-                'subscribeForm' => [
-                    'action' => 'lastudio_elementor_subscribe_form_ajax',
-                    'nonce' => wp_create_nonce('lastudio_elementor_subscribe_form_ajax'),
-                    'type' => 'POST',
-                    'data_type' => 'json',
-                    'is_public' => 'true',
-                ],
-                'sys_messages' => [
-                    'invalid_mail'                => esc_html__( 'Please, provide valid mail', 'omens' ),
-                    'mailchimp'                   => esc_html__( 'Please, set up MailChimp API key and List ID', 'omens' ),
-                    'internal'                    => esc_html__( 'Internal error. Please, try again later', 'omens' ),
-                    'server_error'                => esc_html__( 'Server error. Please, try again later', 'omens' ),
-                    'subscribe_success'           => esc_html__( 'Success', 'omens' ),
-                ],
                 'has_wc' => function_exists('WC' ) ? true : false,
                 'cache_ttl' => apply_filters('omens/cache_time_to_life', !$template_cache ? 30 : (60 * 5)),
                 'local_ttl' => apply_filters('omens/local_cache_time_to_life', !$template_cache ? 30 : (60 * 60 * 24)),

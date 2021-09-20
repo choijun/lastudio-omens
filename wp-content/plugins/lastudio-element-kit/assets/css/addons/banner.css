@@ -546,14 +546,27 @@
 .lakit-adv-custom-img-height-true .lakit-banner__img,
 .lakit-adv-custom-img-height-true .lakit-carousel__item-img {
 	position: absolute;
-	top: 0;
-	left: 0;
+	top: 50%;
+	left: 50%;
 	width: 100%;
 	height: 100%;
+	transform: translate(-50%,-50%);
 }
 .lakit-adv-custom-img-height-true .lakit-banner__link:before,
 .lakit-adv-custom-img-height-true .lakit-carousel__item-link:before {
 	content: '';
 	padding-bottom: var(--lakit-banner-image-height);
 	display: block;
+}
+
+.lakit--btn-fullwidth .lakit-carousel__item-button {
+	display: flex;
+	justify-content: center;
+}
+
+.lakit-adv-custom-img-height-true .lakit-effect-roxy .lakit-banner__img{
+	transform: translate(calc(-50% - 60px),-50%);
+}
+.lakit-adv-custom-img-height-true .lakit-effect-roxy:hover .lakit-banner__img{
+	transform: translate(-50%,-50%);
 }

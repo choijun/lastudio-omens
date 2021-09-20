@@ -486,6 +486,19 @@ class LaStudioKit_Banner extends LaStudioKit_Base {
 		);
 
 		$this->_add_responsive_control(
+			'title_padding',
+			array(
+				'label'      => esc_html__( 'Padding', 'lastudio-kit' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} ' . $css_scheme['banner_title'] => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			),
+			50
+		);
+
+		$this->_add_responsive_control(
 			'title_margin',
 			array(
 				'label'      => esc_html__( 'Margin', 'lastudio-kit' ),

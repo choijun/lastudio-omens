@@ -5,6 +5,6 @@
         value.bind(function ( newval ){
             console.log(newval);
         });
-    })
+    });
 
 })(jQuery, wp.customize);

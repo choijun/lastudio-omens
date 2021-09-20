@@ -12,6 +12,23 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Return theme settings
  */
 
+if ( ! function_exists( 'omens_get_theme_mod' ) ) {
+
+    function omens_get_theme_mod( $key = '', $default = '' ) {
+	    $mods = get_theme_mods();
+
+        if(empty($mods) || $key == ''){
+            $value = $default;
+        }
+        else{
+            $value = !empty($mods[$key]) ? $mods[$key] : $default;
+        }
+
+        return apply_filters( 'omens/filter/omens_get_theme_mode', $value, $key, $default, $mods);
+    }
+
+}
+
 if ( ! function_exists( 'omens_get_option' ) ) {
 
     function omens_get_option( $key = '', $default = '' ) {
@@ -106,316 +123,6 @@ if ( ! function_exists( 'omens_get_term_meta' ) ) {
     }
 }
 
-if ( ! function_exists( 'omens_get_theme_option_by_context') ) {
-
-    function omens_get_theme_option_by_context( $key = '', $default = '' ){
-        if( $key == '' ){
-            return $default;
-        }
-
-        $value = $value_default = omens_get_option( $key, $default );
-
-        if( is_home() ) {
-            $_value = omens_get_option("{$key}_blog");
-            if(!empty($_value)){
-                if(is_array($_value)){
-                    if(omens_array_filter_recursive($_value)){
-                        $value = $_value;
-                    }
-                }
-                else{
-                    if($_value !== 'inherit'){
-                        $value = $_value;
-                    }
-                }
-            }
-        }
-
-        if( is_home() || is_front_page() ) {
-
-            if( ($key == 'main_space' || $key == 'main_full_width' || $key == 'container_width' || $key == 'custom_sidebar_width' || $key == 'custom_sidebar_space') && ( is_home() && !is_front_page() ) ) {
-                $_value = omens_get_option("{$key}_archive_post");
-                if(!empty($_value)){
-                    if(is_array($_value)){
-                        if(omens_array_filter_recursive($_value)){
-                            $value = $_value;
-                        }
-                    }
-                    else{
-                        if($_value !== 'inherit'){
-                            $value = $_value;
-                        }
-                    }
-                }
-            }
-
-            if ( $current_object_id = get_queried_object_id() ) {
-                $_value = omens_get_post_meta( $current_object_id, $key );
-                if(!empty($_value)){
-                    if(is_array($_value)){
-                        if(omens_array_filter_recursive($_value)){
-                            $value = $_value;
-                        }
-                    }
-                    else{
-                        if($_value !== 'inherit'){
-                            $value = $_value;
-                        }
-                    }
-                }
-            }
-        }
-        elseif ( is_singular() ) {
-
-            $post_type = get_query_var('post_type') ? get_query_var('post_type') : ( is_singular('post') ? 'post' : 'page' );
-
-            if(is_array($post_type)){
-                $post_type = $post_type[0];
-            }
-
-            $post_type = str_replace('la_', '', $post_type);
-
-            /*
-             * get {$key} is layout from blog
-             */
-
-            if(is_singular('post') && $key == 'layout'){
-                $_value = omens_get_option('layout_blog');
-                if(!empty($_value) && $_value !== 'inherit'){
-                    $value = $_value;
-                }
-            }
-
-            $_value = omens_get_option("{$key}_single_{$post_type}", $value_default );
-            
-            if(!empty($_value)){
-                if( is_array($_value) ) {
-                    if(omens_array_filter_recursive($_value)){
-                        $value = $_value;
-                    }
-                }
-                else{
-                    if($_value !== 'inherit'){
-                        $value = $_value;
-                    }
-                }
-            }
-            
-            $_value = omens_get_post_meta( get_queried_object_id(), $key );
-
-            if(!empty($_value)){
-                if( is_array($_value) ) {
-                    if( omens_array_filter_recursive($_value) ){
-                        $value = $_value;
-                    }
-                }
-                else{
-                    if($_value !== 'inherit'){
-                        $value = $_value;
-                    }
-                }
-            }
-
-            if(is_singular('elementor_library')){
-                if( $key == 'layout' ) {
-                    $value = 'col-1c';
-                }
-                if( $key == 'page_title_bar_layout'){
-                    $value = 'hide';
-                }
-                if( $key == 'hide_header'){
-                    $value = 'yes';
-                }
-                if( $key == 'hide_footer'){
-                    $value = 'yes';
-                }
-            }
-        }
-
-        elseif( is_archive() ) {
-
-            if( function_exists('is_shop') && (is_shop()) ){
-
-                $_value = omens_get_option("{$key}_archive_product", $value_default );
-                if(!empty($_value)){
-                    if(is_array($_value)){
-                        if(omens_array_filter_recursive($_value)){
-                            $value = $_value;
-                        }
-                    }
-                    else{
-                        if($_value !== 'inherit'){
-                            $value = $_value;
-                        }
-                    }
-                }
-                if( $shop_page_id = wc_get_page_id('shop') ){
-                    $_value = omens_get_post_meta( $shop_page_id, $key );
-                    if(!empty($_value)){
-                        if(is_array($_value)){
-                            if(omens_array_filter_recursive($_value)){
-                                $value = $_value;
-                            }
-                        }
-                        else{
-                            if($_value !== 'inherit'){
-                                $value = $_value;
-                            }
-                        }
-                    }
-                }
-            }
-            elseif( function_exists('is_product_taxonomy') && is_product_taxonomy() ){
-                $_value = omens_get_option("{$key}_archive_product", $value_default);
-                if(!empty($_value)){
-                    if(is_array($_value)){
-                        if(omens_array_filter_recursive($_value)){
-                            $value = $_value;
-                        }
-                    }
-                    else{
-                        if($_value !== 'inherit'){
-                            $value = $_value;
-                        }
-                    }
-                }
-                $_value = omens_get_term_meta( get_queried_object_id(), $key);
-                if(!empty($_value)){
-                    if(is_array($_value)){
-                        if(omens_array_filter_recursive($_value)){
-                            $value = $_value;
-                        }
-                    }
-                    else{
-                        if($_value !== 'inherit'){
-                            $value = $_value;
-                        }
-                    }
-                }
-            }
-            elseif( is_post_type_archive('la_portfolio') ) {
-                $_value = omens_get_option("{$key}_archive_portfolio", $value_default);
-                if(!empty($_value)){
-                    if(is_array($_value)){
-                        if(omens_array_filter_recursive($_value)){
-                            $value = $_value;
-                        }
-                    }
-                    else{
-                        if($_value !== 'inherit'){
-                            $value = $_value;
-                        }
-                    }
-                }
-            }
-            elseif( is_tax() && !empty(get_object_taxonomies( 'la_portfolio' )) && is_tax(get_object_taxonomies( 'la_portfolio' ))){
-                $_value = omens_get_option("{$key}_archive_portfolio", $value_default);
-                if(!empty($_value)){
-                    if(is_array($_value)){
-                        if(omens_array_filter_recursive($_value)){
-                            $value = $_value;
-                        }
-                    }
-                    else{
-                        if($_value !== 'inherit'){
-                            $value = $_value;
-                        }
-                    }
-                }
-                $_value = omens_get_term_meta( get_queried_object_id(), $key );
-                if(!empty($_value)){
-                    if(is_array($_value)){
-                        if(omens_array_filter_recursive($_value)){
-                            $value = $_value;
-                        }
-                    }
-                    else{
-                        if($_value !== 'inherit'){
-                            $value = $_value;
-                        }
-                    }
-                }
-            }
-            else{
-                if($key == 'layout'){
-                    if( omens_is_blog() ){
-                        $_value = omens_get_option("layout_blog");
-                        if(!empty($_value) && $_value !== 'inherit'){
-                            $value = $_value;
-                        }
-                    }
-                }
-                else{
-                    $_value = omens_get_option("{$key}_archive_post", $value_default);
-                    if(!empty($_value)){
-                        if(is_array($_value)){
-                            if(omens_array_filter_recursive($_value)){
-                                $value = $_value;
-                            }
-                        }
-                        else{
-                            if($_value !== 'inherit'){
-                                $value = $_value;
-                            }
-                        }
-                    }
-                }
-
-                $_value = omens_get_term_meta( get_queried_object_id(), $key );
-
-                if(!empty($_value)){
-                    if(is_array($_value)){
-                        if(omens_array_filter_recursive($_value)){
-                            $value = $_value;
-                        }
-                    }
-                    else{
-                        if($_value !== 'inherit'){
-                            $value = $_value;
-                        }
-                    }
-                }
-            }
-        }
-
-        else{
-            /*
-             * check if is dokan store page
-             */
-            if(function_exists('dokan_is_store_page') && dokan_is_store_page()){
-                $_value = omens_get_option("{$key}_archive_product", $value_default );
-                if(!empty($_value)){
-                    if(is_array($_value)){
-                        if(omens_array_filter_recursive($_value)){
-                            $value = $_value;
-                        }
-                    }
-                    else{
-                        if($_value !== 'inherit'){
-                            $value = $_value;
-                        }
-                    }
-                }
-                else{
-
-                    $value = $value_default;
-                }
-            }
-            else{
-                /*
-                * For search & 404 page
-                */
-                $value = $value_default;
-            }
-        }
-
-
-        return apply_filters('omens/filter/get_theme_option_by_context', $value, $key );
-
-    }
-
-}
-
 /**
  * Return correct schema markup
  */
@@ -425,7 +132,7 @@ if ( ! function_exists( 'omens_get_schema_markup' ) ) {
     function omens_get_schema_markup( $location, $original_render = false ) {
 
         // Return if disable
-        if ( ! omens_get_option( 'schema_markup', false ) ) {
+        if ( ! omens_get_theme_mod( 'schema_markup' ) ) {
             return null;
         }
 
@@ -815,64 +522,14 @@ if(!function_exists('omens_is_blog')){
 
 if(!function_exists('omens_get_wishlist_url')){
     function omens_get_wishlist_url(){
-        $wishlist_page_id = omens_get_option('wishlist_page', 0);
+        $wishlist_page_id = omens_get_theme_mod('wishlist_page', 0);
         return (!empty($wishlist_page_id) ? get_the_permalink($wishlist_page_id) : esc_url(home_url('/wishlist/')));
     }
 }
 
 if(!function_exists('omens_get_compare_url')){
     function omens_get_compare_url(){
-        $compare_page_id = omens_get_option('compare_page', 0);
+        $compare_page_id = omens_get_theme_mod('compare_page', 0);
         return (!empty($compare_page_id) ? get_the_permalink($compare_page_id) : esc_url(home_url('/compare/')));
-    }
-}
-
-
-if(!function_exists('omens_get_custom_breakpoints')){
-    function omens_get_custom_breakpoints(){
-        if(function_exists('la_get_custom_breakpoints')){
-            return la_get_custom_breakpoints();
-        }
-        else{
-	        $custom_breakpoints = get_option('la_custom_breakpoints');
-	        $sm = !empty($custom_breakpoints['sm']) ? absint($custom_breakpoints['sm']) : 576;
-	        $md = !empty($custom_breakpoints['md']) ? absint($custom_breakpoints['md']) : 992;
-	        $lg = !empty($custom_breakpoints['lg']) ? absint($custom_breakpoints['lg']) : 1280;
-	        $xl = !empty($custom_breakpoints['xl']) ? absint($custom_breakpoints['xl']) : 1700;
-
-	        if( $sm <= 380 || $sm >= 992 ){
-		        $sm = 576;
-	        }
-	        if( $md <= 992 || $md >= 1280 ){
-		        $md = 992;
-	        }
-	        if( $lg <= 1280 || $lg >= 1700 ){
-		        $lg = 1280;
-	        }
-	        if($lg > $xl){
-		        $xl = $lg + 2;
-	        }
-	        if($xl > 2000){
-		        $xl = 1700;
-	        }
-	        return [
-		        'xs' => 0,
-		        'sm' => $sm,
-		        'md' => $md,
-		        'lg' => $lg,
-		        'xl' => $xl,
-		        'xxl' => 2000
-	        ];
-        }
-    }
-}
-
-if(!function_exists('omens_callback_func_to_show_custom_block')){
-    function omens_callback_func_to_show_custom_block( $block = array(), $hook_name = '', $priority = 10 ){
-        if(!empty($block['content']) && !empty($hook_name)){
-            echo '<div class="la-custom-block '. (!empty($block['el_class']) ? esc_attr($block['el_class']) : '') .'">';
-            echo omens_transfer_text_to_format($block['content'], true);
-            echo '</div>';
-        }
     }
 }

@@ -11,9 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * ACTIONS
  */
-add_action( 'wp_head',          'omens_add_extra_data_into_head', 100 );
 add_action( 'wp_body_open',     'omens_add_pageloader_icon', 1);
-add_action( 'wp_footer',        'omens_render_footer_custom_js', 100 );
 /**
  * FILTERS
  */

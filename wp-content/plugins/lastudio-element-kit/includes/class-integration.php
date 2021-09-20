@@ -27,13 +27,6 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
 		 */
 		private static $instance = null;
 
-		/**
-		 * Check if processing elementor widget
-		 *
-		 * @var boolean
-		 */
-		private $is_elementor_ajax = false;
-
         public $sys_messages = [];
 
 		/**
@@ -52,8 +45,6 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
 			add_action( 'elementor/controls/controls_registered', array( $this, 'rewrite_controls' ), 10 );
 
 			add_action( 'elementor/controls/controls_registered', array( $this, 'add_controls' ), 10 );
-
-			add_action( 'wp_ajax_elementor_render_widget', array( $this, 'set_elementor_ajax' ), 10, -1 );
 
             add_action( 'elementor/editor/before_enqueue_scripts', array( $this, 'editor_scripts' ) );
 
@@ -87,9 +78,6 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
                 'subscribe_success'           => esc_html__( 'Success', 'lastudio-kit' ),
             ) );
 
-            add_action( 'wp_ajax_lakit_elementor_subscribe_form_ajax', [ $this, 'subscribe_form_ajax' ] );
-            add_action( 'wp_ajax_nopriv_lakit_elementor_subscribe_form_ajax', [ $this, 'subscribe_form_ajax' ] );
-
 			// Init Elementor Extension module
 			$ext_module_data = lastudio_kit()->module_loader->get_included_module_data( 'elementor-extension.php' );
 
@@ -114,21 +102,14 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
             }
 
             add_action( 'init', [ $this, 'register_portfolio_content_type' ] );
-		}
 
-		/**
-		 * Set $this->is_elementor_ajax to true on Elementor AJAX processing
-		 *
-		 * @return  void
-		 */
-		public function set_elementor_ajax() {
-			$this->is_elementor_ajax = true;
+            add_action('lastudio-kit/ajax/register_actions', [ $this, 'register_ajax_actions' ] );
 		}
 
 		/**
 		 * Check if we currently in Elementor mode
 		 *
-		 * @return void
+		 * @return boolean
 		 */
 		public function in_elementor() {
 
@@ -466,18 +447,22 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
             $template_cache = true;
             $devMode = true;
 
-            wp_localize_script('lastudio-kit-base', 'LaStudioKitSettings', [
-                'templateApiUrl' => $rest_api_url . 'lastudio-kit-api/v1/elementor-template',
-                'widgetApiUrl'   => $rest_api_url . 'lastudio-kit-api/v1/elementor-widget',
-                'homeURL'        => esc_url(home_url('/')),
-                'ajaxurl'        => esc_url( admin_url( 'admin-ajax.php' ) ),
-                'isMobile'       => filter_var( wp_is_mobile(), FILTER_VALIDATE_BOOLEAN ) ? 'true' : 'false',
-                'devMode'        => defined('WP_DEBUG') && WP_DEBUG ? 'true' : 'false',
-                'cache_ttl'      => apply_filters('lastudio-kit/cache-management/time-to-life', !$template_cache ? 30 : (60 * 5)),
-                'local_ttl'      => apply_filters('lastudio-kit/cache-management/local-time-to-life', !$template_cache ? 30 : (60 * 60 * 24)),
-                'themeName'      => get_template(),
-                'i18n'           => [ ]
-            ]);
+            $LaStudioKitSettings = [
+	            'templateApiUrl' => $rest_api_url . 'lastudio-kit-api/v1/elementor-template',
+	            'widgetApiUrl'   => $rest_api_url . 'lastudio-kit-api/v1/elementor-widget',
+	            'homeURL'        => esc_url(home_url('/')),
+	            'ajaxUrl'        => esc_url( admin_url( 'admin-ajax.php' ) ),
+	            'isMobile'       => filter_var( wp_is_mobile(), FILTER_VALIDATE_BOOLEAN ) ? 'true' : 'false',
+	            'devMode'        => defined('WP_DEBUG') && WP_DEBUG ? 'true' : 'false',
+	            'cache_ttl'      => apply_filters('lastudio-kit/cache-management/time-to-life', !$template_cache ? 30 : (60 * 5)),
+	            'local_ttl'      => apply_filters('lastudio-kit/cache-management/local-time-to-life', !$template_cache ? 30 : (60 * 60 * 24)),
+	            'themeName'      => get_template(),
+	            'i18n'           => [],
+	            'ajaxNonce'      => lastudio_kit()->ajax_manager->create_nonce(),
+            ];
+
+            wp_localize_script('lastudio-kit-base', 'LaStudioKitSettings', $LaStudioKitSettings );
+
             if( apply_filters( 'lastudio-kit/allow_override_elementor_device', true ) ){
                 wp_add_inline_style('elementor-frontend', $this->set_device_name_for_custom_bkp_by_css());
             }
@@ -488,12 +473,12 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
             wp_add_inline_style('elementor-frontend', $this->add_new_animation_css());
 
             $subscribe_obj = [
-                'action' => 'lakit_elementor_subscribe_form_ajax',
-                'nonce' => wp_create_nonce('lakit_elementor_subscribe_form_ajax'),
+                'action' => 'lakit_ajax',
+                'nonce' => lastudio_kit()->ajax_manager->create_nonce(),
                 'type' => 'POST',
                 'data_type' => 'json',
                 'is_public' => 'true',
-                'ajax_url' => admin_url('admin-ajax.php'),
+                'ajax_url' => esc_url( admin_url( 'admin-ajax.php' ) ),
                 'sys_messages' => $this->sys_messages
             ];
             wp_localize_script( 'elementor-frontend', 'lakitSubscribeConfig', $subscribe_obj );
@@ -844,86 +829,6 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
             return '@keyframes lakitShortFadeInDown{from{opacity:0;transform:translate3d(0,-50px,0)}to{opacity:1;transform:none}}.lakitShortFadeInDown{animation-name:lakitShortFadeInDown}@keyframes lakitShortFadeInUp{from{opacity:0;transform:translate3d(0,50px,0)}to{opacity:1;transform:none}}.lakitShortFadeInUp{animation-name:lakitShortFadeInUp}@keyframes lakitShortFadeInLeft{from{opacity:0;transform:translate3d(-50px,0,0)}to{opacity:1;transform:none}}.lakitShortFadeInLeft{animation-name:lakitShortFadeInLeft}@keyframes lakitShortFadeInRight{from{opacity:0;transform:translate3d(50px,0,0)}to{opacity:1;transform:none}}.lakitShortFadeInRight{animation-name:lakitShortFadeInRight}';
         }
 
-        public function subscribe_form_ajax() {
-
-            if ( ! wp_verify_nonce( isset($_POST['nonce']) ? $_POST['nonce'] : false, 'lakit_elementor_subscribe_form_ajax' ) ) {
-                $response = array(
-                    'message' => $this->sys_messages['invalid_nonce'],
-                    'type'    => 'error-notice',
-                ) ;
-
-                wp_send_json( $response );
-            }
-
-            $data = ( ! empty( $_POST['data'] ) ) ? $_POST['data'] : false;
-
-            if ( ! $data ) {
-                wp_send_json_error( array( 'type' => 'error', 'message' => $this->sys_messages['server_error'] ) );
-            }
-
-            $api_key = apply_filters('lastudio-kit/mailchimp/api', lastudio_kit_settings()->get_option('mailchimp-api-key'));
-            $list_id = apply_filters('lastudio-kit/mailchimp/list_id', lastudio_kit_settings()->get_option('mailchimp-list-id'));
-            $double_opt = apply_filters('lastudio-kit/mailchimp/double_opt_in', lastudio_kit_settings()->get_option('mailchimp-double-opt-in'));
-
-            $double_opt_in = filter_var( $double_opt, FILTER_VALIDATE_BOOLEAN );
-
-            if ( ! $api_key ) {
-                wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['mailchimp'] ) );
-            }
-
-            if ( isset( $data['use_target_list_id'] ) &&
-                filter_var( $data['use_target_list_id'], FILTER_VALIDATE_BOOLEAN ) &&
-                ! empty( $data['target_list_id'] )
-            ) {
-                $list_id = $data['target_list_id'];
-            }
-
-            if ( ! $list_id ) {
-                wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['mailchimp'] ) );
-            }
-
-            $mail = $data['email'];
-
-            if ( empty( $mail ) || ! is_email( $mail ) ) {
-                wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['invalid_mail'] ) );
-            }
-
-            $args = [
-                'email_address' => $mail,
-                'status'        => $double_opt_in ? 'pending' : 'subscribed',
-            ];
-
-            if ( ! empty( $data['additional'] ) ) {
-
-                $additional = $data['additional'];
-
-                foreach ( $additional as $key => $value ) {
-                    $merge_fields[ strtoupper( $key ) ] = $value;
-                }
-
-                $args['merge_fields'] = $merge_fields;
-
-            }
-
-            $response = $this->api_call( $api_key, $list_id, $args );
-
-            if ( false === $response ) {
-                wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['mailchimp'] ) );
-            }
-
-            $response = json_decode( $response, true );
-
-            if ( empty( $response ) ) {
-                wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['internal'] ) );
-            }
-
-            if ( isset( $response['status'] ) && 'error' == $response['status'] ) {
-                wp_send_json( array( 'type' => 'error', 'message' => esc_html( $response['error'] ) ) );
-            }
-
-            wp_send_json( array( 'type' => 'success', 'message' => $this->sys_messages['subscribe_success'] ) );
-        }
-
         /**
          * Make remote request to mailchimp API
          *
@@ -993,7 +898,6 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
             return $global_post_template;
         }
 
-
         public function override_single_page_template( $value, $post_id, $meta_key, $single ){
 
             if ( '_wp_page_template' !== $meta_key ) {
@@ -1056,6 +960,144 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
 			}
 		}
 
+		/**
+		 * @param LaStudio_Kit_Ajax_Manager $ajax_manager
+		 */
+		public function register_ajax_actions( $ajax_manager ){
+			$ajax_manager->register_ajax_action( 'newsletter_subscribe', [ $this, 'ajax_newsletter_subscribe' ] );
+			$ajax_manager->register_ajax_action( 'elementor_template', [ $this, 'ajax_get_elementor_template' ] );
+			$ajax_manager->register_ajax_action( 'elementor_widget', [ $this, 'ajax_get_elementor_widget' ] );
+		}
+
+		public function ajax_newsletter_subscribe( $request ){
+
+			$return_data = [];
+
+			$api_key = apply_filters('lastudio-kit/mailchimp/api', lastudio_kit_settings()->get_option('mailchimp-api-key'));
+			$list_id = apply_filters('lastudio-kit/mailchimp/list_id', lastudio_kit_settings()->get_option('mailchimp-list-id'));
+			$double_opt = apply_filters('lastudio-kit/mailchimp/double_opt_in', lastudio_kit_settings()->get_option('mailchimp-double-opt-in'));
+
+			$double_opt_in = filter_var( $double_opt, FILTER_VALIDATE_BOOLEAN );
+
+			if ( ! $api_key ) {
+				$return_data = [
+					'type'      => 'error',
+					'message' => $this->sys_messages['mailchimp']
+				];
+				return $return_data;
+			}
+
+			if ( isset( $request['use_target_list_id'] ) &&
+			     filter_var( $request['use_target_list_id'], FILTER_VALIDATE_BOOLEAN ) &&
+			     ! empty( $request['target_list_id'] )
+			) {
+				$list_id = $request['target_list_id'];
+			}
+
+			if ( ! $list_id ) {
+				$return_data = [
+					'type'      => 'error',
+					'message' => $this->sys_messages['mailchimp']
+				];
+				return $return_data;
+			}
+
+			$mail = $request['email'];
+
+			if ( empty( $mail ) || ! is_email( $mail ) ) {
+				$return_data = [
+					'type'      => 'error',
+					'message' => $this->sys_messages['invalid_mail']
+				];
+				return $return_data;
+			}
+
+			$args = [
+				'email_address' => $mail,
+				'status'        => $double_opt_in ? 'pending' : 'subscribed',
+			];
+
+			if ( ! empty( $data['additional'] ) ) {
+
+				$additional = $data['additional'];
+
+				foreach ( $additional as $key => $value ) {
+					$merge_fields[ strtoupper( $key ) ] = $value;
+				}
+
+				$args['merge_fields'] = $merge_fields;
+
+			}
+
+			$response = $this->api_call( $api_key, $list_id, $args );
+
+			if ( false === $response ) {
+				$return_data = [
+					'type'      => 'error',
+					'message'   => $this->sys_messages['mailchimp']
+				];
+				return $return_data;
+			}
+
+			$response = json_decode( $response, true );
+
+			if ( empty( $response ) ) {
+				$return_data = [
+					'type'      => 'error',
+					'message' => $this->sys_messages['internal']
+				];
+				return $return_data;
+			}
+
+			if ( isset( $response['status'] ) && 'error' == $response['status'] ) {
+				$return_data = [
+					'type'      => 'error',
+					'message' => esc_html( $response['error'] )
+				];
+				return $return_data;
+			}
+			$return_data = [
+				'type'      => 'success',
+				'message' => $this->sys_messages['subscribe_success']
+			];
+
+			return $return_data;
+		}
+
+		public function ajax_get_elementor_template( $request ){
+			$helper = \LaStudioKit\Template_Helper::get_instance();
+
+			$template_data = [
+				'template_content' => '',
+				'template_scripts' => [],
+				'template_styles'  => [],
+				'template_metadata' => []
+			];
+			$args = [
+				'dev' => !empty($request['dev']) ? $request['dev'] : false
+			];
+			$template_ids = !empty($request['template_ids']) ? (array) $request['template_ids'] : [];
+			if(empty($template_ids)){
+				return [ $template_data ];
+			}
+			else{
+				$returned_data = [];
+				foreach ( $template_ids as $template_id ){
+					$returned_data[$template_id] = $helper->callback( array_merge($args, ['id' => $template_id]), 'ajax' );
+				}
+				return $returned_data;
+			}
+		}
+
+		public function ajax_get_elementor_widget( $request ){
+			$helper = \LaStudioKit\Template_Helper::get_instance();
+			$args = [
+				'template_id' => !empty($request['template_id']) ? absint($request['template_id']) : false,
+				'widget_id' => !empty($request['widget_id']) ? $request['widget_id'] : false,
+				'dev' => !empty($request['dev']) ? $request['dev'] : false
+			];
+			return $helper->widget_callback($args, 'ajax');
+		}
 	}
 
 }

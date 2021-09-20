@@ -147,14 +147,38 @@
 .lakit-iconbox__icon-align-righttitle .lakit-iconbox__box_icon {
 	order: 2;
 }
+
+.lakit--icon-floating-button .lakit-iconbox__box_body {
+	position: static;
+}
+.lakit--icon-floating-button .lakit-iconbox__button_wrapper {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+}
+.lakit--icon-floating-button .lakit-iconbox__button_wrapper .elementor-button{
+	height: 100%;
+}
+.lakit--icon-floating-button--left .lakit-iconbox__button_wrapper {
+	left: 0;
+}
+.lakit--icon-floating-button--right .lakit-iconbox__button_wrapper {
+	right: 0;
+}
 .lakit-iconbox .enable_hover_btn {
 	opacity: 0;
 	transform: translateY(20px);
 	visibility: hidden;
 	transition: all .3s;
 }
+.lakit--icon-floating-button--left .enable_hover_btn{
+	transform: translateX(20px);
+}
+.lakit--icon-floating-button--right .enable_hover_btn{
+	transform: translateX(-20px);
+}
 .lakit-iconbox:hover .enable_hover_btn {
 	opacity: 1;
 	visibility: inherit;
-	transform: translateY(0);
+	transform: translate(0);
 }

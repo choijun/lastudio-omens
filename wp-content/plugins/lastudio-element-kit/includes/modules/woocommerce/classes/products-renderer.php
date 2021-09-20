@@ -140,7 +140,7 @@ class Products_Renderer extends Base_Products_Renderer {
                 $page_key .= '-' . $this->settings['unique_id'];
             }
 
-			$page = absint( empty( $_GET[$page_key] ) ? 1 : $_GET[$page_key] );
+			$page = absint( empty( $_REQUEST[$page_key] ) ? 1 : $_REQUEST[$page_key] );
 
 			if ( $page > 1 ) {
 				$query_args['paged'] = $page;

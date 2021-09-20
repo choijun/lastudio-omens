@@ -19,7 +19,7 @@ $header_nav_menu = wp_nav_menu( [
             else {
                 ?>
                 <a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php esc_attr_e( 'Home', 'omens' ); ?>" rel="home">
-                    <img src="<?php echo esc_url(get_theme_file_uri('/assets/images/logo.svg')) ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>" width="229" height="62"/>
+                    <img src="<?php echo esc_url(omens_get_theme_mod('logo_default', get_theme_file_uri('/assets/images/logo.svg'))) ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>" width="229" height="62"/>
                 </a>
             <?php } ?>
         </div>

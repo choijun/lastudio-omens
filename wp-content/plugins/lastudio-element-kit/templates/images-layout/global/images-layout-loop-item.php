@@ -50,6 +50,8 @@ $this->add_render_attribute( $item_instance, 'class', $col_class );
 
 $this->item_counter++;
 
+$btn_icon =  $this->_btn_icon('<span class="btn-icon">%s</span>');
+
 ?>
 <div <?php echo $this->get_render_attribute_string( $item_instance ); ?>>
 	<div class="lakit-images-layout__inner">
@@ -64,7 +66,10 @@ $this->item_counter++;
                 echo $this->_loop_item( array( 'item_title' ), '<' . $title_tag . ' class="lakit-images-layout__title">%s</' . $title_tag . '>' );
                 echo $this->_loop_item( array( 'item_desc' ), '<div class="lakit-images-layout__desc">%s</div>' );
                 if('external' === $link_type){
-	                echo $this->_loop_item( array( 'item_link_text' ), '<button class="lakit-images-layout__button button">%s</button>' );
+                    $item_link_text = $this->_loop_item( array( 'item_link_text' ), '<span>%s</span>');
+                    if(!empty($item_link_text) || !empty($btn_icon)){
+                        echo sprintf('<button class="elementor-button lakit-images-layout__button button">%1$s%2$s</button>', $item_link_text, $btn_icon);
+                    }
                 }
             ?></div>
 		</<?php echo $link_tag; ?>>

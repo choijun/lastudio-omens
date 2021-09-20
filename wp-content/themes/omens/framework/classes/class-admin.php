@@ -28,9 +28,9 @@ class Omens_Admin {
             wp_enqueue_style( 'omens-fonts', Omens_Theme_Class::enqueue_google_fonts_url() , array(), null );
         }
 
-        $body_font_family = omens_get_option('body_font_family');
-        if(!empty($body_font_family['font-family'])){
-            wp_add_inline_style('omens-admin-css', '.block-editor .editor-styles-wrapper .editor-block-list__block{ font-family: "'. esc_attr($body_font_family['font-family']) .'" }');
+        $body_font_family = omens_get_theme_mod('body_font_family');
+        if(!empty($body_font_family)){
+            wp_add_inline_style('omens-admin-css', '.block-editor .editor-styles-wrapper .editor-block-list__block{ font-family: '.$body_font_family.' }');
         }
 
         wp_localize_script( 'omens-admin-theme', 'omens_admin_vars', array(

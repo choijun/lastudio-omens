@@ -23,7 +23,17 @@ add_filter('lastudio-kit/logo/attr/src', 'omens_lakit_logo_attr_src');
 if(!function_exists('omens_lakit_logo_attr_src')){
     function omens_lakit_logo_attr_src( $src ){
         if(!$src){
-            $src = get_theme_file_uri('/assets/images/logo.svg');
+	        $src = omens_get_theme_mod('logo_default', get_theme_file_uri('/assets/images/logo.svg'));
+        }
+        return $src;
+    }
+}
+
+add_filter('lastudio-kit/logo/attr/src2x', 'omens_lakit_logo_attr_src2x');
+if(!function_exists('omens_lakit_logo_attr_src2x')){
+    function omens_lakit_logo_attr_src2x( $src ){
+        if(!$src){
+	        $src = omens_get_theme_mod('logo_transparency', '');
         }
         return $src;
     }
@@ -71,6 +81,7 @@ if(!function_exists('omens_lakit_add_product_grid_style')){
             '6' => esc_html__('Type 6', 'omens'),
             '7' => esc_html__('Type 7', 'omens'),
             '8' => esc_html__('Type 8', 'omens'),
+            '9' => esc_html__('Type 9', 'omens'),
         ];
     }
 }

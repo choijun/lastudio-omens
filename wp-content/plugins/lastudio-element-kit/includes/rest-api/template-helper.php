@@ -71,7 +71,17 @@ class Template_Helper {
                 'template_styles'  => [],
                 'template_metadata' => []
             ];
-            return $type == 'rest' ? rest_ensure_response( $template_data ) : wp_send_json($template_data);
+            return $type == 'rest' ? rest_ensure_response( $template_data ) : $template_data;
+        }
+
+        if( 'elementor_library' !== get_post_type($template_id) ){
+	        $template_data = [
+		        'template_content' => '',
+		        'template_scripts' => [],
+		        'template_styles'  => [],
+		        'template_metadata' => []
+	        ];
+	        return $type == 'rest' ? rest_ensure_response( $template_data ) : $template_data;
         }
 
         $transient_key = md5( sprintf( 'lakit_doc_%s', $template_id ) );
@@ -79,7 +89,7 @@ class Template_Helper {
         $template_data = get_transient( $transient_key );
 
         if ( !empty( $template_data ) && !$dev ) {
-            return $type == 'rest' ? rest_ensure_response( $template_data ) : wp_send_json($template_data);
+            return $type == 'rest' ? rest_ensure_response( $template_data ) : $template_data;
         }
 
         $plugin = lastudio_kit()->elementor();
@@ -133,7 +143,7 @@ class Template_Helper {
         set_transient( $transient_key, $template_data, 24 * HOUR_IN_SECONDS );
         self::set_transient_key('post_type', $template_id, $transient_key );
 
-        return $type == 'rest' ? rest_ensure_response( $template_data ) : wp_send_json($template_data);
+        return $type == 'rest' ? rest_ensure_response( $template_data ) : $template_data;
     }
 
     /**
@@ -406,50 +416,47 @@ class Template_Helper {
         $curl = esc_url_raw( $curl );
         $link = str_replace($curl, '', $link);
         $link = str_replace('&', '?', $link);
+
         return $link;
     }
 
-    public function widget_callback( $args ) {
+    public function widget_callback( $args, $type = 'rest' ) {
         $template_id = ! empty( $args['template_id'] ) ? $args['template_id'] : false;
         $widget_id = ! empty( $args['widget_id'] ) ? $args['widget_id'] : false;
         $is_dev = isset($args['dev']) ? $args['dev'] : false;
         $is_dev = filter_var( $is_dev, FILTER_VALIDATE_BOOLEAN );
 
         if ( (empty($template_id) && empty($widget_id)) || !defined('ELEMENTOR_VERSION' ) ) {
-            return rest_ensure_response([
-                'template_content' => ''
-            ]);
+
+	        return $type == 'rest' ? rest_ensure_response( [ 'template_content' => '' ] ) : [ 'template_content' => '' ];
         }
+
+	    if( false === get_post_type($template_id) ){
+		    return $type == 'rest' ? rest_ensure_response( [ 'template_content' => '' ] ) : [ 'template_content' => '' ];
+	    }
 
         $transient_key = md5( sprintf( 'lakit_doc_%s_widget_%s', $template_id, $widget_id ) );
 
         $template_data = get_transient( $transient_key );
 
         if ( !empty( $template_data ) && !$is_dev ) {
-
-            return rest_ensure_response( $template_data );
+	        return $type == 'rest' ? rest_ensure_response( $template_data ) : $template_data;
         }
 
         $doc_meta = get_post_meta( $template_id, '_elementor_data', true );
 
         if(empty($doc_meta)){
-            return rest_ensure_response([
-                'template_content' => ''
-            ]);
+	        return $type == 'rest' ? rest_ensure_response( [ 'template_content' => '' ] ) : [ 'template_content' => '' ];
         }
 
         $doc_meta = @json_decode($doc_meta, true);
 
         if(empty($doc_meta)){
-            return rest_ensure_response([
-                'template_content' => ''
-            ]);
+	        return $type == 'rest' ? rest_ensure_response( [ 'template_content' => '' ] ) : [ 'template_content' => '' ];
         }
         $widget_data = $this->find_widget_data($doc_meta, $widget_id);
         if(empty($widget_data) || ( !empty($widget_data) && !is_array($widget_data) )){
-            return rest_ensure_response([
-                'template_content' => ''
-            ]);
+	        return $type == 'rest' ? rest_ensure_response( [ 'template_content' => '' ] ) : [ 'template_content' => '' ];
         }
 
         ob_start();
@@ -471,7 +478,7 @@ class Template_Helper {
             self::set_transient_key('post_type', $template_id, $transient_key );
         }
 
-        return rest_ensure_response($template_data);
+	    return $type == 'rest' ? rest_ensure_response( $template_data ) : $template_data;
     }
 
     public static function find_widget_data( $data, $widget_id ){

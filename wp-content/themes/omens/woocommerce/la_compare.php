@@ -20,7 +20,18 @@ if(!function_exists('wc_print_notices')){
     $tax_attr = Omens_WooCommerce_Compare::get_taxonomies();
     $all_attr = array_merge($default_attr, $tax_attr);
 
-    $attribute_allow = omens_get_option('compare_attribute', $default_attr);
+    $attribute_allow = [];
+    $s = omens_get_theme_mod('compare_attribute');
+    $settings = [];
+    if(!empty($s)){
+        $settings = explode(',', $s);
+        foreach ($settings as $setting){
+            if(isset($all_attr[$setting])){
+	            $attribute_allow[$setting] = $all_attr[$setting];
+            }
+        }
+    }
+
     if(empty($attribute_allow)){
         $attribute_allow = $default_attr;
     }

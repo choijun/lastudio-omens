@@ -43,7 +43,7 @@
                 echo $this->_loop_item( array( 'item_title' ), '<' . $title_tag . ' class="lakit-banner__title">%s</' . $title_tag . '>' );
                 echo $this->_loop_item( array( 'item_text' ), '<div class="lakit-banner__text">%s</div>' );
                 if(!empty($item_settings['item_button_text'])){
-                    echo sprintf('<button role="button" class="elementor-button elementor-size-md">%1$s</button>', $item_settings['item_button_text']);
+                    echo sprintf('<button role="button" class="elementor-button lakit-carousel__item-button elementor-size-md">%1$s</button>', $item_settings['item_button_text']);
                 }
             echo '</div>';
         echo '</figcaption>';

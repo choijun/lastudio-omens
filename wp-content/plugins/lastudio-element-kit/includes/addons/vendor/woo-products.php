@@ -584,17 +584,23 @@ class LaStudioKit_Woo_Products extends LaStudioKit_Base {
             ]
         );
 
-        $this->add_responsive_control(
-            'image_spacing',
-            [
-                'label' => esc_html__( 'Spacing', 'lastudio-kit' ),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => [ 'px', 'em' ],
-                'selectors' => [
-                    '{{WRAPPER}} ul.products li.product .product_item--thumbnail' => 'margin-bottom: {{SIZE}}{{UNIT}}',
-                ],
-            ]
-        );
+	    $this->add_responsive_control(
+		    'image_spacing',
+		    [
+			    'label' => esc_html__( 'Spacing', 'lastudio-kit' ),
+			    'type' => Controls_Manager::DIMENSIONS,
+			    'size_units' => [ 'px', 'em' ],
+			    'range' => [
+				    'px' => [
+					    'min' => 0,
+					    'max' => 100,
+				    ],
+			    ],
+			    'selectors' => [
+				    '{{WRAPPER}} ul.products li.product .product_item--thumbnail' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+			    ]
+		    ]
+	    );
 
         $this->add_control(
             'heading_title_style',
@@ -624,24 +630,23 @@ class LaStudioKit_Woo_Products extends LaStudioKit_Base {
             ]
         );
 
-        $this->add_responsive_control(
-            'title_spacing',
-            [
-                'label' => esc_html__( 'Spacing', 'lastudio-kit' ),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => [ 'px', 'em' ],
-                'range' => [
-                    'em' => [
-                        'min' => 0,
-                        'max' => 5,
-                        'step' => 0.1,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} ul.products li.product .product_item--title' => 'margin-bottom: {{SIZE}}{{UNIT}}',
-                ],
-            ]
-        );
+	    $this->add_responsive_control(
+		    'title_spacing',
+		    [
+			    'label' => esc_html__( 'Spacing', 'lastudio-kit' ),
+			    'type' => Controls_Manager::DIMENSIONS,
+			    'size_units' => [ 'px', 'em' ],
+			    'range' => [
+				    'px' => [
+					    'min' => 0,
+					    'max' => 100,
+				    ],
+			    ],
+			    'selectors' => [
+				    '{{WRAPPER}} ul.products li.product .product_item--title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+			    ]
+		    ]
+	    );
 
         $this->add_control(
             'heading_rating_style',
@@ -695,24 +700,23 @@ class LaStudioKit_Woo_Products extends LaStudioKit_Base {
             ]
         );
 
-        $this->add_responsive_control(
-            'rating_spacing',
-            [
-                'label' => esc_html__( 'Spacing', 'lastudio-kit' ),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => [ 'px', 'em' ],
-                'range' => [
-                    'em' => [
-                        'min' => 0,
-                        'max' => 5,
-                        'step' => 0.1,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}}  ul.products li.product .star-rating' => 'margin-bottom: {{SIZE}}{{UNIT}}',
-                ],
-            ]
-        );
+	    $this->add_responsive_control(
+		    'rating_spacing',
+		    [
+			    'label' => esc_html__( 'Spacing', 'lastudio-kit' ),
+			    'type' => Controls_Manager::DIMENSIONS,
+			    'size_units' => [ 'px', 'em' ],
+			    'range' => [
+				    'px' => [
+					    'min' => 0,
+					    'max' => 100,
+				    ],
+			    ],
+			    'selectors' => [
+				    '{{WRAPPER}}  ul.products li.product .star-rating' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+			    ]
+		    ]
+	    );
 
         $this->add_control(
             'heading_price_style',
@@ -773,17 +777,23 @@ class LaStudioKit_Woo_Products extends LaStudioKit_Base {
             ]
         );
 
-        $this->add_responsive_control(
-            'price_spacing',
-            [
-                'label' => esc_html__( 'Spacing', 'lastudio-kit' ),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => [ 'px', 'em' ],
-                'selectors' => [
-                    '{{WRAPPER}} ul.products li.product .price' => 'margin-bottom: {{SIZE}}{{UNIT}}',
-                ],
-            ]
-        );
+	    $this->add_responsive_control(
+		    'price_spacing',
+		    [
+			    'label' => esc_html__( 'Spacing', 'lastudio-kit' ),
+			    'type' => Controls_Manager::DIMENSIONS,
+			    'size_units' => [ 'px', 'em' ],
+			    'range' => [
+				    'px' => [
+					    'min' => 0,
+					    'max' => 100,
+				    ],
+			    ],
+			    'selectors' => [
+				    '{{WRAPPER}}  ul.products li.product .price' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+			    ]
+		    ]
+	    );
 
         $this->add_control(
             'heading_button_style',
@@ -944,24 +954,24 @@ class LaStudioKit_Woo_Products extends LaStudioKit_Base {
             ]
         );
 
-        $this->add_responsive_control(
-            'excerpt_spacing',
-            [
-                'label' => esc_html__( 'Spacing', 'lastudio-kit' ),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => [ 'px', 'em' ],
-                'range' => [
-                    'em' => [
-                        'min' => 0,
-                        'max' => 5,
-                        'step' => 0.1,
-                    ],
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} ul.products li.product .item--excerpt' => 'margin-bottom: {{SIZE}}{{UNIT}}',
-                ],
-            ]
-        );
+
+	    $this->add_responsive_control(
+		    'excerpt_spacing',
+		    [
+			    'label' => esc_html__( 'Spacing', 'lastudio-kit' ),
+			    'type' => Controls_Manager::DIMENSIONS,
+			    'size_units' => [ 'px', 'em' ],
+			    'range' => [
+				    'px' => [
+					    'min' => 0,
+					    'max' => 100,
+				    ],
+			    ],
+			    'selectors' => [
+				    '{{WRAPPER}}  ul.products li.product .item--excerpt' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+			    ]
+		    ]
+	    );
 
 	    $this->add_control(
 		    'heading_cat_style',
@@ -995,20 +1005,20 @@ class LaStudioKit_Woo_Products extends LaStudioKit_Base {
 		    'cat_spacing',
 		    [
 			    'label' => esc_html__( 'Spacing', 'lastudio-kit' ),
-			    'type' => Controls_Manager::SLIDER,
+			    'type' => Controls_Manager::DIMENSIONS,
 			    'size_units' => [ 'px', 'em' ],
 			    'range' => [
-				    'em' => [
+				    'px' => [
 					    'min' => 0,
-					    'max' => 5,
-					    'step' => 0.1,
+					    'max' => 100,
 				    ],
 			    ],
 			    'selectors' => [
-				    '{{WRAPPER}} ul.products li.product .product_item--category-link' => 'margin-bottom: {{SIZE}}{{UNIT}}',
-			    ],
+				    '{{WRAPPER}}  ul.products li.product .product_item--category-link' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+			    ]
 		    ]
 	    );
+
 
         $this->end_controls_section();
 
@@ -1385,17 +1395,23 @@ class LaStudioKit_Woo_Products extends LaStudioKit_Base {
             ]
         );
 
-
-        $this->add_responsive_control(
-            'pagination_spacing',
-            [
-                'label' => esc_html__( 'Spacing', 'lastudio-kit' ),
-                'type' => Controls_Manager::SLIDER,
-                'selectors' => [
-                    '{{WRAPPER}} nav.woocommerce-pagination' => 'margin-top: {{SIZE}}{{UNIT}}',
-                ],
-            ]
-        );
+	    $this->add_responsive_control(
+		    'pagination_spacing',
+		    [
+			    'label' => esc_html__( 'Spacing', 'lastudio-kit' ),
+			    'type' => Controls_Manager::DIMENSIONS,
+			    'size_units' => [ 'px', 'em' ],
+			    'range' => [
+				    'px' => [
+					    'min' => 0,
+					    'max' => 100,
+				    ],
+			    ],
+			    'selectors' => [
+				    '{{WRAPPER}} nav.woocommerce-pagination' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+			    ]
+		    ]
+	    );
 
         $this->add_control(
             'show_pagination_border',

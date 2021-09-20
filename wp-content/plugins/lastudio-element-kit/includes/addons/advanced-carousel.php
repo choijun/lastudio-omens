@@ -12,12 +12,6 @@ if (!defined('WPINC')) {
     die;
 }
 
-use Elementor\Core\Schemes\Color as Scheme_Color;
-use Elementor\Core\Schemes\Typography as Scheme_Typography;
-
-// Elementor Classes
-use Elementor\Modules\DynamicTags\Module as TagsModule;
-
 /**
  * Advanced_Carousel Widget
  */
@@ -157,6 +151,20 @@ class LaStudioKit_Advanced_Carousel extends LaStudioKit_Base {
                 ),
             )
         );
+	    $repeater->add_control(
+		    'item_enable_ajax',
+		    array(
+			    'label'        => esc_html__( 'Enable Ajax Load', 'lastudio-kit' ),
+			    'type'         => Controls_Manager::SWITCHER,
+			    'label_on'     => esc_html__( 'Yes', 'lastudio-kit' ),
+			    'label_off'    => esc_html__( 'No', 'lastudio-kit' ),
+			    'return_value' => 'yes',
+			    'default'      => 'false',
+			    'condition'   => array(
+				    'item_content_type' => 'template',
+			    ),
+		    )
+	    );
 
         $this->_add_control(
             'items_list',
@@ -307,10 +315,31 @@ class LaStudioKit_Advanced_Carousel extends LaStudioKit_Base {
                 ),
             )
         );
+	    $this->_add_control(
+		    'custom_img_type',
+		    array(
+			    'label'   => esc_html__( 'Cropped Type', 'lastudio-kit' ),
+			    'type'    => Controls_Manager::SELECT,
+			    'options' => [
+				    'none' => esc_html__( 'None', 'lastudio-kit' ),
+				    'cover' => esc_html__( 'Cover', 'lastudio-kit' ),
+				    'fill' => esc_html__( 'Fill', 'lastudio-kit' ),
+				    'contain' => esc_html__( 'Contain', 'lastudio-kit' ),
+				    'scale-down' => esc_html__( 'Scale Down', 'lastudio-kit' ),
+			    ],
+			    'default' => 'cover',
+			    'condition' => array(
+				    'equal_custom_img_height' => 'true',
+			    ),
+			    'selectors'  => array(
+				    '{{WRAPPER}} .lakit-carousel .lakit-banner__img,{{WRAPPER}} .lakit-carousel .lakit-carousel__item-img' => 'object-fit: {{value}}',
+			    ),
+		    )
+	    );
         $this->_add_control(
             'custom_img_position',
             array(
-                'label'   => esc_html__( 'Cropped Image Position', 'lastudio-kit' ),
+                'label'   => esc_html__( 'Cropped Position', 'lastudio-kit' ),
                 'type'    => Controls_Manager::SELECT,
                 'options' => [
                     'center' => esc_html__( 'Center', 'lastudio-kit' ),
@@ -350,8 +379,8 @@ class LaStudioKit_Advanced_Carousel extends LaStudioKit_Base {
                 'items_text'     => '.lakit-carousel__content .lakit-carousel__item-text',
                 'items_icon'     => '.lakit-carousel__item-icon',
                 'items_icon_inner' => '.lakit-icon-inner',
-                'items_button'   => '.elementor-button',
-                'button_icon'    => '.elementor-button .btn-icon',
+                'items_button'   => '.lakit-carousel__item-button',
+                'button_icon'    => '.lakit-carousel__item-button .btn-icon',
                 'banner'         => '.lakit-banner',
                 'banner_content' => '.lakit-banner__content',
                 'banner_overlay' => '.lakit-banner__overlay',
@@ -781,6 +810,32 @@ class LaStudioKit_Advanced_Carousel extends LaStudioKit_Base {
             )
         );
 
+	    $this->_add_responsive_control(
+		    'text_alignment',
+		    array(
+			    'label'   => esc_html__( 'Alignment', 'lastudio-kit' ),
+			    'type'    => Controls_Manager::CHOOSE,
+			    'options' => array(
+				    'left'    => array(
+					    'title' => esc_html__( 'Left', 'lastudio-kit' ),
+					    'icon'  => 'eicon-text-align-left',
+				    ),
+				    'center' => array(
+					    'title' => esc_html__( 'Center', 'lastudio-kit' ),
+					    'icon'  => 'eicon-text-align-center',
+				    ),
+				    'right' => array(
+					    'title' => esc_html__( 'Right', 'lastudio-kit' ),
+					    'icon'  => 'eicon-text-align-right',
+				    ),
+			    ),
+			    'selectors'  => array(
+				    '{{WRAPPER}} ' . $css_scheme['banner_content'] => 'text-align: {{VALUE}};',
+			    ),
+		    ),
+		    25
+	    );
+
         $this->_start_controls_tabs( 'tabs_background' );
 
         $this->_start_controls_tab(
@@ -1141,7 +1196,6 @@ class LaStudioKit_Advanced_Carousel extends LaStudioKit_Base {
             Group_Control_Typography::get_type(),
             array(
                 'name'     => 'items_title_typography',
-                'scheme'   => Scheme_Typography::TYPOGRAPHY_3,
                 'selector' => '{{WRAPPER}}  ' . $css_scheme['items_title'] . ', {{WRAPPER}}  ' . $css_scheme['items_title'] . ' a, {{WRAPPER}} ' . $css_scheme['banner_title'],
                 'separator' => 'before',
             ),
@@ -1202,10 +1256,6 @@ class LaStudioKit_Advanced_Carousel extends LaStudioKit_Base {
             array(
                 'label'     => esc_html__( 'Content Color', 'lastudio-kit' ),
                 'type'      => Controls_Manager::COLOR,
-                'scheme'    => array(
-                    'type'  => Scheme_Color::get_type(),
-                    'value' => Scheme_Color::COLOR_3,
-                ),
                 'selectors' => array(
                     '{{WRAPPER}} ' . $css_scheme['items_text'] => 'color: {{VALUE}}',
                     '{{WRAPPER}} ' . $css_scheme['banner_text'] => 'color: {{VALUE}}',
@@ -1244,7 +1294,6 @@ class LaStudioKit_Advanced_Carousel extends LaStudioKit_Base {
             Group_Control_Typography::get_type(),
             array(
                 'name'     => 'items_text_typography',
-                'scheme'   => Scheme_Typography::TYPOGRAPHY_3,
                 'selector' => '{{WRAPPER}}  ' . $css_scheme['items_text'] . ', {{WRAPPER}} ' . $css_scheme['banner_text'],
                 'separator' => 'before',
             ),
@@ -1305,6 +1354,17 @@ class LaStudioKit_Advanced_Carousel extends LaStudioKit_Base {
 		    )
 	    );
 
+	    $this->_add_control(
+		    'full_btn',
+		    array(
+			    'label'     => esc_html__( 'Button Fullwidth', 'lastudio-kit' ),
+			    'type'      => Controls_Manager::SWITCHER,
+			    'default'   => '',
+			    'return_value'   => 'lakit--btn-fullwidth',
+			    'prefix_class' => ''
+		    )
+	    );
+
 	    $this->_add_icon_control(
 		    'btn_icon',
 		    [
@@ -1362,7 +1422,6 @@ class LaStudioKit_Advanced_Carousel extends LaStudioKit_Base {
             Group_Control_Typography::get_type(),
             array(
                 'name'     => 'button_typography',
-                'scheme'   => Scheme_Typography::TYPOGRAPHY_4,
                 'selector' => '{{WRAPPER}}  ' . $css_scheme['items_button'],
             ),
             50
@@ -1433,10 +1492,6 @@ class LaStudioKit_Advanced_Carousel extends LaStudioKit_Base {
             array(
                 'label' => esc_html__( 'Background Color', 'lastudio-kit' ),
                 'type' => Controls_Manager::COLOR,
-                'scheme' => array(
-                    'type'  => Scheme_Color::get_type(),
-                    'value' => Scheme_Color::COLOR_1,
-                ),
                 'selectors' => array(
                     '{{WRAPPER}} ' . $css_scheme['items_button'] => 'background-color: {{VALUE}}',
                 ),
@@ -1592,7 +1647,15 @@ class LaStudioKit_Advanced_Carousel extends LaStudioKit_Base {
 
         // for multi-language plugins
         $template_id = apply_filters( 'lastudio-kit/widgets/template_id', $template_id, $this );
-        $content     = lastudio_kit()->elementor()->frontend->get_builder_content_for_display( $template_id );
+
+	    $item_enable_ajax = !empty($this->_processed_item['item_enable_ajax']) && filter_var($this->_processed_item['item_enable_ajax'], FILTER_VALIDATE_BOOLEAN);
+
+	    if($item_enable_ajax && !Plugin::instance()->editor->is_edit_mode()){
+		    $content = '<div data-lakit_ajax_loadtemplate="true" data-template-id="'.esc_attr($template_id).'"><span class="lakit-css-loader"></span></div>';
+	    }
+	    else{
+		    $content     = lastudio_kit()->elementor()->frontend->get_builder_content_for_display( $template_id );
+	    }
 
         if ( lastudio_kit()->elementor()->editor->is_edit_mode() ) {
             $edit_url = add_query_arg(

@@ -62,9 +62,9 @@
             this.styleTablet.id = 'lakitcustomizer-tablet';
             this.styleMobileExtra.id = 'lakitcustomizer-mobile_extra';
             this.styleMobile.id = 'lakitcustomizer-mobile';
-            this.styleLaptop.media = '(min-width: 1280px) and (max-width: 1600px)';
-            this.styleTablet.media = '(min-width: 882px) and (max-width: 1280px)';
-            this.styleMobileExtra.media = '(min-width: 576px) and (max-width: 881px)';
+            this.styleLaptop.media = '(max-width: 1600px)';
+            this.styleTablet.media = '(max-width: 1280px)';
+            this.styleMobileExtra.media = '(max-width: 881px)';
             this.styleMobile.media = '(max-width: 575.98px)';
             this.doc.head.appendChild(this.style);
             this.doc.head.appendChild(this.styleLaptop);
@@ -83,7 +83,6 @@
             if (this.rules[device] === undefined) {
                 this.rules[device] = {};
             }
-
             this.rules[device][selector] = sheet.cssRules.length;
             sheet.insertRule(selector + '{}', sheet.cssRules.length);
             return this.rules[device][selector];
@@ -154,7 +153,8 @@
                         });
                     }
                 });
-            } else if (control.settings.default !== undefined) {
+            }
+            else if (control.settings.default !== undefined) {
                 var settingObj = control.settings.default;
                 var initValue = settingObj.get();
 
@@ -354,12 +354,12 @@
             }
         },
         css: function css() {
+
             var cssItems = this.params.css;
 
             if (!cssItems.length || this.setting.transport === 'refresh') {
                 return;
             }
-
             if (lakitcustomizer.css !== undefined) {
                 lakitcustomizer.css.watch(this, cssItems);
             }

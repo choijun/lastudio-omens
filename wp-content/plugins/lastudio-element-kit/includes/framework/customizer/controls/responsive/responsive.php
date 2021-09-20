@@ -237,8 +237,6 @@ if ( ! class_exists( 'CX_Customizer_Responsive_control' ) ) {
 
             parent::__construct( $manager, $id, $args );
 
-            //la_log($args);
-
             if(!empty($args['responsive']) && $args['responsive']){
                 $this->responsive = true;
             }
@@ -403,4 +401,76 @@ if ( ! class_exists( 'CX_Customizer_Responsive_control' ) ) {
         }
 
     }
+}
+
+
+if(!class_exists('CX_Customizer_Checkbox_Multiple_control')){
+
+    class CX_Customizer_Checkbox_Multiple_control extends WP_Customize_Control{
+	    /**
+	     * The type of customize control being rendered.
+	     *
+	     * @since  1.0.0
+	     * @access public
+	     * @var    string
+	     */
+	    public $type = 'checkbox-multiple';
+
+	    /**
+	     * Enqueue scripts/styles.
+	     *
+	     * @since  1.0.0
+	     * @access public
+	     * @return void
+	     */
+	    public function enqueue() {
+		    $version = '1.0.0';
+
+		    $dependency = array(
+			    'jquery',
+			    'customize-base',
+			    'customize-controls',
+		    );
+		    wp_enqueue_script( 'lakit-customizer-checkbox-multiple-control', plugin_dir_url(__FILE__ ) . 'checkbox-multiple.js', $dependency, $version, true );
+	    }
+
+	    /**
+	     * Displays the control content.
+	     *
+	     * @since  1.0.0
+	     * @access public
+	     * @return void
+	     */
+	    public function render_content() {
+
+		    if ( empty( $this->choices ) )
+			    return; ?>
+
+		    <?php if ( !empty( $this->label ) ) : ?>
+                <span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
+		    <?php endif; ?>
+
+		    <?php if ( !empty( $this->description ) ) : ?>
+                <span class="description customize-control-description"><?php echo $this->description; ?></span>
+		    <?php endif; ?>
+
+		    <?php $multi_values = !is_array( $this->value() ) ? explode( ',', $this->value() ) : $this->value(); ?>
+
+            <ul>
+			    <?php foreach ( $this->choices as $value => $label ) : ?>
+
+                    <li>
+                        <label>
+                            <input type="checkbox" value="<?php echo esc_attr( $value ); ?>" <?php checked( in_array( $value, $multi_values ) ); ?> />
+						    <?php echo esc_html( $label ); ?>
+                        </label>
+                    </li>
+
+			    <?php endforeach; ?>
+            </ul>
+
+            <input type="hidden" <?php $this->link(); ?> value="<?php echo esc_attr( implode( ',', $multi_values ) ); ?>" />
+	    <?php }
+    }
+
 }

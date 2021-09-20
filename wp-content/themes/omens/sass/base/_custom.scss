@@ -79,3 +79,82 @@
 .wpcf7 .wpcf7-not-valid-tip {
 	font-size: .875em;
 }
+
+.custom-contenttab {
+	align-items: center;
+	@media(min-width: 1400px){
+		font-size: 20px;
+	}
+	h3 {
+		font-family: inherit;
+		font-weight: bold;
+	}
+	a.la-popup{
+		position: relative;
+		&:before{
+			content: '\ea45';
+			font-family: LaStudioIcons;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%,-50%);
+			border: 1px solid;
+			border-radius: 50%;
+			width: 3.2em;
+			height: 3.2em;
+			color: #fff;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding-left: .2em;
+			speak: none;
+			text-transform: none;
+			-webkit-font-smoothing: antialiased;
+			font-size: 20px;
+			transition: all .3s;
+		}
+		&:hover{
+			&:before{
+				transform: translate(-50%,-50%) scale(1.2);
+			}
+		}
+	}
+}
+
+.m23-frm-booking{
+	margin-left: auto;
+	.lakit-row{
+		align-items: center;
+	}
+	.wpcf7-submit{
+		height: 182px;
+	}
+	.lakit-col{
+		&:last-child{
+			flex: 0 0 0;
+			position: relative;
+			.ajax-loader{
+				top: calc(50% - 12px);
+				left: calc(50% - 12px);
+				margin: 0;
+			}
+		}
+	}
+	.wpcf7{
+		span.wpcf7-not-valid-tip {
+			position: absolute;
+			font-size: 12px;
+		}
+		.wpcf7-response-output{
+			position: absolute;
+			bottom: 0;
+			margin: 0;
+			font-size: .875em;
+			left: 0;
+		}
+	}
+}
+
+.lakit-carousel.lakit-carousel--simple .lakit-carousel__item-link{
+	overflow: hidden;
+}

@@ -292,7 +292,7 @@ add_action('woocommerce_checkout_order_review', 'omens_add_custom_heading_to_che
 
 if( !function_exists('omens_calculator_free_shipping_thresholds')){
     function omens_calculator_free_shipping_thresholds(){
-        if( ! omens_string_to_bool(omens_get_option('freeshipping_thresholds', 'off')) ){
+        if( ! omens_string_to_bool( omens_get_theme_mod('freeshipping_thresholds') ) ){
             return;
         }
 
@@ -342,8 +342,8 @@ if( !function_exists('omens_calculator_free_shipping_thresholds')){
                         $parse_class = 'final-parse';
                     }
                     $parse_class .= ' free-shipping-required-notice';
-                    $text1 = omens_get_option('thresholds_text1', esc_html__('[icon]Spend [amount] to get Free Shipping', 'omens'));
-                    $text2 = omens_get_option('thresholds_text2', esc_html__('[icon]Congratulations! You\'ve got free shipping!', 'omens'));
+                    $text1 = omens_get_theme_mod('thresholds_text1', esc_html__('[icon]Spend [amount] to get Free Shipping', 'omens'));
+                    $text2 = omens_get_theme_mod('thresholds_text2', esc_html__('[icon]Congratulations! You\'ve got free shipping!', 'omens'));
                     $icon = '<svg xmlns="http://www.w3.org/2000/svg" width="62" height="45" viewBox="0 0 62 45"><g fill="currentColor" fill-rule="evenodd"><path d="M21 38a2 2 0 1 1-4 0 2 2 0 0 1 4 0m29 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0"></path><path d="M19 33.19A4.816 4.816 0 0 0 14.19 38 4.816 4.816 0 0 0 19 42.81 4.816 4.816 0 0 0 23.81 38 4.816 4.816 0 0 0 19 33.19M19 45c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7"></path><path d="M38 37H24.315v-2.145h11.544V2.145H2.14v32.71h11.544V37H0V0h38zm11-3.81A4.816 4.816 0 0 0 44.19 38 4.816 4.816 0 0 0 49 42.81 4.816 4.816 0 0 0 53.81 38 4.816 4.816 0 0 0 49 33.19M49 45c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7"></path><path d="M62 37h-7.607v-2.154h5.47V22.835l-8.578-12.681H38.137v24.692h5.465V37H36V8h16.415L62 22.17z"></path><path d="M42.147 19.932h10.792l-4.15-5.864h-6.642v5.864zM57 22H40V12h9.924L57 22z"></path></g></svg>';
                     $text1 = str_replace('[icon]', $icon, $text1);
                     $text2 = str_replace('[icon]', $icon, $text2);

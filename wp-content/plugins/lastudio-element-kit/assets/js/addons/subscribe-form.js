@@ -196,7 +196,7 @@
             }
             self.ajaxProcessing = true;
 
-            self.ajaxRequest = jQuery.ajax({
+            self.ajaxRequest = $.ajax({
                 type: self.handlerSettings.type,
                 url: settings.url,
                 data: self.data,
@@ -238,7 +238,7 @@
                         settings.successCallback(data, textStatus, jqXHR);
                     }
 
-                    LakitHandlerUtils.noticeCreate(data.type, data.message, self.handlerSettings.is_public);
+                    //LakitHandlerUtils.noticeCreate(data.type, data.message, self.handlerSettings.is_public);
                 },
                 complete: function (jqXHR, textStatus) {
                     $(document).trigger({
@@ -264,9 +264,14 @@
         self.sendData = function (data) {
             var sendData = data || {};
             self.data = {
-                'action': self.handlerSettings.action,
-                'nonce': self.handlerSettings.nonce,
-                'data': sendData
+                'action': 'lakit_ajax',
+                '_nonce': self.handlerSettings.nonce,
+                'actions': JSON.stringify({
+                    'newsletter_subscribe' : {
+                        'action': 'newsletter_subscribe',
+                        'data': sendData
+                    }
+                }),
             };
 
             self.send();
@@ -304,10 +309,40 @@
         var lakitSubscribeFormAjax = new LakitAjaxHandler({
             handlerId: subscribeFormAjaxId,
 
-            successCallback: function (data) {
-                var successType = data.type,
-                    message = data.message || '',
-                    responceClass = 'lakit-subscribe-form--response-' + successType;
+            errorCallback: function (jqXHR, textStatus, errorThrown){
+                var message = window.lakitSubscribeConfig.sys_messages.invalid_nonce,
+                    responceClass = 'lakit-subscribe-form--response-error';
+
+                $submitButton.removeClass('loading');
+
+                $target.addClass(responceClass);
+
+                $('span', $subscribeFormMessage).html(message);
+                $subscribeFormMessage.css({'visibility': 'visible'});
+
+                timeout = setTimeout(function () {
+                    $subscribeFormMessage.css({'visibility': 'hidden'});
+                    $target.removeClass(responceClass);
+                }, 20000);
+            },
+            successCallback: function ( response ) {
+                var successType, message, responceClass;
+                if(response.success){
+                    if(response.data.responses.newsletter_subscribe.success){
+                        message = response.data.responses.newsletter_subscribe.data.message;
+                        successType = response.data.responses.newsletter_subscribe.data.type;
+                    }
+                    else{
+                        message = response.data.responses.newsletter_subscribe.data;
+                        successType = 'error';
+                    }
+                }
+                else {
+                    successType = 'error';
+                    message = response.responses.error.data;
+                }
+
+                responceClass = 'lakit-subscribe-form--response-' + successType;
 
                 $submitButton.removeClass('loading');
 

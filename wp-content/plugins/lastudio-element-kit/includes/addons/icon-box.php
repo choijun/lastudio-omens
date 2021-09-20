@@ -214,9 +214,45 @@ class LaStudioKit_Icon_Box extends LaStudioKit_Base {
                 'label_on' => esc_html__( 'Yes', 'lastudio-kit' ),
                 'label_off' => esc_html__( 'No', 'lastudio-kit' ),
                 'return_value' => 'yes',
-                'separator' => 'before',
             ]
         );
+        $this->_add_control(
+            'floating_btn',
+            [
+                'label' => esc_html__( 'Floating Button ?', 'lastudio-kit' ),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__( 'Yes', 'lastudio-kit' ),
+                'label_off' => esc_html__( 'No', 'lastudio-kit' ),
+                'return_value' => 'lakit--icon-floating-button',
+	            'prefix_class' => '',
+                'condition' => [
+	                'enable_btn' => 'yes',
+                ]
+            ]
+        );
+	    $this->_add_control(
+		    'floating_btn_pos',
+		    [
+			    'label' => esc_html__( 'Position', 'lastudio-kit' ),
+			    'type' => Controls_Manager::CHOOSE,
+			    'default' => 'right',
+			    'options' => [
+				    'left' => [
+					    'title' => esc_html__( 'Left', 'lastudio-kit' ),
+					    'icon' => 'eicon-h-align-left',
+				    ],
+				    'right' => [
+					    'title' => esc_html__( 'Right', 'lastudio-kit' ),
+					    'icon' => 'eicon-h-align-right',
+				    ],
+			    ],
+			    'prefix_class' => 'lakit--icon-floating-button--',
+			    'condition' => [
+				    'enable_btn' => 'yes',
+				    'floating_btn!' => '',
+			    ]
+		    ]
+	    );
         $this->_add_control(
             'enable_hover_btn',
             [
@@ -225,7 +261,7 @@ class LaStudioKit_Icon_Box extends LaStudioKit_Base {
                 'label_on' => esc_html__( 'Yes', 'lastudio-kit' ),
                 'label_off' => esc_html__( 'No', 'lastudio-kit' ),
                 'return_value' => 'yes',
-                'separator' => 'before',
+                'separator' => 'after',
                 'condition' => [
                     'enable_btn' => 'yes',
                 ]
@@ -321,9 +357,6 @@ class LaStudioKit_Icon_Box extends LaStudioKit_Base {
                 'label_off' => esc_html__( 'No', 'lastudio-kit' ),
                 'return_value' => 'yes',
                 'default' => 'yes',
-                'condition' => [
-                    'enable_btn!' => 'yes',
-                ],
             ]
         );
 
@@ -738,7 +771,17 @@ class LaStudioKit_Icon_Box extends LaStudioKit_Base {
                 ],
             ]
         );
-
+	    $this->_add_responsive_control(
+		    'content_width',
+		    [
+			    'label' => esc_html__( 'Content Width', 'lastudio-kit' ),
+			    'type' => Controls_Manager::SLIDER,
+			    'size_units' => [ 'px', '%', 'em' ],
+			    'selectors' => [
+				    '{{WRAPPER}} ' . $css_scheme['box_body'] => 'width: {{SIZE}}{{UNIT}};max-width: {{SIZE}}{{UNIT}};',
+			    ],
+		    ]
+	    );
         $this->_add_control(
             'content_alignment',
             [
@@ -758,8 +801,13 @@ class LaStudioKit_Icon_Box extends LaStudioKit_Base {
                         'icon' => 'eicon-h-align-right',
                     ],
                 ],
+                'selectors_dictionary' => [
+	                'left'    => 'text-align:left; margin-right: auto;',
+	                'center' => 'text-align:center; margin-left: auto; margin-right: auto;',
+	                'right' => 'text-align:right; margin-left: auto;',
+                ],
                 'selectors' => [
-                    '{{WRAPPER}} ' . $css_scheme['box_body'] => 'text-align: {{VALUE}}',
+                    '{{WRAPPER}} ' . $css_scheme['box_body'] => '{{VALUE}}',
                 ],
                 'separator' => 'before',
             ]
@@ -1908,20 +1956,15 @@ class LaStudioKit_Icon_Box extends LaStudioKit_Base {
             return;
         }
 
-        $format = apply_filters( 'lastudio-kit/iconbox/main-image-format', '<img src="%1$s" alt="%2$s" class="lakit-iconbox__main_img" loading="lazy">' );
-
         if ( empty( $image['id'] ) ) {
+	        $format = apply_filters( 'lastudio-kit/iconbox/main-image-format', '<img src="%1$s" alt="%2$s" class="lakit-iconbox__main_img" loading="lazy">' );
             $main_image = sprintf( $format, $image['url'], '' );
             return sprintf( $main_format, $main_image );
         }
-
-        $size = 'full';
-
-        $image_url = wp_get_attachment_image_url( $image['id'], $size );
-        $alt       = esc_attr( Control_Media::get_image_alt( $image ) );
-
-        $main_image = sprintf( $format, $image_url, $alt );
-        return sprintf( $main_format, $main_image );
+        else{
+	        $main_image = wp_get_attachment_image( $image['id'], 'full', false, [ 'class' => 'lakit-iconbox__main_img' ] );
+	        return sprintf( $main_format, $main_image );
+        }
     }
 
     public function get_main_icon( $main_format = '%s' ){

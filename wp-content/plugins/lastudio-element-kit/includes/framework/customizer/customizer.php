@@ -189,6 +189,122 @@ if ( ! class_exists( 'CX_Customizer' ) ) {
 
             add_filter( 'customize_previewable_devices', array( $this, 'custom_devices' ) );
 
+			add_action( 'customize_preview_init', array( $this, 'customize_preview_init' ) );
+
+			add_action( 'wp_head', array( $this, 'auto_enqueue_frontend_css' ), 999 );
+
+		}
+
+		public function customize_preview_init(){
+			$theme_version = defined('WP_DEBUG') && WP_DEBUG ? time() : lastudio_kit()->get_version();
+			$dependency = array(
+				'jquery',
+				'customize-preview',
+			);
+			wp_enqueue_script( 'lakit-customize-preview', lastudio_kit()->plugin_url('assets/js/lastudio-customizer-preview.js') , $dependency, $theme_version, true );
+			wp_localize_script('lakit-customize-preview', 'lakitCustomizeConfigs', $this->get_controls_with_css());
+		}
+
+		public function get_controls_with_css(){
+			$controls = [];
+			if ( empty( $this->options ) ) {
+				return $controls;
+			}
+			foreach ( (array) $this->options as $id => $option ) {
+
+				if ( empty( $option['type'] ) ) {
+					continue;
+				}
+				if ( 'control' === $option['type'] && !empty($option['css']) && empty($option['responsive']) ) {
+					$controls[$id] = $option['css'];
+				}
+			}
+			return $controls;
+		}
+
+		public function auto_enqueue_frontend_css(){
+			$cssRules = [
+				'desktop'       => '',
+				'laptop'        => '',
+				'tablet'        => '',
+				'mobile_extra'  => '',
+				'mobile'        => ''
+			];
+			if ( empty( $this->options ) ) {
+				return;
+			}
+			$responsive_controls = [];
+			foreach ( (array) $this->options as $id => $option ) {
+				if ( empty( $option['type'] ) ) {
+					continue;
+				}
+				if ( 'control' === $option['type'] && !empty($option['css']) ) {
+					$value = $this->get_value($id);
+					if($option['field'] == 'fonts'){
+						$value = $this->render_font_value($value);
+					}
+					if(!empty($value)){
+						foreach ( $option['css'] as $item ){
+							$cssRules['desktop'] .= sprintf('%1$s{%2$s:%3$s}', $item['selector'], $item['property'], $value );
+						}
+					}
+					if( $option['field'] === 'lakit_responsive' && $option['responsive'] ) {
+						$responsive_controls[$id] = $option['css'];
+					}
+				}
+			}
+
+			$device_list = [ 'laptop', 'tablet', 'mobile_extra', 'mobile' ];
+
+			if(!empty($responsive_controls)){
+				foreach ($responsive_controls as $control => $css){
+					foreach ( $device_list as $device ) {
+						$res_cval = $this->get_value($control . '_' . $device );
+						if(!empty($res_cval)){
+							foreach ($css as $item){
+								$cssRules[$device] .= sprintf('%1$s{%2$s:%3$s}', $item['selector'], $item['property'], $res_cval );
+							}
+						}
+					}
+				}
+			}
+
+			$css_render = '';
+			foreach ($cssRules as $device => $val){
+				if(empty($val)){
+					continue;
+				}
+				if ( $device == 'laptop' ){
+					$css_render .= '@media(max-width: 1599px){'. $val .'}';
+				}
+				elseif ( $device == 'tablet' ){
+					$css_render .= '@media(max-width: 1279px){'. $val .'}';
+				}
+				elseif ( $device == 'mobile_extra' ){
+					$css_render .= '@media(max-width: 991px){'. $val .'}';
+				}
+				elseif ( $device == 'mobile' ){
+					$css_render .= '@media(max-width: 767px){'. $val .'}';
+				}
+				else{
+					$css_render .= $val;
+				}
+			}
+
+			if(!empty($css_render)){
+				echo sprintf('<style id="lakitcustomizer-css-style">%1$s</style>', $css_render);
+			}
+		}
+
+		public function render_font_value( $value ){
+			if(!empty($value)){
+				$tmp = explode(',', $value);
+				if(strpos($tmp[0], ' ') !== false){
+					$tmp[0] = '"' . $tmp[0] . '"';
+					$value = join(',', $tmp);
+				}
+			}
+			return $value;
 		}
 
 		/**
@@ -430,6 +546,10 @@ if ( ! class_exists( 'CX_Customizer' ) ) {
                 );
             }
 
+            if( !empty($args['css']) ){
+	            $control_args['css'] = $args['css'];
+            }
+
 			switch ( $field_type ) {
 
 				case 'text':
@@ -465,7 +585,7 @@ if ( ! class_exists( 'CX_Customizer' ) ) {
 						$choices      = ( isset( $args['choices'] ) ) ? $args['choices'] : $this->get_fonts();
 						$control_args = wp_parse_args( array(
 							'type'    => 'select',
-							'choices' => $choices,
+							'choices' => ['' => __('— Select —', 'lastuido-kit')] + $choices,
 						), $control_args );
 					break;
 
@@ -516,6 +636,12 @@ if ( ! class_exists( 'CX_Customizer' ) ) {
                     $control_class = 'CX_Customizer_Responsive_control';
                     break;
 
+                case 'checkbox-multiple':
+                    $control_class = 'CX_Customizer_Checkbox_Multiple_control';
+	                $choices      = ( isset( $args['choices'] ) ) ? $args['choices'] : array();
+	                $control_args['choices'] = $choices;
+                    break;
+
 				default:
 						/**
 						 * Filter arguments for a `$field_type` customize control.
@@ -553,6 +679,10 @@ if ( ! class_exists( 'CX_Customizer' ) ) {
 			 * @param object $this         Cherry_Customizer instance.
 			 */
 			$control_class = apply_filters( 'lastudio-kit/theme/customizer/control_class', $control_class, $id, $this );
+
+			if( in_array( $control_class, ['CX_Customizer_Checkbox_Multiple_control', 'CX_Customizer_Responsive_control']) && !class_exists($control_class)){
+				require_once lastudio_kit()->plugin_path( 'includes/framework/customizer/controls/responsive/responsive.php' );
+			}
 
 			if ( class_exists( $control_class ) ) {
 				$this->customize->add_control( new $control_class( $this->customize, $id, $control_args ) );

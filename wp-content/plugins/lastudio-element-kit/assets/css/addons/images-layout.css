@@ -167,3 +167,8 @@
 .imagelayout-preset-type-2 .lakit-images-layout__inner:hover .lakit-images-layout__content {
 	opacity: 1
 }
+.imagelayout-preset-type-3 .lakit-images-layout__content{
+	top: auto;
+	height: auto;
+	bottom: 0;
+}

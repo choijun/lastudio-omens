@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if(!function_exists('omens_setup_customizer')){
     function omens_setup_customizer( $args ){
+
         $args['prefix']      = 'omens';
         $args['options']    = [
             /** `General` panel */
@@ -66,7 +67,6 @@ if(!function_exists('omens_setup_customizer')){
                 'default'  => false,
                 'field'     => 'checkbox',
                 'type'     => 'control',
-                'transport'=> 'postMessage',
             ),
             'page_preloader_type' => array(
                 'title'    => esc_html__( 'Page preloader type', 'omens' ),
@@ -83,7 +83,6 @@ if(!function_exists('omens_setup_customizer')){
                     '5' => esc_html__( 'Type 5', 'omens' ),
                     'custom' => esc_html__( 'Custom', 'omens' ),
                 ],
-                'transport'=> 'postMessage',
             ),
             'page_preloader_custom' => array(
                 'title'    => esc_html__( 'Custom page preloader image', 'omens' ),
@@ -91,40 +90,119 @@ if(!function_exists('omens_setup_customizer')){
                 'priority' => 20,
                 'field'     => 'image',
                 'type'     => 'control',
-                'transport'=> 'postMessage',
+            ),
+            'page_preloader_bgcolor' => array(
+	            'title'   => esc_html__( 'Preloader background color', 'omens' ),
+	            'section' => 'colors',
+	            'field'   => 'hex_color',
+	            'type'    => 'control',
+	            'priority' => 20,
+	            'transport'=> 'postMessage',
+	            'css' => [
+		            [
+			            'selector' => '.la-image-loading',
+			            'property' => 'background-color'
+		            ]
+	            ]
+            ),
+            'page_preloader_textcolor' => array(
+	            'title'   => esc_html__( 'Preloader text color', 'omens' ),
+	            'section' => 'colors',
+	            'field'   => 'hex_color',
+	            'type'    => 'control',
+	            'priority' => 20,
+	            'transport'=> 'postMessage',
+	            'css' => [
+		            [
+			            'selector' => '.la-image-loading',
+			            'property' => 'color'
+		            ]
+	            ]
             ),
             /** `Color Schema` panel */
-            'accent_color' => array(
-                'title'   => esc_html__( 'Accent color', 'omens' ),
-                'section' => 'colors',
-                'field'   => 'hex_color',
-                'type'    => 'control',
-                'priority' => 20,
-                'transport'=> 'postMessage',
+            'body_bgcolor' => array(
+	            'title'   => esc_html__( 'Body Background Color', 'omens' ),
+	            'section' => 'colors',
+	            'field'   => 'hex_color',
+	            'type'    => 'control',
+	            'priority' => 20,
+	            'transport'=> 'postMessage',
+	            'css' => [
+		            [
+			            'selector' => ':root',
+			            'property' => '--theme-body-bg-color'
+		            ]
+	            ]
             ),
-            'primary_text_color' => array(
-                'title'   => esc_html__( 'Primary Text color', 'omens' ),
+            'text_color' => array(
+	            'title'   => esc_html__( 'Text color', 'omens' ),
+	            'section' => 'colors',
+	            'field'   => 'hex_color',
+	            'type'    => 'control',
+	            'priority' => 20,
+	            'transport'=> 'postMessage',
+	            'css' => [
+		            [
+			            'selector' => ':root',
+			            'property' => '--theme-body-font-color'
+		            ]
+	            ]
+            ),
+            'primary_color' => array(
+                'title'   => esc_html__( 'Primary color', 'omens' ),
                 'section' => 'colors',
                 'field'   => 'hex_color',
                 'type'    => 'control',
                 'priority' => 25,
                 'transport'=> 'postMessage',
+                'css' => [
+	                [
+		                'selector' => ':root',
+		                'property' => '--theme-primary-color'
+	                ]
+                ]
             ),
-            'secondary_text_color' => array(
-                'title'   => esc_html__( 'Secondary Text color', 'omens' ),
+            'secondary_color' => array(
+                'title'   => esc_html__( 'Secondary color', 'omens' ),
                 'section' => 'colors',
                 'field'   => 'hex_color',
                 'type'    => 'control',
                 'priority' => 30,
                 'transport'=> 'postMessage',
+                'css' => [
+	                [
+		                'selector' => ':root',
+		                'property' => '--theme-secondary-color'
+	                ]
+                ]
             ),
-            'invert_text_color' => array(
-                'title'   => esc_html__( 'Invert Text color', 'omens' ),
-                'section' => 'colors',
-                'field'   => 'hex_color',
-                'type'    => 'control',
-                'priority' => 35,
-                'transport'=> 'postMessage',
+            'third_color' => array(
+	            'title'   => esc_html__( 'Third color', 'omens' ),
+	            'section' => 'colors',
+	            'field'   => 'hex_color',
+	            'type'    => 'control',
+	            'priority' => 35,
+	            'transport'=> 'postMessage',
+	            'css' => [
+		            [
+			            'selector' => ':root',
+			            'property' => '--theme-three-color'
+		            ]
+	            ]
+            ),
+            'border_color' => array(
+	            'title'   => esc_html__( 'Border color', 'omens' ),
+	            'section' => 'colors',
+	            'field'   => 'hex_color',
+	            'type'    => 'control',
+	            'priority' => 38,
+	            'transport'=> 'postMessage',
+	            'css' => [
+		            [
+			            'selector' => ':root',
+			            'property' => '--theme-border-color'
+		            ]
+	            ]
             ),
             'link_color' => array(
                 'title'   => esc_html__( 'Link color', 'omens' ),
@@ -133,6 +211,12 @@ if(!function_exists('omens_setup_customizer')){
                 'type'    => 'control',
                 'priority' => 40,
                 'transport'=> 'postMessage',
+                'css' => [
+	                [
+		                'selector' => ':root',
+		                'property' => '--theme-link-color'
+	                ]
+                ]
             ),
             'link_hover_color' => array(
                 'title'   => esc_html__( 'Link hover color', 'omens' ),
@@ -141,6 +225,30 @@ if(!function_exists('omens_setup_customizer')){
                 'type'    => 'control',
                 'priority' => 45,
                 'transport'=> 'postMessage',
+                'css' => [
+	                [
+		                'selector' => ':root',
+		                'property' => '--theme-link-hover-color'
+	                ]
+                ]
+            ),
+            'h_color' => array(
+                'title'   => esc_html__( 'Heading color', 'omens' ),
+                'section' => 'colors',
+                'field'   => 'hex_color',
+                'type'    => 'control',
+                'priority' => 48,
+                'transport'=> 'postMessage',
+                'css' => [
+	                [
+		                'selector' => ':root',
+		                'property' => '--theme-heading-font-color'
+	                ],
+	                [
+		                'selector' => 'h1, h2, h3, h4, h5, h6, .theme-heading',
+		                'property' => 'color'
+	                ]
+                ]
             ),
             'h1_color' => array(
                 'title'   => esc_html__( 'H1 color', 'omens' ),
@@ -149,6 +257,12 @@ if(!function_exists('omens_setup_customizer')){
                 'type'    => 'control',
                 'priority' => 50,
                 'transport'=> 'postMessage',
+                'css' => [
+	                [
+		                'selector' => '.h1, h1',
+		                'property' => 'color'
+	                ]
+                ]
             ),
             'h2_color' => array(
                 'title'   => esc_html__( 'H2 color', 'omens' ),
@@ -157,6 +271,12 @@ if(!function_exists('omens_setup_customizer')){
                 'type'    => 'control',
                 'priority' => 55,
                 'transport'=> 'postMessage',
+                'css' => [
+	                [
+		                'selector' => '.h2, h2',
+		                'property' => 'color'
+	                ]
+                ]
             ),
             'h3_color' => array(
                 'title'   => esc_html__( 'H3 color', 'omens' ),
@@ -165,6 +285,12 @@ if(!function_exists('omens_setup_customizer')){
                 'type'    => 'control',
                 'priority' => 60,
                 'transport'=> 'postMessage',
+                'css' => [
+	                [
+		                'selector' => '.h3, h3',
+		                'property' => 'color'
+	                ]
+                ]
             ),
             'h4_color' => array(
                 'title'   => esc_html__( 'H4 color', 'omens' ),
@@ -173,6 +299,12 @@ if(!function_exists('omens_setup_customizer')){
                 'type'    => 'control',
                 'priority' => 65,
                 'transport'=> 'postMessage',
+                'css' => [
+	                [
+		                'selector' => '.h4, h4',
+		                'property' => 'color'
+	                ]
+                ]
             ),
             'h5_color' => array(
                 'title'   => esc_html__( 'H5 color', 'omens' ),
@@ -181,6 +313,12 @@ if(!function_exists('omens_setup_customizer')){
                 'type'    => 'control',
                 'priority' => 70,
                 'transport'=> 'postMessage',
+                'css' => [
+	                [
+		                'selector' => '.h5, h5',
+		                'property' => 'color'
+	                ]
+                ]
             ),
             'h6_color' => array(
                 'title'   => esc_html__( 'H6 color', 'omens' ),
@@ -189,6 +327,12 @@ if(!function_exists('omens_setup_customizer')){
                 'type'    => 'control',
                 'priority' => 75,
                 'transport'=> 'postMessage',
+                'css' => [
+	                [
+		                'selector' => '.h6 h6',
+		                'property' => 'color'
+	                ]
+                ]
             ),
             /** `Typography Settings` panel */
             'typography' => array(
@@ -209,7 +353,12 @@ if(!function_exists('omens_setup_customizer')){
                 'section' => 'body_typography',
                 'field'   => 'fonts',
                 'type'    => 'control',
-                'transport'=> 'postMessage',
+                'css' => [
+	                [
+		                'selector' => ':root',
+		                'property' => '--theme-body-font-family'
+	                ]
+                ]
             ),
             'body_font_style' => array(
                 'title'   => esc_html__( 'Font Style', 'omens' ),
@@ -218,6 +367,12 @@ if(!function_exists('omens_setup_customizer')){
                 'choices' => omens_customizer_get_font_styles(),
                 'type'    => 'control',
                 'transport'=> 'postMessage',
+                'css' => [
+	                [
+		                'selector' => ':root',
+		                'property' => '--theme-body-font-style'
+	                ]
+                ]
             ),
             'body_font_weight' => array(
                 'title'   => esc_html__( 'Font Weight', 'omens' ),
@@ -226,6 +381,12 @@ if(!function_exists('omens_setup_customizer')){
                 'choices' => omens_customizer_get_font_weight(),
                 'type'    => 'control',
                 'transport'=> 'postMessage',
+                'css' => [
+	                [
+		                'selector' => ':root',
+		                'property' => '--theme-body-font-weight'
+	                ]
+                ]
             ),
             'body_font_size' => array(
                 'title'       => esc_html__( 'Font Size, px', 'omens' ),
@@ -238,6 +399,12 @@ if(!function_exists('omens_setup_customizer')){
                 ),
                 'type' => 'control',
                 'transport'=> 'postMessage',
+                'css' => [
+	                [
+		                'selector' => ':root',
+		                'property' => '--theme-body-font-size'
+	                ]
+                ]
             ),
             'body_line_height' => array(
                 'title'       => esc_html__( 'Line Height', 'omens' ),
@@ -251,6 +418,12 @@ if(!function_exists('omens_setup_customizer')){
                 ),
                 'type' => 'control',
                 'transport'=> 'postMessage',
+                'css' => [
+	                [
+		                'selector' => ':root',
+		                'property' => '--theme-body-font-height'
+	                ]
+                ]
             ),
             'body_letter_spacing' => array(
                 'title'       => esc_html__( 'Letter Spacing, px', 'omens' ),
@@ -263,6 +436,12 @@ if(!function_exists('omens_setup_customizer')){
                 ),
                 'type' => 'control',
                 'transport'=> 'postMessage',
+                'css' => [
+	                [
+		                'selector' => ':root',
+		                'property' => '--theme-body-font-spacing'
+	                ]
+                ]
             ),
             'body_character_set' => array(
                 'title'   => esc_html__( 'Character Set', 'omens' ),
@@ -271,7 +450,6 @@ if(!function_exists('omens_setup_customizer')){
                 'field'   => 'select',
                 'choices' => omens_customizer_get_character_sets(),
                 'type'    => 'control',
-                'transport'=> 'postMessage',
             ),
             'body_text_align' => array(
                 'title'   => esc_html__( 'Text Align', 'omens' ),
@@ -280,545 +458,439 @@ if(!function_exists('omens_setup_customizer')){
                 'choices' => omens_customizer_get_text_aligns(),
                 'type'    => 'control',
                 'transport'=> 'postMessage',
+                'css' => [
+	                [
+		                'selector' => ':root',
+		                'property' => '--theme-body-font-align'
+	                ]
+                ]
             ),
 
-            /** `H1 Heading` section */
-            'h1_typography' => array(
-                'title'       => esc_html__( 'H1 Heading', 'omens' ),
-                'priority'    => 10,
-                'panel'       => 'typography',
-                'type'        => 'section',
+            /** `Heading` section */
+            'heading_typography' => array(
+	            'title'       => esc_html__( 'Heading Typography', 'omens' ),
+	            'priority'    => 10,
+	            'panel'       => 'typography',
+	            'type'        => 'section',
             ),
-            'h1_font_family' => array(
-                'title'   => esc_html__( 'Font Family', 'omens' ),
-                'section' => 'h1_typography',
-                'field'   => 'fonts',
-                'type'    => 'control',
-                'transport'=> 'postMessage',
+            'heading_font_family' => array(
+	            'title'   => esc_html__( 'Font Family', 'omens' ),
+	            'section' => 'heading_typography',
+	            'field'   => 'fonts',
+	            'type'    => 'control',
+	            'css' => [
+		            [
+			            'selector' => ':root',
+			            'property' => '--theme-heading-font-family'
+		            ]
+	            ]
             ),
-            'h1_font_style' => array(
-                'title'   => esc_html__( 'Font Style', 'omens' ),
-                'section' => 'h1_typography',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_font_styles(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
+            'heading_font_style' => array(
+	            'title'   => esc_html__( 'Font Style', 'omens' ),
+	            'section' => 'heading_typography',
+	            'field'   => 'select',
+	            'choices' => omens_customizer_get_font_styles(),
+	            'type'    => 'control',
+	            'transport'=> 'postMessage',
+	            'css' => [
+		            [
+			            'selector' => ':root',
+			            'property' => '--theme-heading-font-style'
+		            ]
+	            ]
             ),
-            'h1_font_weight' => array(
-                'title'   => esc_html__( 'Font Weight', 'omens' ),
-                'section' => 'h1_typography',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_font_weight(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
+            'heading_font_weight' => array(
+	            'title'   => esc_html__( 'Font Weight', 'omens' ),
+	            'section' => 'heading_typography',
+	            'field'   => 'select',
+	            'choices' => omens_customizer_get_font_weight(),
+	            'type'    => 'control',
+	            'transport'=> 'postMessage',
+	            'css' => [
+		            [
+			            'selector' => ':root',
+			            'property' => '--theme-heading-font-weight'
+		            ]
+	            ]
             ),
-            'h1_font_size' => array(
-                'title'       => esc_html__( 'Font Size, px', 'omens' ),
-                'section'     => 'h1_typography',
-                'field'        => 'lakit_responsive',
-                'unit'        => 'px',
-                'responsive'  => true,
-                'input_attrs' => array(
-                    'min'  => 10,
-                    'max'  => 200,
-                    'step' => 1,
-                ),
-                'type' => 'control',
-                'transport'=> 'postMessage',
+            'heading_line_height' => array(
+	            'title'       => esc_html__( 'Line Height', 'omens' ),
+	            'description' => esc_html__( 'Relative to the font-size of the element', 'omens' ),
+	            'section'     => 'heading_typography',
+	            'field'       => 'number',
+	            'input_attrs' => array(
+		            'min'  => 1.0,
+		            'max'  => 3.0,
+		            'step' => 0.1,
+	            ),
+	            'type' => 'control',
+	            'transport'=> 'postMessage',
+	            'css' => [
+		            [
+			            'selector' => ':root',
+			            'property' => '--theme-heading-font-line-height'
+		            ]
+	            ]
             ),
-            'h1_line_height' => array(
-                'title'       => esc_html__( 'Line Height', 'omens' ),
-                'description' => esc_html__( 'Relative to the font-size of the element', 'omens' ),
-                'section'     => 'h1_typography',
-                'field'       => 'number',
-                'input_attrs' => array(
-                    'min'  => 1.0,
-                    'max'  => 3.0,
-                    'step' => 0.1,
-                ),
-                'type' => 'control',
-                'transport'=> 'postMessage',
+            'heading_letter_spacing' => array(
+	            'title'       => esc_html__( 'Letter Spacing, px', 'omens' ),
+	            'section'     => 'heading_typography',
+	            'field'       => 'number',
+	            'input_attrs' => array(
+		            'min'  => -10,
+		            'max'  => 10,
+		            'step' => 1,
+	            ),
+	            'type' => 'control',
+	            'transport'=> 'postMessage',
+	            'css' => [
+		            [
+			            'selector' => ':root',
+			            'property' => '--theme-heading-font-spacing'
+		            ]
+	            ]
             ),
-            'h1_letter_spacing' => array(
-                'title'       => esc_html__( 'Letter Spacing, px', 'omens' ),
-                'section'     => 'h1_typography',
-                'field'        => 'lakit_responsive',
-                'unit'        => 'px',
-                'responsive'  => true,
-                'input_attrs' => array(
-                    'min'  => -10,
-                    'max'  => 10,
-                    'step' => 1,
-                ),
-                'type' => 'control',
-                'transport'=> 'postMessage',
+            'heading_character_set' => array(
+	            'title'   => esc_html__( 'Character Set', 'omens' ),
+	            'section' => 'heading_typography',
+	            'default' => 'latin',
+	            'field'   => 'select',
+	            'choices' => omens_customizer_get_character_sets(),
+	            'type'    => 'control',
             ),
-            'h1_character_set' => array(
-                'title'   => esc_html__( 'Character Set', 'omens' ),
-                'section' => 'h1_typography',
-                'default' => 'latin',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_character_sets(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h1_text_align' => array(
-                'title'   => esc_html__( 'Text Align', 'omens' ),
-                'section' => 'h1_typography',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_text_aligns(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-
-            /** `H2 Heading` section */
-            'h2_typography' => array(
-                'title'       => esc_html__( 'H2 Heading', 'omens' ),
-                'priority'    => 15,
-                'panel'       => 'typography',
-                'type'        => 'section',
-            ),
-            'h2_font_family' => array(
-                'title'   => esc_html__( 'Font Family', 'omens' ),
-                'section' => 'h2_typography',
-                'field'   => 'fonts',
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h2_font_style' => array(
-                'title'   => esc_html__( 'Font Style', 'omens' ),
-                'section' => 'h2_typography',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_font_styles(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h2_font_weight' => array(
-                'title'   => esc_html__( 'Font Weight', 'omens' ),
-                'section' => 'h2_typography',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_font_weight(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h2_font_size' => array(
-                'title'       => esc_html__( 'Font Size, px', 'omens' ),
-                'section'     => 'h2_typography',
-                'field'        => 'lakit_responsive',
-                'unit'        => 'px',
-                'responsive'  => true,
-                'input_attrs' => array(
-                    'min'  => 10,
-                    'max'  => 200,
-                    'step' => 1,
-                ),
-                'type' => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h2_line_height' => array(
-                'title'       => esc_html__( 'Line Height', 'omens' ),
-                'description' => esc_html__( 'Relative to the font-size of the element', 'omens' ),
-                'section'     => 'h2_typography',
-                'field'       => 'number',
-                'input_attrs' => array(
-                    'min'  => 1.0,
-                    'max'  => 3.0,
-                    'step' => 0.1,
-                ),
-                'type' => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h2_letter_spacing' => array(
-                'title'       => esc_html__( 'Letter Spacing, px', 'omens' ),
-                'section'     => 'h2_typography',
-                'field'        => 'lakit_responsive',
-                'unit'        => 'px',
-                'responsive'  => true,
-                'input_attrs' => array(
-                    'min'  => -10,
-                    'max'  => 10,
-                    'step' => 1,
-                ),
-                'type' => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h2_character_set' => array(
-                'title'   => esc_html__( 'Character Set', 'omens' ),
-                'section' => 'h2_typography',
-                'default' => 'latin',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_character_sets(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h2_text_align' => array(
-                'title'   => esc_html__( 'Text Align', 'omens' ),
-                'section' => 'h2_typography',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_text_aligns(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-
-            /** `H3 Heading` section */
-            'h3_typography' => array(
-                'title'       => esc_html__( 'H3 Heading', 'omens' ),
-                'priority'    => 20,
-                'panel'       => 'typography',
-                'type'        => 'section',
-            ),
-            'h3_font_family' => array(
-                'title'   => esc_html__( 'Font Family', 'omens' ),
-                'section' => 'h3_typography',
-                'field'   => 'fonts',
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h3_font_style' => array(
-                'title'   => esc_html__( 'Font Style', 'omens' ),
-                'section' => 'h3_typography',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_font_styles(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h3_font_weight' => array(
-                'title'   => esc_html__( 'Font Weight', 'omens' ),
-                'section' => 'h3_typography',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_font_weight(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h3_font_size' => array(
-                'title'       => esc_html__( 'Font Size, px', 'omens' ),
-                'section'     => 'h3_typography',
-                'field'        => 'lakit_responsive',
-                'unit'        => 'px',
-                'responsive'  => true,
-                'input_attrs' => array(
-                    'min'  => 10,
-                    'max'  => 200,
-                    'step' => 1,
-                ),
-                'type' => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h3_line_height' => array(
-                'title'       => esc_html__( 'Line Height', 'omens' ),
-                'description' => esc_html__( 'Relative to the font-size of the element', 'omens' ),
-                'section'     => 'h3_typography',
-                'field'       => 'number',
-                'input_attrs' => array(
-                    'min'  => 1.0,
-                    'max'  => 3.0,
-                    'step' => 0.1,
-                ),
-                'type' => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h3_letter_spacing' => array(
-                'title'       => esc_html__( 'Letter Spacing, px', 'omens' ),
-                'section'     => 'h3_typography',
-                'field'        => 'lakit_responsive',
-                'unit'        => 'px',
-                'responsive'  => true,
-                'input_attrs' => array(
-                    'min'  => -10,
-                    'max'  => 10,
-                    'step' => 1,
-                ),
-                'type' => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h3_character_set' => array(
-                'title'   => esc_html__( 'Character Set', 'omens' ),
-                'section' => 'h3_typography',
-                'default' => 'latin',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_character_sets(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h3_text_align' => array(
-                'title'   => esc_html__( 'Text Align', 'omens' ),
-                'section' => 'h3_typography',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_text_aligns(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-
-            /** `H4 Heading` section */
-            'h4_typography' => array(
-                'title'       => esc_html__( 'H4 Heading', 'omens' ),
-                'priority'    => 25,
-                'panel'       => 'typography',
-                'type'        => 'section',
-            ),
-            'h4_font_family' => array(
-                'title'   => esc_html__( 'Font Family', 'omens' ),
-                'section' => 'h4_typography',
-                'field'   => 'fonts',
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h4_font_style' => array(
-                'title'   => esc_html__( 'Font Style', 'omens' ),
-                'section' => 'h4_typography',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_font_styles(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h4_font_weight' => array(
-                'title'   => esc_html__( 'Font Weight', 'omens' ),
-                'section' => 'h4_typography',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_font_weight(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h4_font_size' => array(
-                'title'       => esc_html__( 'Font Size, px', 'omens' ),
-                'section'     => 'h4_typography',
-                'field'        => 'lakit_responsive',
-                'unit'        => 'px',
-                'responsive'  => true,
-                'input_attrs' => array(
-                    'min'  => 10,
-                    'max'  => 200,
-                    'step' => 1,
-                ),
-                'type' => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h4_line_height' => array(
-                'title'       => esc_html__( 'Line Height', 'omens' ),
-                'description' => esc_html__( 'Relative to the font-size of the element', 'omens' ),
-                'section'     => 'h4_typography',
-                'field'       => 'number',
-                'input_attrs' => array(
-                    'min'  => 1.0,
-                    'max'  => 3.0,
-                    'step' => 0.1,
-                ),
-                'type' => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h4_letter_spacing' => array(
-                'title'       => esc_html__( 'Letter Spacing, px', 'omens' ),
-                'section'     => 'h4_typography',
-                'field'        => 'lakit_responsive',
-                'unit'        => 'px',
-                'responsive'  => true,
-                'input_attrs' => array(
-                    'min'  => -10,
-                    'max'  => 10,
-                    'step' => 1,
-                ),
-                'type' => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h4_character_set' => array(
-                'title'   => esc_html__( 'Character Set', 'omens' ),
-                'section' => 'h4_typography',
-                'default' => 'latin',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_character_sets(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h4_text_align' => array(
-                'title'   => esc_html__( 'Text Align', 'omens' ),
-                'section' => 'h4_typography',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_text_aligns(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-
-            /** `H5 Heading` section */
-            'h5_typography' => array(
-                'title'       => esc_html__( 'H5 Heading', 'omens' ),
-                'priority'    => 30,
-                'panel'       => 'typography',
-                'type'        => 'section',
-            ),
-            'h5_font_family' => array(
-                'title'   => esc_html__( 'Font Family', 'omens' ),
-                'section' => 'h5_typography',
-                'field'   => 'fonts',
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h5_font_style' => array(
-                'title'   => esc_html__( 'Font Style', 'omens' ),
-                'section' => 'h5_typography',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_font_styles(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h5_font_weight' => array(
-                'title'   => esc_html__( 'Font Weight', 'omens' ),
-                'section' => 'h5_typography',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_font_weight(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h5_font_size' => array(
-                'title'       => esc_html__( 'Font Size, px', 'omens' ),
-                'section'     => 'h5_typography',
-                'field'        => 'lakit_responsive',
-                'unit'        => 'px',
-                'responsive'  => true,
-                'input_attrs' => array(
-                    'min'  => 10,
-                    'max'  => 200,
-                    'step' => 1,
-                ),
-                'type' => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h5_line_height' => array(
-                'title'       => esc_html__( 'Line Height', 'omens' ),
-                'description' => esc_html__( 'Relative to the font-size of the element', 'omens' ),
-                'section'     => 'h5_typography',
-                'field'       => 'number',
-                'input_attrs' => array(
-                    'min'  => 1.0,
-                    'max'  => 3.0,
-                    'step' => 0.1,
-                ),
-                'type' => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h5_letter_spacing' => array(
-                'title'       => esc_html__( 'Letter Spacing, px', 'omens' ),
-                'section'     => 'h5_typography',
-                'field'        => 'lakit_responsive',
-                'unit'        => 'px',
-                'responsive'  => true,
-                'input_attrs' => array(
-                    'min'  => -10,
-                    'max'  => 10,
-                    'step' => 1,
-                ),
-                'type' => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h5_character_set' => array(
-                'title'   => esc_html__( 'Character Set', 'omens' ),
-                'section' => 'h5_typography',
-                'default' => 'latin',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_character_sets(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h5_text_align' => array(
-                'title'   => esc_html__( 'Text Align', 'omens' ),
-                'section' => 'h5_typography',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_text_aligns(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-
-            /** `H6 Heading` section */
-            'h6_typography' => array(
-                'title'       => esc_html__( 'H6 Heading', 'omens' ),
-                'priority'    => 35,
-                'panel'       => 'typography',
-                'type'        => 'section',
-            ),
-            'h6_font_family' => array(
-                'title'   => esc_html__( 'Font Family', 'omens' ),
-                'section' => 'h6_typography',
-                'field'   => 'fonts',
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h6_font_style' => array(
-                'title'   => esc_html__( 'Font Style', 'omens' ),
-                'section' => 'h6_typography',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_font_styles(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h6_font_weight' => array(
-                'title'   => esc_html__( 'Font Weight', 'omens' ),
-                'section' => 'h6_typography',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_font_weight(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h6_font_size' => array(
-                'title'       => esc_html__( 'Font Size, px', 'omens' ),
-                'section'     => 'h6_typography',
-                'field'        => 'lakit_responsive',
-                'unit'        => 'px',
-                'responsive'  => true,
-                'input_attrs' => array(
-                    'min'  => 10,
-                    'max'  => 200,
-                    'step' => 1,
-                ),
-                'type' => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h6_line_height' => array(
-                'title'       => esc_html__( 'Line Height', 'omens' ),
-                'description' => esc_html__( 'Relative to the font-size of the element', 'omens' ),
-                'section'     => 'h6_typography',
-                'field'       => 'number',
-                'input_attrs' => array(
-                    'min'  => 1.0,
-                    'max'  => 3.0,
-                    'step' => 0.1,
-                ),
-                'type' => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h6_letter_spacing' => array(
-                'title'       => esc_html__( 'Letter Spacing, px', 'omens' ),
-                'section'     => 'h6_typography',
-                'field'        => 'lakit_responsive',
-                'unit'        => 'px',
-                'responsive'  => true,
-                'input_attrs' => array(
-                    'min'  => -10,
-                    'max'  => 10,
-                    'step' => 1,
-                ),
-                'type' => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h6_character_set' => array(
-                'title'   => esc_html__( 'Character Set', 'omens' ),
-                'section' => 'h6_typography',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_character_sets(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
-            ),
-            'h6_text_align' => array(
-                'title'   => esc_html__( 'Text Align', 'omens' ),
-                'section' => 'h6_typography',
-                'field'   => 'select',
-                'choices' => omens_customizer_get_text_aligns(),
-                'type'    => 'control',
-                'transport'=> 'postMessage',
+            'heading_text_align' => array(
+	            'title'   => esc_html__( 'Text Align', 'omens' ),
+	            'section' => 'heading_typography',
+	            'field'   => 'select',
+	            'choices' => omens_customizer_get_text_aligns(),
+	            'type'    => 'control',
+	            'transport'=> 'postMessage',
+	            'css' => [
+		            [
+			            'selector' => ':root',
+			            'property' => '--theme-heading-font-align'
+		            ]
+	            ]
             ),
         ];
+
+	    if(function_exists('WC')){
+
+		    $woo_default_attr = Omens_WooCommerce_Compare::get_default_attributes();
+		    $woo_tax_attr = Omens_WooCommerce_Compare::get_taxonomies();
+		    $woo_all_attr = array_merge($woo_default_attr, $woo_tax_attr);
+
+	    	$woo_opts = [
+			    /** WooCommerce */
+			    'shop_settings' => array(
+				    'title'       => esc_html__( 'Shop settings', 'omens' ),
+				    'priority'    => 70,
+				    'panel'       => 'general_settings',
+				    'type'        => 'section',
+			    ),
+			    'shopdetail_settings' => array(
+				    'title'       => esc_html__( 'Product settings', 'omens' ),
+				    'priority'    => 75,
+				    'panel'       => 'general_settings',
+				    'type'        => 'section',
+			    ),
+			    'compare_wishlist' => array(
+				    'title'       => esc_html__( 'Compare & Wishlist', 'omens' ),
+				    'priority'    => 80,
+				    'panel'       => 'general_settings',
+				    'type'        => 'section',
+			    ),
+			    'shop_cart' => array(
+				    'title'       => esc_html__( 'Cart', 'omens' ),
+				    'priority'    => 85,
+				    'panel'       => 'general_settings',
+				    'type'        => 'section',
+			    ),
+			    'freeshipping_thresholds' => array(
+				    'title'         => esc_html__( 'WooCommerce Enable Free Shipping Thresholds', 'omens' ),
+				    'description'   => esc_html__( 'Enable Free shipping amount notice', 'omens' ),
+				    'section'       => 'shop_cart',
+				    'default'       => false,
+				    'field'          => 'checkbox',
+				    'type'          => 'control',
+			    ),
+			    'thresholds_text1' => array(
+				    'title'         => esc_html__( 'Shipping bar text 1', 'omens' ),
+				    'section'       => 'shop_cart',
+				    'default'       => esc_html__('[icon]Spend [amount] to get Free Shipping', 'omens'),
+				    'description'       => esc_html__('[icon]Spend [amount] to get Free Shipping', 'omens'),
+				    'field'          => 'text',
+				    'type'          => 'control',
+			    ),
+			    'thresholds_text2' => array(
+				    'title'         => esc_html__( 'Shipping bar text 2', 'omens' ),
+				    'section'       => 'shop_cart',
+				    'default'       => esc_html__('[icon]Congratulations! You\'ve got free shipping!', 'omens'),
+				    'description'       => esc_html__('[icon]Congratulations! You\'ve got free shipping!', 'omens'),
+				    'field'          => 'text',
+				    'type'          => 'control',
+			    ),
+			    'woocommerce_gallery_zoom' => array(
+				    'title'         => esc_html__( 'Enable WooCommerce Zoom', 'omens' ),
+				    'section'       => 'shopdetail_settings',
+				    'default'       => false,
+				    'field'          => 'checkbox',
+				    'type'          => 'control',
+			    ),
+			    'woocommerce_gallery_lightbox' => array(
+				    'title'         => esc_html__( 'Enable WooCommerce LightBox', 'omens' ),
+				    'section'       => 'shopdetail_settings',
+				    'default'       => false,
+				    'field'          => 'checkbox',
+				    'type'          => 'control',
+			    ),
+			    'single_ajax_add_cart' => array(
+				    'title'         => esc_html__( 'Ajax Add to Cart', 'omens' ),
+				    'description'   => esc_html__( 'Support Ajax Add to cart for all types of products', 'omens' ),
+				    'section'       => 'shopdetail_settings',
+				    'default'       => false,
+				    'field'          => 'checkbox',
+				    'type'          => 'control',
+			    ),
+			    'catalog_mode' => array(
+				    'title'         => esc_html__( 'Catalog Mode', 'omens' ),
+				    'description'   => esc_html__( 'Turn on to disable the shopping functionality of WooCommerce.', 'omens' ),
+				    'section'       => 'shop_settings',
+				    'default'       => false,
+				    'field'          => 'checkbox',
+				    'type'          => 'control',
+			    ),
+			    'catalog_mode_price' => array(
+				    'title'         => esc_html__( 'Catalog Mode Price', 'omens' ),
+				    'description'   => esc_html__( 'Turn on to do not show product price', 'omens' ),
+				    'section'       => 'shop_settings',
+				    'default'       => false,
+				    'field'          => 'checkbox',
+				    'type'          => 'control',
+			    ),
+			    'woocommerce_enable_crossfade_effect' => array(
+				    'title'         => esc_html__( 'Enable Crossfade Image Effect', 'omens' ),
+				    'description'   => esc_html__( 'Turn on to display the product crossfade image effect on the product.', 'omens' ),
+				    'section'       => 'shop_settings',
+				    'default'       => false,
+				    'field'          => 'checkbox',
+				    'type'          => 'control',
+			    ),
+			    'woocommerce_show_rating_on_catalog' => array(
+				    'title'         => esc_html__( 'Show Ratings', 'omens' ),
+				    'description'   => esc_html__( 'Turn on to display the ratings on the main shop page and archive shop pages.', 'omens' ),
+				    'section'       => 'shop_settings',
+				    'default'       => false,
+				    'field'          => 'checkbox',
+				    'type'          => 'control',
+			    ),
+			    'woocommerce_show_addcart_btn' => array(
+				    'title'         => esc_html__( 'Show Add Cart Button', 'omens' ),
+				    'section'       => 'shop_settings',
+				    'default'       => false,
+				    'field'          => 'checkbox',
+				    'type'          => 'control',
+			    ),
+			    'woocommerce_show_quickview_btn' => array(
+				    'title'         => esc_html__( 'Show Quick View Button', 'omens' ),
+				    'section'       => 'shop_settings',
+				    'default'       => false,
+				    'field'          => 'checkbox',
+				    'type'          => 'control',
+			    ),
+			    'woocommerce_show_wishlist_btn' => array(
+				    'title'         => esc_html__( 'Show Wishlist Button', 'omens' ),
+				    'section'       => 'shop_settings',
+				    'default'       => false,
+				    'field'          => 'checkbox',
+				    'type'          => 'control',
+			    ),
+			    'woocommerce_show_compare_btn' => array(
+				    'title'         => esc_html__( 'Show Compare Button', 'omens' ),
+				    'section'       => 'shop_settings',
+				    'default'       => false,
+				    'field'          => 'checkbox',
+				    'type'          => 'control',
+			    ),
+			    'woocommerce_show_action_btn_mobile' => array(
+				    'title'         => esc_html__( 'Force display Product Actions on mobile', 'omens' ),
+				    'description'   => esc_html__( 'Display add-to-cart, wishlist, compare buttons on the mobile', 'omens' ),
+				    'section'       => 'shop_settings',
+				    'default'       => false,
+				    'field'          => 'checkbox',
+				    'type'          => 'control',
+			    ),
+
+			    /* Wishlist Compare */
+			    'wishlist_page' => array(
+				    'title'   => esc_html__( 'Wishlist Page', 'omens' ),
+				    'description'   => esc_html__( 'The content of page must be contain [la_wishlist] shortcode', 'omens' ),
+				    'section' => 'compare_wishlist',
+				    'field'   => 'dropdown-pages',
+				    'type'    => 'control',
+			    ),
+			    'compare_page' => array(
+				    'title'   => esc_html__( 'Compare Page', 'omens' ),
+				    'description'   => esc_html__( 'The content of page must be contain [la_compare] shortcode', 'omens' ),
+				    'section' => 'compare_wishlist',
+				    'field'   => 'dropdown-pages',
+				    'type'    => 'control',
+			    ),
+			    'compare_attribute' => array(
+				    'title'   => esc_html__( 'Compare fields to show', 'omens' ),
+				    'description'   => esc_html__( 'Select the fields to show in the comparison table', 'omens' ),
+				    'section' => 'compare_wishlist',
+				    'field'   => 'checkbox-multiple',
+				    'choices' => $woo_all_attr,
+				    'type'    => 'control',
+			    ),
+		    ];
+		    $args['options'] = array_merge($args['options'], $woo_opts);
+	    }
+
+	    $args['options'] = array_merge($args['options'], omens_customizer_heading_typo());
+
         return $args;
     }
 }
+
 add_filter('lastudio-kit/theme/customizer/options', 'omens_setup_customizer');
+
+if(!function_exists('omens_customizer_heading_typo')){
+	function omens_customizer_heading_typo(){
+		$options = [];
+		for ($i = 1; $i <=6; $i++){
+			$options['h'.$i.'_typography'] = [
+				'title'       => sprintf(__('H%s Heading', 'omens'), $i),
+				'priority'    => 10 + ( $i * 5 ),
+				'panel'       => 'typography',
+				'type'        => 'section',
+			];
+			$options['h'.$i.'_font_family'] = [
+				'title'   => esc_html__( 'Font Family', 'omens' ),
+				'section' => 'h'.$i.'_typography',
+				'field'   => 'fonts',
+				'type'    => 'control',
+				'css' => [
+					[
+						'selector' => ':root',
+						'property' => '--theme-h'.$i.'-font-family'
+					]
+				]
+			];
+			$options['h'.$i.'_font_style'] = [
+				'title'   => esc_html__( 'Font Style', 'omens' ),
+				'section' => 'h'.$i.'_typography',
+				'field'   => 'select',
+				'choices' => omens_customizer_get_font_styles(),
+				'type'    => 'control',
+				'transport'=> 'postMessage',
+				'css' => [
+					[
+						'selector' => ':root',
+						'property' => '--theme-h'.$i.'-font-style'
+					]
+				]
+			];
+			$options['h'.$i.'_font_weight'] = [
+				'title'   => esc_html__( 'Font Weight', 'omens' ),
+				'section' => 'h'.$i.'_typography',
+				'field'   => 'select',
+				'choices' => omens_customizer_get_font_weight(),
+				'type'    => 'control',
+				'transport'=> 'postMessage',
+				'css' => [
+					[
+						'selector' => ':root',
+						'property' => '--theme-h'.$i.'-font-weight'
+					]
+				]
+			];
+			$options['h'.$i.'_font_size'] = [
+				'title'       => esc_html__( 'Font Size, px', 'omens' ),
+				'section' => 'h'.$i.'_typography',
+				'field'        => 'lakit_responsive',
+				'unit'        => 'px',
+				'responsive'  => true,
+				'input_attrs' => array(
+					'min'  => 10,
+					'max'  => 200,
+					'step' => 1,
+				),
+				'type' => 'control',
+				'transport'=> 'postMessage',
+				'css' => [
+					[
+						'selector' => ':root',
+						'property' => '--theme-h'.$i.'-font-size'
+					]
+				]
+			];
+			$options['h'.$i.'_line_height'] = [
+				'title'       => esc_html__( 'Line Height', 'omens' ),
+				'description' => esc_html__( 'Relative to the font-size of the element', 'omens' ),
+				'section' => 'h'.$i.'_typography',
+				'field'       => 'number',
+				'input_attrs' => array(
+					'min'  => 1.0,
+					'max'  => 3.0,
+					'step' => 0.1,
+				),
+				'type' => 'control',
+				'transport'=> 'postMessage',
+				'css' => [
+					[
+						'selector' => ':root',
+						'property' => '--theme-h'.$i.'-font-line-height'
+					]
+				]
+			];
+			$options['h'.$i.'_letter_spacing'] = [
+				'title'       => esc_html__( 'Letter Spacing, px', 'omens' ),
+				'section' => 'h'.$i.'_typography',
+				'field'        => 'lakit_responsive',
+				'unit'        => 'px',
+				'responsive'  => true,
+				'input_attrs' => array(
+					'min'  => -10,
+					'max'  => 10,
+					'step' => 1,
+				),
+				'type' => 'control',
+				'transport'=> 'postMessage',
+				'css' => [
+					[
+						'selector' => ':root',
+						'property' => '--theme-h'.$i.'-font-spacing'
+					]
+				]
+			];
+			$options['h'.$i.'_character_set'] = [
+				'title'   => esc_html__( 'Character Set', 'omens' ),
+				'section' => 'h'.$i.'_typography',
+				'default' => 'latin',
+				'field'   => 'select',
+				'choices' => omens_customizer_get_character_sets(),
+				'type'    => 'control',
+			];
+			$options['h'.$i.'_text_align'] = [
+				'title'   => esc_html__( 'Text Align', 'omens' ),
+				'section' => 'h'.$i.'_typography',
+				'field'   => 'select',
+				'choices' => omens_customizer_get_text_aligns(),
+				'type'    => 'control',
+				'transport'=> 'postMessage',
+				'css' => [
+					[
+						'selector' => ':root',
+						'property' => '--theme-h'.$i.'-font-align'
+					]
+				]
+			];
+		}
+		return $options;
+	}
+}
 
 /**
  * Move native `site_icon` control (based on WordPress core) into custom section.
@@ -831,8 +903,8 @@ if(!function_exists('omens_customizer_change_core_controls')){
     function omens_customizer_change_core_controls( $wp_customize ) {
         $wp_customize->remove_control('display_header_text');
         $wp_customize->remove_control('header_textcolor');
+	    $wp_customize->remove_control( 'background_color' );
         $wp_customize->get_control( 'site_icon' )->section      = 'omens_favicon';
-        $wp_customize->get_control( 'background_color' )->label = esc_html__( 'Body Background Color', 'omens' );
         $wp_customize->get_section( 'colors' )->title = esc_html__( 'Color Scheme', 'omens' );
     }
 }
@@ -917,4 +989,17 @@ if(!function_exists('omens_customizer_get_font_weight')){
             '900' => '900',
         ) );
     }   
+}
+
+if(!function_exists('omens_customizer_list_pages')){
+	function omens_customizer_list_pages(){
+		$pages = get_pages();
+		$opts = [
+			'' => ''
+		];
+		foreach ($pages as $page){
+			$opts[$page->ID] = $page->post_title;
+		}
+		return $opts;
+	}
 }

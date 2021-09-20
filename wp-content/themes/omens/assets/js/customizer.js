@@ -24,6 +24,29 @@
                     }
                 }
             }
+        },
+        'catalog_mode' : {
+            controls: {
+                'catalog_mode_price': {
+                    callback: function( to ) {
+                        return !!to;
+                    }
+                }
+            }
+        },
+        'freeshipping_thresholds' : {
+            controls: {
+                'thresholds_text1': {
+                    callback: function( to ) {
+                        return !!to;
+                    }
+                },
+                'thresholds_text2': {
+                    callback: function( to ) {
+                        return !!to;
+                    }
+                }
+            }
         }
     }
 

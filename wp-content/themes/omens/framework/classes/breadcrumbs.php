@@ -182,7 +182,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
 
             // Set up variables that we'll need.
             $breadcrumb    	= '';
-            $separator      = apply_filters( 'breadcrumb_trail_separator', omens_get_option('breadcrumb_separator', '>') );
+            $separator      = apply_filters( 'breadcrumb_trail_separator', '>' );
             $separator      = '<span class="breadcrumb-sep">' . $separator . '</span>';
             $item_count    	= count( $this->items );
             $item_position 	= 0;
@@ -194,7 +194,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
                 $breadcrumb .= '<ul class="trail-items"'. omens_get_schema_markup( 'breadcrumb' ) .'>';
 
                 // Add the number of items and item list order schema.
-                if(is_paged() && omens_get_option( 'schema_markup', false )){
+                if( is_paged() && false ){
                     $breadcrumb .= sprintf( '<meta name="numberOfItems" content="%d" />', absint( $item_count ) );
                     $breadcrumb .= '<meta name="itemListOrder" content="Ascending" />';
                 }
@@ -226,7 +226,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
                     // Separator
                     if ( $item_count === $item_position ) {
                         $sep = '';
-                        if(omens_get_option( 'schema_markup', false )){
+                        if(false){
                             $current_url = home_url(add_query_arg(null, null));
                             $tmp = sprintf( '<meta content="%s"'. omens_get_schema_markup( 'item' ) .' />', $current_url );
                             $item .= $tmp;
@@ -236,7 +236,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
                     }
 
                     // Build the meta position HTML.
-                    if(omens_get_option( 'schema_markup', false )){
+                    if( false ){
                         $meta = sprintf( '<meta content="%s"'. omens_get_schema_markup( 'position' ) .' />', absint( $item_position ) );
                     }
                     else{
@@ -295,11 +295,11 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
 
             $defaults = array(
                 'aria_label'          	=> esc_attr_x( 'Breadcrumbs', 'breadcrumbs aria label', 'omens' ),
-                'home'           		=> omens_get_option( 'breadcrumb_translation_home', esc_html__( 'Home', 'omens' ) ),
-                'error_404'           	=> omens_get_option( 'breadcrumb_translation_error', esc_html__( '404 Not Found', 'omens' ) ),
+                'home'           		=> esc_html__( 'Home', 'omens' ),
+                'error_404'           	=> esc_html__( '404 Not Found', 'omens' ),
                 'archives'            	=> esc_html__( 'Archives',                              'omens' ),
                 // Translators: %s is the search query. The HTML entities are opening and closing curly quotes.
-                'search'           		=> omens_get_option( 'breadcrumb_translation_search', esc_html__( 'Search results for', 'omens' ) ),
+                'search'           		=> esc_html__( 'Search results for', 'omens' ),
                 // Translators: %s is the page number.
                 'paged'               	=> esc_html__( 'Page %s',                               'omens' ),
                 // Translators: Minute archive title. %s is the minute time format.
@@ -487,7 +487,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
         protected function add_network_home_link() {
 
             // Home item
-            $setting = omens_get_option( 'breadcrumb_home_item', 'icon' );
+            $setting = 'icon';
 
             // Icon
             $icon_class = '';
@@ -522,7 +522,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
         protected function add_site_home_link() {
 
             // Home item
-            $setting = omens_get_option( 'breadcrumb_home_item', 'icon' );
+            $setting = 'icon';
 
             // Icon
             $icon_class = '';
@@ -607,9 +607,9 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
             }
 
             // Post type taxonomy
-            $posts_tax 		= omens_get_option( 'breadcrumb_posts_taxonomy', 'none' );
-            $products_tax 	= omens_get_option( 'breadcrumb_products_taxonomy', 'shop' );
-            $portfolio_tax 	= omens_get_option( 'breadcrumb_portfolio_taxonomy', 'la_portfolio_category' );
+            $posts_tax 		= 'none';
+            $products_tax 	= 'shop';
+            $portfolio_tax 	= 'la_portfolio_category';
 
             if ( 'product' != $post->post_type  && 'post' != $post->post_type  && 'la_portfolio' != $post->post_type) {
 
@@ -660,7 +660,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
             // If the post type is 'lastudio_portfolio'.
             else if ( 'la_portfolio' === $post->post_type && 'none' != $portfolio_tax ) {
 
-                $portfolio_id = omens_get_option( 'portfolio_page' );
+                $portfolio_id = false;
 
                 if ( 'portfolio' == $portfolio_tax ) {
                     if( ! empty( $portfolio_id )){

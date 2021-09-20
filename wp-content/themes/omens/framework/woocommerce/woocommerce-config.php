@@ -125,7 +125,8 @@ if(!class_exists('Omens_WooCommerce_Config')){
             /**
              * Catalog Mode
              */
-            if( omens_get_option('catalog_mode', 'off') == 'on' ){
+
+            if( omens_string_to_bool( omens_get_theme_mod('catalog_mode') ) ){
                 // In Loop
                 add_filter( 'woocommerce_loop_add_to_cart_link', '__return_empty_string', 10 );
                 // In Single
@@ -133,8 +134,9 @@ if(!class_exists('Omens_WooCommerce_Config')){
                 // In Page
                 add_action( 'wp', array( $this, 'set_page_when_active_catalog_mode' ) );
 
-                if( omens_get_option('catalog_mode_price', 'off') == 'on' ){
-                    //remove_action('woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_price');
+                if( omens_string_to_bool( omens_get_theme_mod('catalog_mode_price') ) ){
+
+                    remove_action('woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_price');
                     remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_price');
                     add_filter('woocommerce_catalog_orderby', array( $this, 'remove_sortby_price_in_toolbar_when_active_catalog' ));
                     add_filter('woocommerce_default_catalog_orderby_options', array( $this, 'remove_sortby_price_in_toolbar_when_active_catalog' ));
@@ -247,7 +249,9 @@ if(!class_exists('Omens_WooCommerce_Config')){
 
         public function add_extra_hook_to_product_item(){
             add_action('woocommerce_shop_loop_item_title', [ $this, 'add_category_into_product_loop' ], 5);
+	        add_action('woocommerce_shop_loop_item_title', [ $this, 'add_author_into_product_loop' ], 11);
             add_action('woocommerce_before_shop_loop_item_title', [ $this, 'add_custom_badge_into_product_loop' ], 9);
+
 
             add_action('lastudio-kit/products/action/shop_loop_item_action_top', [ $this, 'add_quick_view_btn' ], 10);
             add_action('lastudio-kit/products/action/shop_loop_item_action_top', [ $this, 'add_wishlist_btn' ], 15);
@@ -318,6 +322,14 @@ if(!class_exists('Omens_WooCommerce_Config')){
             }
         }
 
+	    public function add_author_into_product_loop(){
+		    $layout = wc_get_loop_prop('lakit_layout');
+		    $preset = wc_get_loop_prop('lakit_preset');
+		    if( $layout == 'grid' && $preset == 9 ){
+			    echo sprintf('<div class="product_item--author product_item--category-link">%1$s %2$s</div>', __('By', 'omens'), get_the_author());
+            }
+	    }
+
         public function add_excerpt_into_product_loop(){
 
             $layout = wc_get_loop_prop('lakit_layout');
@@ -332,7 +344,7 @@ if(!class_exists('Omens_WooCommerce_Config')){
         }
 
         public function add_quick_view_btn(){
-            if( 'on' == omens_get_option('woocommerce_show_quickview_btn', 'off') ){
+	        if( omens_string_to_bool( omens_get_theme_mod('woocommerce_show_quickview_btn') ) ) {
                 global $product;
                 printf(
                     '<a class="%s" href="%s" data-href="%s" title="%s"><span class="labtn-icon labtn-icon-quickview"></span><span class="labtn-text">%s</span></a>',
@@ -347,7 +359,7 @@ if(!class_exists('Omens_WooCommerce_Config')){
 
         public function add_compare_btn(){
             global $yith_woocompare, $product;
-            if( omens_get_option('woocommerce_show_compare_btn', 'on') == 'on' ) {
+            if( omens_string_to_bool( omens_get_theme_mod('woocommerce_show_compare_btn') ) ) {
                 if ( !empty($yith_woocompare->obj) ) {
 
                     $action_add = 'yith-woocompare-add-product';
@@ -392,7 +404,7 @@ if(!class_exists('Omens_WooCommerce_Config')){
 
         public function add_wishlist_btn(){
 
-            if(omens_get_option('woocommerce_show_wishlist_btn', 'off') == 'on'){
+	        if( omens_string_to_bool( omens_get_theme_mod('woocommerce_show_wishlist_btn') ) ) {
                 global $product;
                 if (function_exists('YITH_WCWL')) {
                     $default_wishlists = is_user_logged_in() ? YITH_WCWL()->get_wishlists(array('is_default' => true)) : false;
@@ -580,7 +592,7 @@ if(!class_exists('Omens_WooCommerce_Config')){
         }
 
         public function wrapper_before_product_main_image(){
-            echo '<div class="woocommerce-product-gallery-outer layout-type-'. esc_attr(omens_get_option('woocommerce_product_page_design', '1')) .'">';
+            echo '<div class="woocommerce-product-gallery-outer layout-type-1">';
         }
 
         public function wrapper_after_product_main_image(){

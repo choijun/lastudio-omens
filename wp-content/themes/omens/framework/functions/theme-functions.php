@@ -44,7 +44,7 @@ if (!function_exists('omens_body_classes')) {
         }
 
         $classes[] = 'body-loading';
-        if (omens_get_option('page_loading_animation', 'off') == 'on') {
+	    if( omens_string_to_bool( omens_get_theme_mod('page_preloader') ) ){
             $classes[] = 'site-loading';
             $classes[] = 'active_page_loading';
         }
@@ -53,27 +53,15 @@ if (!function_exists('omens_body_classes')) {
     }
 }
 
-
-if(!function_exists('omens_add_extra_data_into_head')){
-    function omens_add_extra_data_into_head(){
-        if( $la_custom_css = omens_get_option('la_custom_css') ){
-            echo sprintf( '<%1$s id="omens-custom-css">%2$s</%1$s>', 'style', $la_custom_css);
-        }
-        if( $header_js = omens_get_option('header_js') ){
-            echo sprintf( '<%1$s>%2$s</%1$s>', 'script', $header_js);
-        }
-    }
-}
-
 if(!function_exists('omens_add_pageloader_icon')){
     function omens_add_pageloader_icon(){
-        if( omens_string_to_bool( omens_get_option('page_loading_animation', 'off') ) ){
-            $loading_style = omens_get_option('page_loading_style', 1);
+        if( omens_string_to_bool( omens_get_theme_mod('page_preloader') ) ){
+            $loading_style = omens_get_theme_mod('page_preloader_type', 1);
             if($loading_style == 'custom'){
-                if(($img = omens_get_option('page_loading_custom')) && !empty($img['id']) && wp_attachment_is_image($img['id']) ){
+                if(($img = omens_get_theme_mod('page_preloader_custom')) && !empty($img) ){
                     add_filter('omens/filter/enable_image_lazyload', '__return_false', 10000);
                     add_filter('wp_lazy_loading_enabled', '__return_false', 10000);
-                    echo '<div class="la-image-loading spinner-custom"><div class="content"><div class="la-loader">'. wp_get_attachment_image($img['id'], 'full') .'</div><div class="la-loader-ss"></div></div></div>';
+                    echo '<div class="la-image-loading spinner-custom"><div class="content"><div class="la-loader"><img src="'.esc_url($img).'" width="50" height="50" alt="'.esc_attr(get_bloginfo('display')).'"/></div><div class="la-loader-ss"></div></div></div>';
                     omens_deactive_filter('omens/filter/enable_image_lazyload', '__return_false', 10000);
                     omens_deactive_filter('wp_lazy_loading_enabled', '__return_false', 10000);
                 }
@@ -88,17 +76,9 @@ if(!function_exists('omens_add_pageloader_icon')){
     }
 }
 
-if(!function_exists('omens_render_footer_custom_js')){
-    function omens_render_footer_custom_js(){
-	    if( $footer_js = omens_get_option('footer_js') ){
-		    echo sprintf( '<%1$s>%2$s</%1$s>', 'script', $footer_js);
-	    }
-    }
-}
-
 if(!function_exists('omens_change_excerpt_length')){
     function omens_change_excerpt_length( $length ){
-        $excerpt_length = absint(omens_get_option('blog_excerpt_length', 25));
+        $excerpt_length = 20;
         if($excerpt_length > 0){
             return $excerpt_length;
         }

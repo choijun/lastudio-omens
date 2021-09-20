@@ -2843,11 +2843,11 @@ if(!class_exists('LaStudioKit_Posts')) {
 				$this->add_render_attribute( 'main-container', 'data-widget_current_query', 'yes' );
 			}
 
-			$page = absint( empty( $_GET[ $paged_key ] ) ? 1 : $_GET[ $paged_key ] );
+			$page = absint( empty( $_REQUEST[ $paged_key ] ) ? 1 : $_REQUEST[ $paged_key ] );
 			if ( $query_post_type == 'current_query' ) {
 				$page = get_query_var( 'paged' ) ? (int) get_query_var( 'paged' ) : 1;
-				if ( ! empty( $_GET[ $paged_key ] ) ) {
-					$page = $_GET[ $paged_key ];
+				if ( ! empty( $_REQUEST[ $paged_key ] ) ) {
+					$page = $_REQUEST[ $paged_key ];
 				}
 			}
 

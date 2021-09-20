@@ -9,7 +9,6 @@ Vue.component( 'lakit-fonts-manager', {
         },
     },
     data: function() {
-        console.log(this.value);
         return {
             fieldsList: this.value
         };
@@ -17,7 +16,6 @@ Vue.component( 'lakit-fonts-manager', {
     watch: {
         fieldsList: {
             handler: function( val ) {
-                console.log(val);
                 this.$emit( 'input', val );
             },
             deep: true,

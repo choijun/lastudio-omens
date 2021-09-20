@@ -747,7 +747,10 @@ class LaStudioKit_Hamburger_Panel extends LaStudioKit_Base {
                     } else if ( ! $ajax_template ) {
                         $content_html = $this->no_templates_message();
                     } else {
-                        $content_html .= '<div class="lakit-hamburger-panel-loader lakit-tpl-panel-loader"></div>';
+	                    $this->add_render_attribute( 'lakit-hamburger-panel__content', array(
+		                    'data-lakit_ajax_loadtemplate' => 'true',
+	                    ) );
+                        $content_html .= '<span class="lakit-css-loader"></span>';
                     }
 
                     echo sprintf( '<div %1$s>%2$s</div>', $this->get_render_attribute_string( 'lakit-hamburger-panel__content' ), $content_html );
