@@ -128,11 +128,23 @@
 	}
 	.wpcf7-submit{
 		height: 182px;
+		@media(max-width: 1600px){
+			height: 150px;
+		}
+		@media(max-width: 1280px){
+			height: auto;
+		}
+		@media(max-width: 767px){
+			width: 100%;
+		}
 	}
 	.lakit-col{
 		&:last-child{
 			flex: 0 0 0;
 			position: relative;
+			@media(max-width: 767px){
+				flex: 1 0 100%;
+			}
 			.ajax-loader{
 				top: calc(50% - 12px);
 				left: calc(50% - 12px);
@@ -155,6 +167,6 @@
 	}
 }
 
-.lakit-carousel.lakit-carousel--simple .lakit-carousel__item-link{
-	overflow: hidden;
-}
+//.lakit-carousel.lakit-carousel--simple .lakit-carousel__item-link{
+//	overflow: hidden;
+//}

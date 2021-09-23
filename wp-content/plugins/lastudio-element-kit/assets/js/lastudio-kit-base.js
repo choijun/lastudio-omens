@@ -862,7 +862,7 @@
                                 _container_width_base = masonrySettings.container_width,
                                 _container_width = $isotope_container.width(),
                                 item_per_page = Math.round(_container_width_base / _base_w),
-                                itemwidth = Math.floor(_container_width / item_per_page),
+                                itemwidth = _container_width / item_per_page,
                                 margin = parseInt($isotope_container.data('lakitmasonry_itemmargin') || 0),
                                 dimension = (_base_h ? parseFloat(_base_w / _base_h) : 1),
                                 layout_mapping = masonrySettings.layout || [{w: 1, h: 1}];
@@ -873,7 +873,7 @@
                             $(selector, $isotope_container).each(function () {
                                 $(this)
                                     .css({
-                                        'width': Math.floor(itemwidth * (layout_mapping[_idx]['w']) - (margin / 2)),
+                                        'width': itemwidth * (layout_mapping[_idx]['w']) - (margin / 2),
                                         'height': _base_h ? Math.floor(itemwidth / dimension * (layout_mapping[_idx]['h'])) : 'auto'
                                     })
                                     .addClass('lakit-disable-cols-style');
@@ -882,6 +882,9 @@
                                     //     'itemwidth': itemwidth,
                                     //     'layout': layout_mapping[_idx]
                                     // }));
+
+                                    // console.log(_container_width,itemwidth, margin);
+
                                 _idx++;
                                 if (_idx == layout_mapping.length) {
                                     _idx2++;
@@ -1822,6 +1825,14 @@
 
         window.elementorFrontend.hooks.addAction('frontend/element_ready/lakit-wooproduct-datatabs.default', function ($scope) {
             LaStudioKits.wooTabs($scope);
+        });
+
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/accordion.default', function ($scope) {
+            if($scope.hasClass('accordion-close-all')){
+                setTimeout(function (){
+                    $scope.find('.elementor-accordion-item:first-child > .elementor-tab-title').trigger('click')
+                }, 100)
+            }
         });
 
         window.elementorFrontend.hooks.addAction('frontend/element_ready/section', function ($scope) {

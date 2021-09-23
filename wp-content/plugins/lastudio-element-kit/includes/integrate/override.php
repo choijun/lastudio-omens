@@ -138,6 +138,22 @@ add_action('elementor/element/accordion/section_toggle_style_icon/before_section
 }, 10);
 
 /**
+ * Add `Close All` for `Accordion` widget of Elementor
+ */
+add_action('elementor/element/accordion/section_title/before_section_end', function ( $element ){
+    $element->add_control(
+        'close_all',
+        [
+            'label' => __( 'Close All ?', 'lastudio-kit' ),
+            'type' => \Elementor\Controls_Manager::SWITCHER,
+	        'return_value' => 'accordion-close-all',
+	        'prefix_class' => '',
+            'separator' => 'before',
+        ]
+    );
+}, 10);
+
+/**
  * Modify Divider - Weight control
  */
 add_action('elementor/element/divider/section_divider_style/before_section_end', function( $element ){

@@ -29,3 +29,6 @@
 	right: auto;
 	left: 0;
 }
+.elementor-lakit-portfolio .lakit-posts.preset-grid-2 .lakit-posts__inner-box{
+	background-color: transparent;
+}

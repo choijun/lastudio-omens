@@ -23,6 +23,12 @@ $this->add_render_attribute( 'main-container', 'class', array(
     'querycpt--' . (!empty($query_post_type) ? $query_post_type : 'default')
 ) );
 
+if($preset == 'grid-2a'){
+	$this->add_render_attribute( 'main-container', 'class', array(
+		'preset-grid-2',
+	) );
+}
+
 if(filter_var($floating_counter, FILTER_VALIDATE_BOOLEAN)){
     $this->add_render_attribute( 'main-container', 'class', 'enable--counter' );
     if(filter_var($floating_counter_as, FILTER_VALIDATE_BOOLEAN)){
@@ -94,14 +100,60 @@ $the_query = $this->the_query();
             <div <?php echo $this->get_render_attribute_string( 'list-container' ); ?>>
             <?php
 
+            // reset custom var
+            $post_count = $the_query->post_count;
+            $need_open = false;
+            $need_close = false;
+            $this->item_counter = 0;
+            $this->cflag = false;
+
+            $c_item_classes = ['lakit-posts__item-g lakit-posts__item'];
+
+            if($enable_carousel){
+	            $c_item_classes[] = 'swiper-slide';
+            }
+            else{
+	            $c_item_classes[] = lastudio_kit_helper()->col_new_classes('columns', $this->get_settings_for_display());
+            }
+
             while ($the_query->have_posts()){
 
                 $the_query->the_post();
 
+                if(!$enable_masonry && $preset == 'grid-2a'){
+
+	                if($this->item_counter == 3){
+		                $this->item_counter = 0;
+	                }
+
+                    if($this->item_counter == 1){
+                        $need_open  = true;
+	                    $need_close  = true;
+	                    $this->cflag = true;
+	                    echo '<div class="'.esc_attr( join(' ', $c_item_classes) ).'">';
+                    }
+                }
+
                 $this->_load_template( $this->_get_global_template( 'loop-item' ) );
+
+                if(!$enable_masonry && $preset == 'grid-2a'){
+                    if($this->item_counter == 2){
+                        echo '</div>';
+	                    $need_open = false;
+	                    $need_close = false;
+	                    $this->cflag = false;
+                    }
+                }
 
                 $this->item_counter++;
                 $this->_processed_index++;
+            }
+
+            if(!$enable_masonry && $preset == 'grid-2a'){
+	            if($need_close){
+		            echo '</div>';
+		            $this->cflag = false;
+	            }
             }
             ?>
             </div>

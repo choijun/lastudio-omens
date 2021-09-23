@@ -1101,3 +1101,31 @@ span.lakit-btn-more-icon {
 .elementor-element .elementor-widget .elementor-icon-list-items.elementor-inline-items .elementor-icon-list-item:after{
 	transform: translateY(calc( -1 * ( 50% + var(--divider-height, 0%) ) ) );
 }
+
+
+@media(min-width: 768px){
+	.preset-grid-2a .lakit-posts__item{
+		height: auto;
+	}
+	.preset-grid-2a .lakit-posts__thumbnail-img,
+	.preset-grid-2a .lakit-posts__thumbnail-link,
+	.preset-grid-2a .lakit-posts__thumbnail,
+	.preset-grid-2a .lakit-posts__inner-box,
+	.preset-grid-2a .lakit-posts__outer-box{
+		height: 100%;
+	}
+
+	.preset-grid-2a .lakit-posts__item-g.lakit-posts__item {
+		display: flex;
+		flex-wrap: wrap;
+	}
+	.preset-grid-2a .lakit-posts__item-g .lakit-posts__item {
+		height: 50%;
+	}
+	.preset-grid-2a .lakit-posts__item-g .lakit-posts__thumbnail-link{
+		padding: 0 !important;
+	}
+	.preset-grid-2a .swiper-container-autoheight .swiper-slide.lakit-posts__item {
+		align-self: stretch;
+	}
+}

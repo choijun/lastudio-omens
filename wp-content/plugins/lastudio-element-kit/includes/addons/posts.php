@@ -52,15 +52,7 @@ if(!class_exists('LaStudioKit_Posts')) {
 
 		protected function _register_section_layout( $css_scheme ){
 
-			$preset_type = apply_filters(
-				'lastudio-kit/'.$this->get_lakit_name().'/control/preset',
-				array(
-					'grid-1' => esc_html__( 'Grid 1', 'lastudio-kit' ),
-					'grid-2' => esc_html__( 'Grid 2', 'lastudio-kit' ),
-					'list-1' => esc_html__( 'List 1', 'lastudio-kit' ),
-					'list-2' => esc_html__( 'List 2', 'lastudio-kit' ),
-				)
-			);
+			$preset_type = $this->preset_list();
 
 			$default_preset_type = array_keys( $preset_type );
 
@@ -101,10 +93,6 @@ if(!class_exists('LaStudioKit_Posts')) {
 					'label'                  => esc_html__( 'Columns', 'lastudio-kit' ),
 					'type'                   => Controls_Manager::SELECT,
 					'default'                => 3,
-					'tablet_default'         => 2,
-					'mobile_extra_default'   => 2,
-					'tabletportrait_default' => 2,
-					'mobile_default'         => 1,
 					'options'                => lastudio_kit_helper()->get_select_range( 6 )
 				)
 			);
@@ -933,7 +921,7 @@ if(!class_exists('LaStudioKit_Posts')) {
 					'type'    => Controls_Manager::SWITCHER,
 					'default' => '',
 					'condition' => [
-						'preset' => ['grid-2'],
+						'preset' => $this->condition_grid2(),
 					],
 					'prefix_class' => 'lakit--content-hover-',
 				]
@@ -2902,6 +2890,23 @@ if(!class_exists('LaStudioKit_Posts')) {
 			}
 
 			return apply_filters( 'lastudio-kit/'.$this->get_lakit_name().'/format-icon', $output, $type );
+		}
+
+		protected function preset_list(){
+			$preset_type = apply_filters(
+				'lastudio-kit/'.$this->get_lakit_name().'/control/preset',
+				array(
+					'grid-1' => esc_html__( 'Grid 1', 'lastudio-kit' ),
+					'grid-2' => esc_html__( 'Grid 2', 'lastudio-kit' ),
+					'list-1' => esc_html__( 'List 1', 'lastudio-kit' ),
+					'list-2' => esc_html__( 'List 2', 'lastudio-kit' ),
+				)
+			);
+			return $preset_type;
+		}
+
+		protected function condition_grid2(){
+			return ['grid-2', 'grid-2a'];
 		}
 	}
 }

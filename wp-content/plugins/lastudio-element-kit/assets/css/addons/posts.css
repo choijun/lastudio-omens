@@ -183,7 +183,7 @@
 	height: 100%
 }
 .lakit-posts.preset-grid-2 .lakit-posts__inner-box {
-	background-color: #f5f5f5
+	background-color: currentColor;
 }
 .lakit-posts.preset-grid-2 .lakit-posts__inner-box:after {
 	background: linear-gradient(180deg, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0.7) 100%)

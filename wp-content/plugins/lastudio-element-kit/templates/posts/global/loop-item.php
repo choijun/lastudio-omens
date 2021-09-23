@@ -35,7 +35,9 @@ else{
     $post_classes[] = lastudio_kit_helper()->col_new_classes('columns', $this->get_settings_for_display());
 }
 
-$post_classes = array_merge($post_classes, lastudio_kit_helper()->get_post_terms(get_the_ID(), 'id'));
+if(filter_var($this->get_settings_for_display('enable_masonry'), FILTER_VALIDATE_BOOLEAN)){
+	$post_classes = array_merge($post_classes, lastudio_kit_helper()->get_post_terms(get_the_ID(), 'id'));
+}
 
 $post_format = get_post_format();
 if(empty($post_format)){

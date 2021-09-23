@@ -36,6 +36,8 @@ class LaStudioKit_Portfolio extends LaStudioKit_Posts {
 
 	public $item_counter = 0;
 
+	public $cflag = false;
+
 	public function get_name() {
 		return 'lakit-portfolio';
 	}
@@ -310,7 +312,7 @@ class LaStudioKit_Portfolio extends LaStudioKit_Posts {
 				'tab'        => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 				'condition' => [
-					'preset' => ['grid-2'],
+					'preset' => $this->condition_grid2(),
 				]
 			)
 		);
@@ -522,6 +524,20 @@ class LaStudioKit_Portfolio extends LaStudioKit_Posts {
 
 		$this->register_carousel_arrows_dots_style_section( [ 'enable_masonry!' => 'yes' ] );
 
+	}
+
+	protected function preset_list(){
+		$preset_type = apply_filters(
+			'lastudio-kit/'.$this->get_lakit_name().'/control/preset',
+			array(
+				'grid-1' => esc_html__( 'Grid 1', 'lastudio-kit' ),
+				'grid-2' => esc_html__( 'Grid 2', 'lastudio-kit' ),
+				'grid-2a' => esc_html__( 'Grid 2a', 'lastudio-kit' ),
+				'list-1' => esc_html__( 'List 1', 'lastudio-kit' ),
+				'list-2' => esc_html__( 'List 2', 'lastudio-kit' ),
+			)
+		);
+		return $preset_type;
 	}
 
 }

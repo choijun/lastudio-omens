@@ -223,6 +223,8 @@
 
             // Mobile trigger click event
             $( '.lakit-nav__mobile-trigger', $scope ).on( 'click.lakitNavMenu', function( event ) {
+                event.preventDefault();
+                console.log('ok');
                 $( this ).closest( '.lakit-nav-wrap' ).toggleClass( mobileActiveClass );
             } );
 

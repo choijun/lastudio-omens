@@ -3576,6 +3576,7 @@ a > .lahb_icon--accordion {
 
 .elementor-widget-icon .elementor-icon {
   vertical-align: middle;
+  display: flex;
 }
 
 .text-vertical .elementor-icon-list-items .elementor-icon-list-item,
@@ -5247,9 +5248,29 @@ ol.wp-block-latest-comments,
 .m23-frm-booking .wpcf7-submit {
   height: 182px;
 }
+@media (max-width: 1600px) {
+  .m23-frm-booking .wpcf7-submit {
+    height: 150px;
+  }
+}
+@media (max-width: 1280px) {
+  .m23-frm-booking .wpcf7-submit {
+    height: auto;
+  }
+}
+@media (max-width: 767px) {
+  .m23-frm-booking .wpcf7-submit {
+    width: 100%;
+  }
+}
 .m23-frm-booking .lakit-col:last-child {
   flex: 0 0 0;
   position: relative;
+}
+@media (max-width: 767px) {
+  .m23-frm-booking .lakit-col:last-child {
+    flex: 1 0 100%;
+  }
 }
 .m23-frm-booking .lakit-col:last-child .ajax-loader {
   top: calc(50% - 12px);
@@ -5266,10 +5287,6 @@ ol.wp-block-latest-comments,
   margin: 0;
   font-size: 0.875em;
   left: 0;
-}
-
-.lakit-carousel.lakit-carousel--simple .lakit-carousel__item-link {
-  overflow: hidden;
 }
 
 /*# sourceMappingURL=style.css.map */
