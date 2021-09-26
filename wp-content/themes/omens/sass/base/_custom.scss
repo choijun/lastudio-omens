@@ -82,6 +82,7 @@
 
 .custom-contenttab {
 	align-items: center;
+	justify-content: space-between;
 	@media(min-width: 1400px){
 		font-size: 20px;
 	}
@@ -91,6 +92,9 @@
 	}
 	a.la-popup{
 		position: relative;
+		@media(max-width: 767px){
+			margin-bottom: 25px
+		}
 		&:before{
 			content: '\ea45';
 			font-family: LaStudioIcons;

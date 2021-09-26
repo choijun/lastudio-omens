@@ -14,6 +14,37 @@ License URI: 	  licence/GPL.txt
 Text Domain:    omens-child
 Domain Path:    /languages/
 */
+.m23-frm-booking .wpcf7-submit {
+  background-image: url(https://omens.la-studioweb.com/wp-content/uploads/2021/09/arrow-right-white.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 40px;
+  font-size: 0;
+  width: 130px;
+}
+@media (max-width: 1600px) {
+  .m23-frm-booking .wpcf7-submit {
+    background-size: 30px;
+    width: 100px;
+  }
+}
+@media (max-width: 1280px) {
+  .m23-frm-booking .wpcf7-submit {
+    background-size: 20px;
+    height: 51px;
+  }
+}
+@media (max-width: 992px) {
+  .m23-frm-booking .wpcf7-submit {
+    width: 80px;
+  }
+}
+@media (max-width: 767px) {
+  .m23-frm-booking .wpcf7-submit {
+    width: 100%;
+  }
+}
+
 body.page-id-306 {
   --theme-body-font-family: "Acumin Pro", Sans-serif;
   --theme-heading-font-family: "Acumin Pro", Sans-serif;

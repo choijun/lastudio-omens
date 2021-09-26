@@ -1,3 +1,9 @@
+.elementor-icon-wrapper {
+  line-height: 0;
+}
+.elementor-icon {
+  vertical-align: middle;
+}
 .lakit-carousel--simple .lakit-carousel__item-img {
   transition: all .5s;
 }
@@ -14,7 +20,6 @@
 .elementor-widget-lakit-addtocart .added ~ .added_to_cart {
   display: none;
 }
-
 
 .lakit-team-member.preset-type-1 .lakit-team-member__inner{
   .lakit-team-member__cover{

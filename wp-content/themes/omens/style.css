@@ -4855,6 +4855,14 @@ ol.wp-block-latest-comments,
     --theme-sidebar-space: 80px ;
   }
 }
+.elementor-icon-wrapper {
+  line-height: 0;
+}
+
+.elementor-icon {
+  vertical-align: middle;
+}
+
 .lakit-carousel--simple .lakit-carousel__item-img {
   transition: all 0.5s;
 }
@@ -5195,6 +5203,7 @@ ol.wp-block-latest-comments,
 
 .custom-contenttab {
   align-items: center;
+  justify-content: space-between;
 }
 @media (min-width: 1400px) {
   .custom-contenttab {
@@ -5207,6 +5216,11 @@ ol.wp-block-latest-comments,
 }
 .custom-contenttab a.la-popup {
   position: relative;
+}
+@media (max-width: 767px) {
+  .custom-contenttab a.la-popup {
+    margin-bottom: 25px;
+  }
 }
 .custom-contenttab a.la-popup:before {
   content: "";

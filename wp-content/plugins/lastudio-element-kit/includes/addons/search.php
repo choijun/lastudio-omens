@@ -457,6 +457,22 @@ class LaStudioKit_Search extends LaStudioKit_Base {
             25
         );
 
+		$this->_add_responsive_control(
+			'form_submit_order',
+			array(
+				'label'   => esc_html__( 'Button Order', 'lastudio-kit' ),
+				'type'    => Controls_Manager::NUMBER,
+				'default' => 1,
+				'min'     => -1,
+				'max'     => 3,
+				'step'    => 1,
+				'selectors' => array(
+					'{{WRAPPER}} '. $css_scheme['form_submit'] => 'order: {{VALUE}};',
+				),
+			),
+			100
+		);
+
         $this->_add_group_control(
             Group_Control_Typography::get_type(),
             array(
@@ -466,7 +482,7 @@ class LaStudioKit_Search extends LaStudioKit_Base {
             50
         );
 
-        $this->_add_responsive_control(
+		$this->_add_responsive_control(
             'form_submit_icon_size',
             array(
                 'label'      => esc_html__( 'Icon Size', 'lastudio-kit' ),
