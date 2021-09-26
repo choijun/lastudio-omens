@@ -370,3 +370,35 @@ add_action('elementor/element/heading/section_title_style/before_section_end', f
 		]
 	);
 }, 10 );
+
+/**
+ * Modify Image Box - Color Hover
+ */
+add_action('elementor/element/image-box/section_style_content/before_section_end', function ( $element ){
+	$element->add_control(
+		'title_hover_color',
+		[
+			'label' => __( 'Hover Color', 'lastudio-kit' ),
+			'type' => \Elementor\Controls_Manager::COLOR,
+			'selectors' => [
+				'{{WRAPPER}} .elementor-image-box-wrapper:hover .elementor-image-box-title' => 'color: {{VALUE}};',
+			],
+		],
+		[
+			'index' => 39
+		]
+	);
+	$element->add_control(
+		'description_hover_color',
+		[
+			'label' => __( 'Hover Color', 'lastudio-kit' ),
+			'type' => \Elementor\Controls_Manager::COLOR,
+			'selectors' => [
+				'{{WRAPPER}} .elementor-image-box-wrapper:hover .elementor-image-box-description' => 'color: {{VALUE}};',
+			],
+		],
+		[
+			'index' => 53
+		]
+	);
+});
