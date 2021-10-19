@@ -270,5 +270,32 @@ body.ltr .la-custom-badge.custom-hot:before {
     font-size: 26px;
   }
 }
+.lakit-pf-metalist {
+  display: flex;
+  flex-flow: row wrap;
+}
+.lakit-pf-layout-type-block .lakit-pf-metalist {
+  flex-flow: column wrap;
+}
+.lakit-pf-metalist .lakit-pf-meta__item {
+  display: flex;
+}
+.lakit-pf-layout-type-block .lakit-pf-metalist .lakit-pf-meta__item {
+  width: 100%;
+  margin-bottom: var(--pf-meta-space, 0);
+  flex-flow: row wrap;
+}
+.lakit-pf-metalist .lakit-pf-meta__item .meta--label {
+  width: var(--pf-label-width, auto);
+}
+.lakit-pf-layout-type-block .lakit-pf-metalist .lakit-pf-meta__item .meta--value {
+  flex-grow: 1;
+  width: calc( 100% - var(--pf-label-width, auto));
+}
+
+.lakit-pf-layout-type-inline .lakit-pf-meta__item {
+  margin-left: calc( var(--pf-meta-space, 0) / 2 );
+  margin-right: calc( var(--pf-meta-space, 0) / 2 );
+}
 
 /*# sourceMappingURL=style.css.map */

@@ -19,9 +19,11 @@ if (!defined('WPINC')) {
 class LaStudioKit_Testimonials extends LaStudioKit_Base {
 
     protected function enqueue_addon_resources(){
-        wp_register_style( $this->get_name(), lastudio_kit()->plugin_url('assets/css/addons/testimonials.css'), ['lastudio-kit-base'], lastudio_kit()->get_version());
-        $this->add_style_depends( $this->get_name() );
-        $this->add_script_depends( 'lastudio-kit-base' );
+	    if(!lastudio_kit_settings()->is_combine_js_css()) {
+		    wp_register_style( $this->get_name(), lastudio_kit()->plugin_url( 'assets/css/addons/testimonials.css' ), [ 'lastudio-kit-base' ], lastudio_kit()->get_version() );
+		    $this->add_style_depends( $this->get_name() );
+		    $this->add_script_depends( 'lastudio-kit-base' );
+	    }
     }
     
     public function get_name() {
@@ -75,6 +77,7 @@ class LaStudioKit_Testimonials extends LaStudioKit_Base {
                 'type-7' => esc_html__( 'Type 7', 'lastudio-kit' ),
                 'type-8' => esc_html__( 'Type 8', 'lastudio-kit' ),
                 'type-9' => esc_html__( 'Type 9', 'lastudio-kit' ),
+                'type-10' => esc_html__( 'Type 10', 'lastudio-kit' ),
             )
         );
 

@@ -190,8 +190,10 @@ class Header_Vertical {
             $classes[] = 'lakit--is-vheader';
             $classes[] = 'lakit-vheader-p' . $alignment;
             $classes[] = 'lakit-vheader--hide' . $disable_on;
-            wp_enqueue_script('lastudio-kit-header-vertical');
-            wp_enqueue_style('lastudio-kit-base');
+	        if( !lastudio_kit_settings()->is_combine_js_css() ){
+		        wp_enqueue_script('lastudio-kit-header-vertical');
+		        wp_enqueue_style('lastudio-kit-base');
+	        }
         }
         echo sprintf('<div class="%s">', esc_attr(join(' ', $classes)));
     }

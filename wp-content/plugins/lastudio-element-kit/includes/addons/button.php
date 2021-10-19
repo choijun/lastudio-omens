@@ -18,7 +18,9 @@ if (!defined('WPINC')) {
 class LaStudioKit_Button extends LaStudioKit_Base {
 
     protected function enqueue_addon_resources(){
-        $this->add_style_depends('lastudio-kit-base');
+	    if(!lastudio_kit_settings()->is_combine_js_css()) {
+		    $this->add_style_depends( 'lastudio-kit-base' );
+	    }
     }
 
     public function get_name() {
@@ -438,6 +440,21 @@ class LaStudioKit_Button extends LaStudioKit_Base {
         $this->add_render_attribute( 'wrapper', 'class', 'elementor-button-wrapper' );
 
         if ( ! empty( $settings['link']['url'] ) ) {
+
+            $tmp_url = $settings['link']['url'];
+            if(false !== strpos($tmp_url, '{meta:')){
+	            $tmp_url = str_replace(['{meta:', '}'], '', $tmp_url);
+	            if(!empty($tmp_url)){
+	                global $post;
+	                if( $post instanceof \WP_Post ){
+		                $new_url_val = get_post_meta($post->ID, $tmp_url, true);
+		                if(!empty($new_url_val)){
+			                $settings['link']['url'] = $new_url_val;
+                        }
+                    }
+                }
+            }
+
             $this->add_link_attributes( 'button', $settings['link'] );
             $this->add_render_attribute( 'button', 'class', 'elementor-button-link' );
         }

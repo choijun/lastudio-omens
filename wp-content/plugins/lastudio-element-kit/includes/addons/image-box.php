@@ -17,11 +17,12 @@ if (!defined('WPINC')) {
 class LaStudioKit_Image_Box extends LaStudioKit_Base {
 
     protected function enqueue_addon_resources(){
+	    if(!lastudio_kit_settings()->is_combine_js_css()) {
+		    wp_register_style( $this->get_name(), lastudio_kit()->plugin_url( 'assets/css/addons/imagebox.css' ), [ 'lastudio-kit-base' ], lastudio_kit()->get_version() );
 
-        wp_register_style( $this->get_name(), lastudio_kit()->plugin_url('assets/css/addons/imagebox.css'), ['lastudio-kit-base'], lastudio_kit()->get_version());
-
-        $this->add_style_depends( $this->get_name() );
-        $this->add_script_depends( 'lastudio-kit-base' );
+		    $this->add_style_depends( $this->get_name() );
+		    $this->add_script_depends( 'lastudio-kit-base' );
+	    }
     }
 
     public function get_name() {

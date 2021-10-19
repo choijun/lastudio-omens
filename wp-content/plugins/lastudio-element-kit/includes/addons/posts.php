@@ -24,10 +24,14 @@ if(!class_exists('LaStudioKit_Posts')) {
 	class LaStudioKit_Posts extends LaStudioKit_Base {
 
 		protected function enqueue_addon_resources() {
-			wp_register_style( $this->get_name(), lastudio_kit()->plugin_url( 'assets/css/addons/posts.css' ), [ 'lastudio-kit-base' ], lastudio_kit()->get_version() );
-			$this->add_style_depends( $this->get_name() );
+
 			$this->add_script_depends( 'jquery-isotope' );
-			$this->add_script_depends( 'lastudio-kit-base' );
+
+			if(!lastudio_kit_settings()->is_combine_js_css()) {
+				wp_register_style( $this->get_name(), lastudio_kit()->plugin_url( 'assets/css/addons/posts.css' ), [ 'lastudio-kit-base' ], lastudio_kit()->get_version() );
+				$this->add_style_depends( $this->get_name() );
+				$this->add_script_depends( 'lastudio-kit-base' );
+			}
 		}
 
 		private $_query = null;
@@ -37,6 +41,11 @@ if(!class_exists('LaStudioKit_Posts')) {
 		public function get_name() {
 			return 'lakit-posts';
 		}
+
+        protected function get_html_wrapper_class()
+        {
+            return 'lastudio-kit elementor-lakit-gposts elementor-' . $this->get_name();
+        }
 
 		protected function get_widget_title() {
 			return esc_html__( 'Posts', 'lastudio-kit' );

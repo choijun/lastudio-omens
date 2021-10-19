@@ -99,3 +99,22 @@ body:not(.lakit--js-ready){
     display: none;
   }
 }
+
+.lakit-iconbox__box_icon.icon_pos_top {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.elementor-widget .wpcf7 form .wpcf7-response-output {
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+}
+
+.section-static{
+  .elementor-column,
+  .elementor-column > .elementor-widget-wrap,
+  > .elementor-container{
+    position: static;
+  }
+}

@@ -12,7 +12,9 @@ class CSS_Transform {
     }
 
     public function enqueue_scripts(){
-        wp_enqueue_style( 'lastudio-kit-css-transform', lastudio_kit()->plugin_url('assets/css/addons/css-transform.css'), [], lastudio_kit()->get_version());
+	    if(!lastudio_kit_settings()->is_combine_js_css()) {
+		    wp_enqueue_style( 'lastudio-kit-css-transform', lastudio_kit()->plugin_url( 'assets/css/addons/css-transform.css' ), [], lastudio_kit()->get_version() );
+	    }
     }
 
     public function init_module( $element ){

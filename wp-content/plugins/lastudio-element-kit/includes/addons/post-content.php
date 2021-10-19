@@ -21,7 +21,9 @@ use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 class LaStudioKit_Post_Content extends LaStudioKit_Base {
 
     protected function enqueue_addon_resources(){
-        $this->add_style_depends( 'lastudio-kit-base' );
+	    if(!lastudio_kit_settings()->is_combine_js_css()) {
+		    $this->add_style_depends( 'lastudio-kit-base' );
+	    }
     }
 
     public function get_name() {

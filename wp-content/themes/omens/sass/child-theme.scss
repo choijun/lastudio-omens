@@ -277,3 +277,42 @@ body.ltr .la-custom-badge.custom-hot:before {
     font-size: 26px;
   }
 }
+
+
+//.lakit-masonry_filter {
+//  position: sticky;
+//  top: calc( var(--lakit-header-height) + var(--lakit-adminbar-height) );
+//  width: 100%;
+//  z-index: 3;
+//}
+
+.lakit-pf-metalist {
+  display: flex;
+  flex-flow: row wrap;
+  .lakit-pf-layout-type-block & {
+    flex-flow: column wrap;
+  }
+  .lakit-pf-meta__item {
+    display: flex;
+    .lakit-pf-layout-type-block & {
+      width: 100%;
+      margin-bottom: var(--pf-meta-space, 0);
+      flex-flow: row wrap;
+    }
+    .meta--label{
+      width: var(--pf-label-width, auto);
+    }
+    .meta--value{
+      .lakit-pf-layout-type-block & {
+        flex-grow: 1;
+        width: calc( 100% - var(--pf-label-width, auto));
+      }
+    }
+  }
+}
+.lakit-pf-layout-type-inline{
+  .lakit-pf-meta__item{
+    margin-left: calc( var(--pf-meta-space, 0) / 2 );
+    margin-right: calc( var(--pf-meta-space, 0) / 2 );
+  }
+}

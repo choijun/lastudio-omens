@@ -144,6 +144,18 @@ class Custom_CSS {
 			}
 		}
 
+		if ( ! empty( $settings['_duytest'] ) ) {
+			$attributes = \Elementor\Utils::parse_custom_attributes( $settings['_duytest'], "\n" );
+
+			$black_list = [ 'id', 'class', 'data-id', 'data-settings', 'data-element_type', 'data-widget_type', 'data-model-cid' ];
+
+			foreach ( $attributes as $attribute => $value ) {
+				if ( ! in_array( $attribute, $black_list, true ) ) {
+					$element->add_render_attribute( '_wrapper', $attribute, $value );
+				}
+			}
+		}
+
 	}
 
 }

@@ -18,12 +18,19 @@ if (!defined('WPINC')) {
 class LaStudioKit_Animated_Text extends LaStudioKit_Base {
 
     protected function enqueue_addon_resources(){
-        wp_register_style( $this->get_name(), lastudio_kit()->plugin_url('assets/css/addons/animated-text.css'), ['lastudio-kit-base'], lastudio_kit()->get_version());
-        wp_register_script( 'lastudio-kit-anime-js', lastudio_kit()->plugin_url('assets/js/lib/anime.min.js'), [], lastudio_kit()->get_version(), true);
-        wp_register_script( $this->get_name(), lastudio_kit()->plugin_url('assets/js/addons/animated-text.js'), ['lastudio-kit-anime-js'], lastudio_kit()->get_version(), true);
 
-        $this->add_style_depends( $this->get_name() );
-        $this->add_script_depends( $this->get_name() );
+	    if(!lastudio_kit_settings()->is_combine_js_css()){
+		    wp_register_style( $this->get_name(), lastudio_kit()->plugin_url('assets/css/addons/animated-text.css'), ['lastudio-kit-base'], lastudio_kit()->get_version());
+		    wp_register_script( 'lastudio-kit-anime-js', lastudio_kit()->plugin_url('assets/js/lib/anime.min.js'), [], lastudio_kit()->get_version(), true);
+		    wp_register_script( $this->get_name(), lastudio_kit()->plugin_url('assets/js/addons/animated-text.js'), ['lastudio-kit-anime-js'], lastudio_kit()->get_version(), true);
+
+		    $this->add_style_depends( $this->get_name() );
+		    $this->add_script_depends( $this->get_name() );
+	    }
+	    else{
+	    	wp_enqueue_script('lastudio-kit-anime-js');
+	    }
+
     }
 
     public function get_name() {

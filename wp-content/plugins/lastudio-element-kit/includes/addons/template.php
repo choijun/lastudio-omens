@@ -22,6 +22,11 @@ class LaStudioKit_Template extends LaStudioKit_Base {
         return 'lakit-template';
     }
 
+    protected function get_html_wrapper_class()
+    {
+        return 'elementor-' . $this->get_name();
+    }
+
     protected function get_widget_title() {
         return esc_html__( 'Template', 'lastudio-kit' );
     }

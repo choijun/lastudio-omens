@@ -12,11 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
 
     protected function enqueue_addon_resources(){
-        wp_register_style( $this->get_name(), lastudio_kit()->plugin_url('assets/css/addons/nav-menu.css'), ['lastudio-kit-base'], lastudio_kit()->get_version());
-        wp_register_script( $this->get_name(), lastudio_kit()->plugin_url('assets/js/addons/nav-menu.js'), ['hoverIntent', 'lastudio-kit-base'], lastudio_kit()->get_version(), true);
-
-        $this->add_style_depends( $this->get_name() );
-        $this->add_script_depends( $this->get_name() );
+	    $this->add_script_depends( 'hoverIntent' );
+	    if(!lastudio_kit_settings()->is_combine_js_css()) {
+		    $this->add_style_depends( 'lastudio-kit-base' );
+		    $this->add_script_depends( 'lastudio-kit-base' );
+	    }
     }
 
 	public function get_name() {
@@ -181,7 +181,9 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'label' => esc_html__( 'Breakpoint', 'lastudio-kit' ),
                 'type'  => Controls_Manager::SELECT,
                 'default' => 'tablet',
-                'options' => lastudio_kit_helper()->get_active_breakpoints(false, true),
+                'options' => [
+                    'all' => 'All'
+                ] + lastudio_kit_helper()->get_active_breakpoints(false, true),
                 'condition' => array(
                     'mobile_trigger_visible' => 'yes',
                 ),
@@ -1487,7 +1489,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
             )
         );
 
-        $this->_add_control(
+        $this->_add_responsive_control(
             'mobile_menu_width',
             array(
                 'label' => esc_html__( 'Width', 'lastudio-kit' ),
@@ -1554,7 +1556,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
             25
         );
 
-        $this->_add_control(
+        $this->_add_responsive_control(
             'mobile_menu_padding',
             array(
                 'label'      => esc_html__( 'Padding', 'lastudio-kit' ),
@@ -1905,6 +1907,11 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
         $breakpoint_value = 1024;
         if(isset($active_breakpoints[$mobile_menu_breakpoint])){
             $breakpoint_value = $active_breakpoints[$mobile_menu_breakpoint];
+        }
+
+        if($mobile_menu_breakpoint == 'all'){
+            $breakpoint_value = 'all';
+            $this->add_render_attribute( 'nav-wrapper', 'class', 'lakit-active--mbmenu' );
         }
 
         require_once lastudio_kit()->plugin_path( 'includes/class-nav-walker.php' );

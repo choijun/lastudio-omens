@@ -59,6 +59,7 @@ class Motion_Effects
         wp_register_script('lastudio-kit-sticky-js', lastudio_kit()->plugin_url('assets/js/lib/jquery.sticky.min.js'), ['jquery'], lastudio_kit()->get_version(), true);
         wp_register_script('lastudio-kit-motion-fx', lastudio_kit()->plugin_url('assets/js/addons/motion-fx.min.js'), [
             'elementor-frontend-modules',
+            'elementor-frontend',
             'lastudio-kit-sticky-js'
         ], lastudio_kit()->get_version(), true);
     }

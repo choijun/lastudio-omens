@@ -61,9 +61,11 @@ body:not(.lakit--js-ready) .lakit-hamburger-panel__instance {
 	background-color: white;
 	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
 	visibility: hidden;
+	opacity: 0;
 }
 .open-state .lakit-hamburger-panel__inner{
 	visibility: inherit;
+	opacity: 1;
 }
 .lakit-hamburger-panel__close-button {
 	display: flex;
@@ -297,4 +299,13 @@ html.lakit-hamburger-panel-visible {
 [data-elementor-device-mode="mobile_extra"] .lakit--is-vheader.lakit-vheader--hidemobile_extra,
 [data-elementor-device-mode="mobile"] .lakit--is-vheader.lakit-vheader--hidemobile{
 	--lakit-vheader-width: 0px;
+}
+
+.lakit-hamburger-panel-top-position .lakit-hamburger-panel__instance {
+	height: auto;
+}
+.lakit-hamburger-panel-bottom-position .lakit-hamburger-panel__instance {
+	height: auto;
+	bottom: 0;
+	top: auto;
 }

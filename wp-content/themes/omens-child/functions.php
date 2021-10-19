@@ -57,6 +57,16 @@ function posts_custom_columns($column_name, $id){
 	}
 }
 
+add_action('admin_head', function (){
+	?>
+	<style>
+        .lakit_post_thumbs img {
+            width: 80px;
+            height: auto;
+        }
+	</style>
+	<?php
+});
 //add_action('woocommerce_after_shop_loop_item_title','woocommerce_template_loop_price', 10);
 
 //require_once 'demo/disable-emoji.php';

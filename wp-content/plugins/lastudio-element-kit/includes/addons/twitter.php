@@ -15,10 +15,16 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class LaStudioKit_Twitter extends LaStudioKit_Base {
 
     protected function enqueue_addon_resources(){
-        wp_register_style( $this->get_name(), lastudio_kit()->plugin_url('assets/css/addons/twitter.css'), ['lastudio-kit-base'], lastudio_kit()->get_version());
-        wp_register_script( $this->get_name(), lastudio_kit()->plugin_url('assets/js/addons/twitter.js'), ['lastudio-kit-base'], lastudio_kit()->get_version(), true);
-        $this->add_style_depends( $this->get_name() );
-        $this->add_script_depends( $this->get_name() );
+	    if(!lastudio_kit_settings()->is_combine_js_css()) {
+		    wp_register_style( $this->get_name(), lastudio_kit()->plugin_url( 'assets/css/addons/twitter.css' ), [ 'lastudio-kit-base' ], lastudio_kit()->get_version() );
+		    wp_register_script( $this->get_name(), lastudio_kit()->plugin_url( 'assets/js/addons/twitter.js' ), [ 'lastudio-kit-base' ], lastudio_kit()->get_version(), true );
+		    $this->add_style_depends( $this->get_name() );
+		    $this->add_script_depends( $this->get_name() );
+	    }
+	    else{
+		    wp_register_script( $this->get_name(), lastudio_kit()->plugin_url( 'assets/js/addons/twitter.js' ), [], lastudio_kit()->get_version(), true );
+		    $this->add_script_depends( $this->get_name() );
+        }
     }
 
 	public function get_name() {

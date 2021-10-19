@@ -18,10 +18,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 class LaStudioKit_Post_Navigation extends LaStudioKit_Base {
 
     protected function enqueue_addon_resources(){
+	    if(!lastudio_kit_settings()->is_combine_js_css()) {
+		    wp_register_style( $this->get_name(), lastudio_kit()->plugin_url( 'assets/css/addons/post-navigation.css' ), [], lastudio_kit()->get_version() );
 
-        wp_register_style( $this->get_name(), lastudio_kit()->plugin_url('assets/css/addons/post-navigation.css'), [], lastudio_kit()->get_version());
-
-        $this->add_style_depends( $this->get_name() );
+		    $this->add_style_depends( $this->get_name() );
+	    }
     }
 
     public function get_name() {
@@ -306,8 +307,7 @@ class LaStudioKit_Post_Navigation extends LaStudioKit_Base {
                 'global' => [
                     'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
                 ],
-                'selector' => '{{WRAPPER}} span.post-navigation__prev--label, {{WRAPPER}} span.post-navigation__next--label',
-                'exclude' => [ 'line_height' ],
+                'selector' => '{{WRAPPER}} span.post-navigation__prev--label, {{WRAPPER}} span.post-navigation__next--label'
             ]
         );
 
@@ -379,7 +379,6 @@ class LaStudioKit_Post_Navigation extends LaStudioKit_Base {
                     'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
                 ],
                 'selector' => '{{WRAPPER}} span.post-navigation__prev--title, {{WRAPPER}} span.post-navigation__next--title',
-                'exclude' => [ 'line_height' ],
             ]
         );
 

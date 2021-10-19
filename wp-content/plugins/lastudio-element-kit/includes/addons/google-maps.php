@@ -20,21 +20,24 @@ class LaStudioKit_Google_Maps extends LaStudioKit_Base {
 
     protected function enqueue_addon_resources(){
 
-        wp_register_script(  $this->get_name() , lastudio_kit()->plugin_url('assets/js/addons/google-map.js') , null,  lastudio_kit()->get_version() , true );
-        wp_register_style( $this->get_name(), lastudio_kit()->plugin_url('assets/css/addons/google-map.css'), null, lastudio_kit()->get_version());
 
-        $google_api_key = lastudio_kit_settings()->get_option('gmap_api_key', lastudio_kit_settings()->get_option('gmap_backend_api_key'));
+	    $google_api_key = lastudio_kit_settings()->get_option( 'gmap_api_key', lastudio_kit_settings()->get_option( 'gmap_backend_api_key' ) );
 
-        $api = add_query_arg( array( 'key' => $google_api_key ), 'https://maps.googleapis.com/maps/api/js' );
-        wp_register_script(  'lakit-google-maps-api' , $api , false,  lastudio_kit()->get_version() , true );
+	    $api = add_query_arg( array( 'key' => $google_api_key ), 'https://maps.googleapis.com/maps/api/js' );
+	    wp_register_script( 'lakit-google-maps-api', $api, false, lastudio_kit()->get_version(), true );
 
-        $disable_gmap_api_js = lastudio_kit_settings()->get_option('disable_gmap_api_js');
-        if( !filter_var($disable_gmap_api_js, FILTER_VALIDATE_BOOLEAN) ){
-            $this->add_script_depends( 'lakit-google-maps-api' );
-        }
+	    $disable_gmap_api_js = lastudio_kit_settings()->get_option( 'disable_gmap_api_js' );
+	    if ( ! filter_var( $disable_gmap_api_js, FILTER_VALIDATE_BOOLEAN ) ) {
+		    $this->add_script_depends( 'lakit-google-maps-api' );
+	    }
 
-        $this->add_style_depends( $this->get_name() );
-        $this->add_script_depends( $this->get_name() );
+	    if(!lastudio_kit_settings()->is_combine_js_css()) {
+		    wp_register_script( $this->get_name(), lastudio_kit()->plugin_url( 'assets/js/addons/google-map.js' ), null, lastudio_kit()->get_version(), true );
+		    wp_register_style( $this->get_name(), lastudio_kit()->plugin_url( 'assets/css/addons/google-map.css' ), null, lastudio_kit()->get_version() );
+
+		    $this->add_style_depends( $this->get_name() );
+		    $this->add_script_depends( $this->get_name() );
+	    }
     }
 
     public function get_name() {

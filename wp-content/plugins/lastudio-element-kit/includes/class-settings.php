@@ -458,6 +458,10 @@ if ( ! class_exists( 'LaStudio_Kit_Settings' ) ) {
 			}
 			return self::$instance;
 		}
+
+		public function is_combine_js_css(){
+			return false;
+		}
 	}
 }
 

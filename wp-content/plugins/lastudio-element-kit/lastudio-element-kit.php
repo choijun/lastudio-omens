@@ -24,7 +24,7 @@ if ( ! defined( 'WPINC' ) ) {
     die;
 }
 
-if(!function_exists('LaStudio_Kit')){
+if(!class_exists('LaStudio_Kit')){
     class LaStudio_Kit{
         /**
          * A reference to an instance of this class.
@@ -123,6 +123,8 @@ if(!function_exists('LaStudio_Kit')){
             add_action('admin_enqueue_scripts', [ $this, 'admin_enqueue'] );
 
             add_action('elementor/element/after_section_end', array( $this, 'add_size_units' ), 10, 2);
+
+            add_action( 'plugins_loaded', [ $this, 'plugins_loaded' ], 0 );
 
             // Register handle ajax global
 
@@ -596,6 +598,11 @@ if(!function_exists('LaStudio_Kit')){
             $this->customizer = new \CX_Customizer( apply_filters('lastudio-kit/theme/customizer/options', $customizer_options) );
         }
 
+        public function plugins_loaded(){
+        	if( ($typography = $this->plugin_path('includes/integrate/typography.php')) && file_exists( $typography )){
+        	    require_once $typography;
+	        }
+        }
     }
 }
 

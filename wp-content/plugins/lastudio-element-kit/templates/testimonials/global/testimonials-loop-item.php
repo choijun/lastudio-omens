@@ -35,9 +35,18 @@ else{
             }
 
             echo $this->_loop_item( array( 'item_comment' ), '<div class="lakit-testimonials__comment"><div>%s</div></div>' );
+
+            if($preset == 'type-10'){
+                echo '<div class="lakit-testimonials__infowrap">';
+                echo '<div class="lakit-testimonials__infowrap2">';
+            }
+
             echo $this->_loop_item( array( 'item_name' ), '<div class="lakit-testimonials__name"><span>%s</span></div>' );
             echo $this->_loop_item( array( 'item_position' ), '<div class="lakit-testimonials__position"><span>%s</span></div>' );
 
+            if($preset == 'type-10'){
+                echo '</div>';
+            }
             if($this->get_settings('replace_star')){
                 ?>
                 <div class="lakit-testimonials__rating has-replace"><span class="star-rating"><?php
@@ -55,6 +64,9 @@ else{
                     $percentage =  (absint($item_rating) * 10) . '%';
                     echo '<div class="lakit-testimonials__rating"><span class="star-rating"><span style="width: '.$percentage.'"></span></span></div>';
                 }
+            }
+            if($preset == 'type-10'){
+                echo '</div>';
             }
 		?></div>
 	</div>

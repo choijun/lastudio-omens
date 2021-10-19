@@ -422,23 +422,29 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
 
         public function frontend_enqueue(){
 
+	        $polyfill_data = apply_filters('lastudio-kit/filter/js_polyfill_data', [
+		        'lakit-polyfill-resizeobserver' => [
+			        'condition' => '\'ResizeObserver\' in window',
+			        'src'       => lastudio_kit()->plugin_url( 'assets/js/lib/polyfill-resizeobserver.min.js' ),
+			        'version'   => '1.5.0',
+		        ],
+	        ]);
+	        $polyfill_inline = lastudio_kit_helper()->get_polyfill_inline( $polyfill_data );
+
             wp_register_style( 'lastudio-kit-base', lastudio_kit()->plugin_url('assets/css/lastudio-kit-base.css'), [], lastudio_kit()->get_version());
-            wp_register_script(  'lastudio-kit-base' , lastudio_kit()->plugin_url('assets/js/lastudio-kit-base.js') , [ 'elementor-frontend' ],  lastudio_kit()->get_version() , true );
-            wp_register_script(  'lastudio-kit-header-vertical' , lastudio_kit()->plugin_url('assets/js/addons/header-sidebar.js') , [ 'elementor-frontend' ],  lastudio_kit()->get_version() , true );
+
+	        if( lastudio_kit_settings()->is_combine_js_css() ){
+		        wp_register_style( 'lastudio-kit-all-addons', lastudio_kit()->plugin_url('assets/css/addon.css'), [], lastudio_kit()->get_version());
+		        wp_register_script(  'lastudio-kit-base' , lastudio_kit()->plugin_url('assets/js/frondend.js') , [ 'elementor-frontend' ],  lastudio_kit()->get_version() , true );
+		        wp_add_inline_script('lastudio-kit-base', $polyfill_inline, 'before');
+	        }
+	        else{
+		        wp_register_script(  'lastudio-kit-base' , lastudio_kit()->plugin_url('assets/js/lastudio-kit-base.js') , [ 'elementor-frontend' ],  lastudio_kit()->get_version() , true );
+		        wp_register_script(  'lastudio-kit-header-vertical' , lastudio_kit()->plugin_url('assets/js/addons/header-sidebar.js') , [ 'elementor-frontend' ],  lastudio_kit()->get_version() , true );
+		        wp_add_inline_script('lastudio-kit-header-vertical', $polyfill_inline, 'before');
+	        }
 
             wp_register_script(  'jquery-isotope' , lastudio_kit()->plugin_url('assets/js/lib/isotope.pkgd.min.js') , ['imagesloaded'],  lastudio_kit()->get_version() , true );
-
-            $polyfill_data = apply_filters('lastudio-kit/filter/js_polyfill_data', [
-                'lakit-polyfill-resizeobserver' => [
-                    'condition' => '\'ResizeObserver\' in window',
-                    'src'       => lastudio_kit()->plugin_url( 'assets/js/lib/polyfill-resizeobserver.min.js' ),
-                    'version'   => '1.5.0',
-                ],
-            ]);
-
-            $polyfill_inline = lastudio_kit_helper()->get_polyfill_inline( $polyfill_data );
-
-            wp_add_inline_script('lastudio-kit-header-vertical', $polyfill_inline, 'before');
 
             wp_register_style( 'lastudio-kit-woocommerce', lastudio_kit()->plugin_url('assets/css/lastudio-kit-woocommerce.css'), [], lastudio_kit()->get_version());
 
@@ -483,6 +489,15 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
             ];
             wp_localize_script( 'elementor-frontend', 'lakitSubscribeConfig', $subscribe_obj );
             wp_localize_script( 'lakit-subscribe-form', 'lakitSubscribeConfig', $subscribe_obj );
+
+            if(lastudio_kit_settings()->is_combine_js_css()){
+            	wp_enqueue_style('lastudio-kit-base');
+            	wp_enqueue_style('lastudio-kit-all-addons');
+            	wp_enqueue_script('lastudio-kit-base');
+	            if ( class_exists( 'WooCommerce' ) ) {
+		            wp_enqueue_style('lastudio-kit-woocommerce');
+	            }
+            }
         }
 
         /**

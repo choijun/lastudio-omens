@@ -19,7 +19,9 @@ if (!defined('WPINC')) {
 class LaStudioKit_Post_Featured_Image extends LaStudioKit_Base {
 
     protected function enqueue_addon_resources(){
-        $this->add_style_depends( 'lastudio-kit-base' );
+	    if(!lastudio_kit_settings()->is_combine_js_css()) {
+		    $this->add_style_depends( 'lastudio-kit-base' );
+	    }
     }
 
     public function get_name() {
@@ -301,7 +303,7 @@ class LaStudioKit_Post_Featured_Image extends LaStudioKit_Base {
             ]
         );
 
-        $this->add_control(
+        $this->add_responsive_control(
             'image_border_radius',
             [
                 'label' => __( 'Border Radius', 'lastudio-kit' ),

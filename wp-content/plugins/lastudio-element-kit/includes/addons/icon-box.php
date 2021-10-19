@@ -18,10 +18,12 @@ class LaStudioKit_Icon_Box extends LaStudioKit_Base {
 
     protected function enqueue_addon_resources(){
 
-        wp_register_style( $this->get_name(), lastudio_kit()->plugin_url('assets/css/addons/iconbox.css'), ['lastudio-kit-base'], lastudio_kit()->get_version());
+	    if(!lastudio_kit_settings()->is_combine_js_css()) {
+		    wp_register_style( $this->get_name(), lastudio_kit()->plugin_url( 'assets/css/addons/iconbox.css' ), [ 'lastudio-kit-base' ], lastudio_kit()->get_version() );
 
-        $this->add_style_depends( $this->get_name() );
-        $this->add_script_depends( 'lastudio-kit-base' );
+		    $this->add_style_depends( $this->get_name() );
+		    $this->add_script_depends( 'lastudio-kit-base' );
+	    }
     }
 
     public function get_name() {
@@ -782,6 +784,14 @@ class LaStudioKit_Icon_Box extends LaStudioKit_Base {
 			    ],
 		    ]
 	    );
+	    $this->_add_group_control(
+		    Group_Control_Border::get_type(),
+		    [
+			    'name' => 'content_border',
+			    'label' => esc_html__( 'Border', 'lastudio-kit' ),
+			    'selector' => '{{WRAPPER}} ' . $css_scheme['box_body'],
+		    ]
+	    );
         $this->_add_control(
             'content_alignment',
             [
@@ -809,7 +819,6 @@ class LaStudioKit_Icon_Box extends LaStudioKit_Base {
                 'selectors' => [
                     '{{WRAPPER}} ' . $css_scheme['box_body'] => '{{VALUE}}',
                 ],
-                'separator' => 'before',
             ]
         );
 
@@ -840,7 +849,6 @@ class LaStudioKit_Icon_Box extends LaStudioKit_Base {
                 'selectors' => [
                     '{{WRAPPER}} ' . $css_scheme['box'] => '{{VALUE}}',
                 ],
-                'separator' => 'after',
                 'condition' => [
                     'icon_position'           => ['left', 'right'],
                 ],
@@ -852,6 +860,7 @@ class LaStudioKit_Icon_Box extends LaStudioKit_Base {
             [
                 'label' => esc_html__( 'Title', 'lastudio-kit' ),
                 'type' => Controls_Manager::HEADING,
+                'separator' => 'before',
             ]
         );
 

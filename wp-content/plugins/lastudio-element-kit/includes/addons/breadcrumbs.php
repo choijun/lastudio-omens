@@ -19,9 +19,11 @@ if (!defined('WPINC')) {
 class LaStudioKit_Breadcrumbs extends LaStudioKit_Base {
 
     protected function enqueue_addon_resources(){
-        wp_register_style( $this->get_name(), lastudio_kit()->plugin_url('assets/css/addons/breadcrumbs.css'), ['lastudio-kit-base'], lastudio_kit()->get_version());
+	    if(!lastudio_kit_settings()->is_combine_js_css()) {
+		    wp_register_style( $this->get_name(), lastudio_kit()->plugin_url( 'assets/css/addons/breadcrumbs.css' ), [ 'lastudio-kit-base' ], lastudio_kit()->get_version() );
 
-        $this->add_style_depends( $this->get_name() );
+		    $this->add_style_depends( $this->get_name() );
+	    }
     }
 
     public function get_name() {
@@ -80,6 +82,19 @@ class LaStudioKit_Breadcrumbs extends LaStudioKit_Base {
                 'default' => '',
                 'render_type'  => 'template',
                 'prefix_class' => 'lakit-breadcrumbs-page-title-',
+            )
+        );
+
+        $this->add_control(
+            'custom_page_title',
+            array(
+                'label'       => esc_html__( 'Custom Page Title', 'lastudio-kit' ),
+                'label_block' => true,
+                'type'        => Controls_Manager::TEXT,
+                'default'     => '',
+                'condition' => array(
+                    'show_title' => 'yes',
+                ),
             )
         );
 
@@ -845,6 +860,11 @@ class LaStudioKit_Breadcrumbs extends LaStudioKit_Base {
         $settings = $this->get_settings();
 
         $title_format = '<' . $settings['title_tag'] . ' class="lakit-breadcrumbs__title">%s</' . $settings['title_tag'] . '>';
+
+        $custom_page_title = $this->get_settings_for_display('custom_page_title');
+        if(!empty($custom_page_title)){
+            $title_format = '<' . $settings['title_tag'] . ' class="lakit-breadcrumbs__title">'.$custom_page_title.'</' . $settings['title_tag'] . '>';
+        }
 
         $custom_home_page_enabled = ! empty( $settings['enabled_custom_home_page_label'] ) ? $settings['enabled_custom_home_page_label'] : false;
         $custom_home_page_enabled = filter_var( $custom_home_page_enabled, FILTER_VALIDATE_BOOLEAN );

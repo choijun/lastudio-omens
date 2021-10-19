@@ -172,3 +172,7 @@
 	height: auto;
 	bottom: 0;
 }
+
+.elementor-lakit-portfolio-gallery .lakit-masonry-wrapper .col-row {
+	margin: 0 !important;
+}

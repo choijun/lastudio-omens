@@ -18,8 +18,10 @@ if (!defined('WPINC')) {
 class LaStudioKit_Woo_Single_Product_Content extends LaStudioKit_Post_Content {
 
     protected function enqueue_addon_resources(){
-        $this->add_style_depends( 'lastudio-kit-woocommerce' );
-        $this->add_script_depends('lastudio-kit-base' );
+	    if(!lastudio_kit_settings()->is_combine_js_css()) {
+		    $this->add_style_depends( 'lastudio-kit-woocommerce' );
+		    $this->add_script_depends( 'lastudio-kit-base' );
+	    }
     }
 
     public function show_in_panel() {

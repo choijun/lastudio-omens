@@ -1808,7 +1808,7 @@ abstract class LaStudioKit_Base extends Widget_Base
                 'label_on' => esc_html__('Yes', 'lastudio-kit'),
                 'label_off' => esc_html__('No', 'lastudio-kit'),
                 'return_value' => 'yes',
-                'default' => '',
+                'default' => 'no',
                 'prefix_class' => 'lakit-dots--vertical-',
             )
         );
@@ -2076,12 +2076,19 @@ abstract class LaStudioKit_Base extends Widget_Base
                 'default' => '1',
                 'options' => array(
                     '1' => '1 width',
+                    '1-2' => '1.5 width',
                     '2' => '2 width',
+                    '2-3' => '2.3 width',
+                    '2-5' => '2.5 width',
                     '3' => '3 width',
+                    '3-5' => '3.5 width',
+                    '3-7' => '3.7 width',
                     '4' => '4 width',
+                    '4-5' => '4.5 width',
                     '5' => '5 width',
+                    '5-5' => '5.5 width',
                     '6' => '6 width',
-                    '0-5' => '1/2 width'
+                    '0-5' => '1/2 width',
                 ),
             )
         );
@@ -2106,6 +2113,8 @@ abstract class LaStudioKit_Base extends Widget_Base
                     '1-5' => '1.5 height',
                     '1-6' => '1.6 height',
                     '1-8' => '1.7 height',
+                    '2-2' => '2.2 height',
+                    '2-4' => '2.4 height',
                 )
             )
         );

@@ -239,18 +239,18 @@
 	content: counter(postitem, decimal-leading-zero)
 }
 @media (max-width: 767px) {
-	.lastudio-kit:not(.lakit-keep-mbl-yes) .lakit-posts.preset-list-1 .lakit-posts__inner-box,
-	.lastudio-kit:not(.lakit-keep-mbl-yes) .lakit-posts.preset-list-2 .lakit-posts__inner-box {
+	.elementor-lakit-gposts:not(.lakit-keep-mbl-yes) .lakit-posts.preset-list-1 .lakit-posts__inner-box,
+	.elementor-lakit-gposts:not(.lakit-keep-mbl-yes) .lakit-posts.preset-list-2 .lakit-posts__inner-box {
 		flex-flow: column wrap
 	}
-	.lastudio-kit:not(.lakit-keep-mbl-yes) .lakit-posts.preset-list-1 .lakit-posts__inner-box .lakit-posts__inner-content,
-	.lastudio-kit:not(.lakit-keep-mbl-yes) .lakit-posts.preset-list-1 .lakit-posts__inner-box .lakit-posts__thumbnail,
-	.lastudio-kit:not(.lakit-keep-mbl-yes) .lakit-posts.preset-list-2 .lakit-posts__inner-box .lakit-posts__inner-content,
-	.lastudio-kit:not(.lakit-keep-mbl-yes) .lakit-posts.preset-list-2 .lakit-posts__inner-box .lakit-posts__thumbnail {
+	.elementor-lakit-gposts:not(.lakit-keep-mbl-yes) .lakit-posts.preset-list-1 .lakit-posts__inner-box .lakit-posts__inner-content,
+	.elementor-lakit-gposts:not(.lakit-keep-mbl-yes) .lakit-posts.preset-list-1 .lakit-posts__inner-box .lakit-posts__thumbnail,
+	.elementor-lakit-gposts:not(.lakit-keep-mbl-yes) .lakit-posts.preset-list-2 .lakit-posts__inner-box .lakit-posts__inner-content,
+	.elementor-lakit-gposts:not(.lakit-keep-mbl-yes) .lakit-posts.preset-list-2 .lakit-posts__inner-box .lakit-posts__thumbnail {
 		width: 100%
 	}
-	.lastudio-kit:not(.lakit-keep-mbl-yes) .lakit-posts.preset-list-1 .lakit-posts__inner-box .lakit-posts__thumbnail,
-	.lastudio-kit:not(.lakit-keep-mbl-yes) .lakit-posts.preset-list-2 .lakit-posts__inner-box .lakit-posts__thumbnail {
+	.elementor-lakit-gposts:not(.lakit-keep-mbl-yes) .lakit-posts.preset-list-1 .lakit-posts__inner-box .lakit-posts__thumbnail,
+	.elementor-lakit-gposts:not(.lakit-keep-mbl-yes) .lakit-posts.preset-list-2 .lakit-posts__inner-box .lakit-posts__thumbnail {
 		margin-bottom: var(--lakit-posts-thumbnail-spacing)
 	}
 }

@@ -202,16 +202,20 @@
 }
 .preset-type-4.lakit-team-member .lakit-team-member__content {
 	position: absolute;
-	height: 100%;
 	left: 0;
 	bottom: 0;
 	z-index: 2;
-	text-align: center;
-	color: #fff;
 	display: flex;
 	justify-content: center;
-	align-items: center;
-	flex-direction: column
+	flex-direction: column;
+	right: 0;
+	top: 0;
+	width: auto;
+	opacity: 0;
+	transition: all .5s;
+}
+.preset-type-4.lakit-team-member .lakit-team-member__item:hover .lakit-team-member__content{
+	opacity: 1;
 }
 .preset-type-5.lakit-team-member .lakit-team-member__link:after {
 	left: 20px;
@@ -254,26 +258,22 @@
 .preset-type-5.lakit-team-member .lakit-team-member__inner {
 	overflow: hidden
 }
-.preset-type-5.lakit-team-member .lakit-team-member__name {
-	color: inherit;
-	font-weight: normal;
-	font-style: italic
-}
-.preset-type-5.lakit-team-member .lakit-team-member__position {
-	margin-bottom: 20px
-}
 .preset-type-5.lakit-team-member .lakit-team-member__content {
 	position: absolute;
-	height: 100%;
 	left: 0;
 	bottom: 0;
 	z-index: 2;
-	text-align: center;
-	color: #fff;
 	display: flex;
 	justify-content: flex-end;
-	align-items: center;
-	flex-direction: column
+	flex-direction: column;
+	right: 0;
+	top: 0;
+	width: auto;
+	opacity: 0;
+	transition: all .5s;
+}
+.preset-type-5.lakit-team-member .lakit-team-member__item:hover .lakit-team-member__content{
+	opacity: 1;
 }
 .preset-type-6.lakit-team-member .lakit-team-member__name {
 	display: inline-block;

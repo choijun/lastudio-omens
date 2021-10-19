@@ -19,7 +19,9 @@ if (!defined('WPINC')) {
 class LaStudioKit_Post_Terms extends LaStudioKit_Base {
 
     protected function enqueue_addon_resources(){
-        $this->add_style_depends( 'lastudio-kit-base' );
+	    if(!lastudio_kit_settings()->is_combine_js_css()) {
+		    $this->add_style_depends( 'lastudio-kit-base' );
+	    }
     }
 
     public function get_name() {
@@ -329,64 +331,6 @@ class LaStudioKit_Post_Terms extends LaStudioKit_Base {
         $html .= sprintf( '</%1$s>', $settings['html_tag'] );
 
         echo $html;
-    }
-
-    protected function content_template() {
-        global $post;
-        ?>
-        <#
-        var taxonomy = settings.taxonomy;
-
-        var all_terms = [];
-        <?php
-        $taxonomies = get_taxonomies( array( 'public' => true ) );
-        foreach ( $taxonomies as $taxonomy ) {
-            printf( 'all_terms["%1$s"] = [];', $taxonomy );
-            $terms = get_the_terms( $post->ID, $taxonomy );
-            if ( $terms ) {
-                $i = 0;
-                foreach ( $terms as $term ) {
-                    printf( 'all_terms["%1$s"][%2$s] = [];', $taxonomy, $i );
-                    printf( 'all_terms["%1$s"][%2$s] = { slug: "%3$s", name: "%4$s", url: "%5$s" };', $taxonomy, $i, $term->slug, $term->name, esc_url( get_term_link( $term ) ) );
-                    $i++;
-                }
-            }
-        }
-        ?>
-        var post_terms = all_terms[ settings.taxonomy ];
-
-        var terms = '';
-        var i = 0;
-
-        switch( settings.link_to ) {
-        case 'term':
-        while ( all_terms[ settings.taxonomy ][i] ) {
-        terms += "<a href='" + all_terms[ settings.taxonomy ][i].url + "'>" + all_terms[ settings.taxonomy ][i].name + "</a>" + settings.separator;
-        i++;
-        }
-        break;
-        case 'none':
-        default:
-        while ( all_terms[ settings.taxonomy ][i] ) {
-        terms += all_terms[ settings.taxonomy ][i].name + settings.separator;
-        i++;
-        }
-        break;
-        }
-        terms = terms.slice(0, terms.length-2);
-
-        var animation_class = '';
-        if ( '' !== settings.hover_animation ) {
-        animation_class = 'elementor-animation-' + settings.hover_animation;
-        }
-
-        var html = '<' + settings.html_tag + ' class="lakit-post-terms ' + animation_class + '">';
-        html += terms;
-        html += '</' + settings.html_tag + '>';
-
-        print( html );
-        #>
-        <?php
     }
     
 }

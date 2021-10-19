@@ -22,8 +22,10 @@ class LaStudioKit_Woo_Products extends LaStudioKit_Base {
     public static $__called_item = false;
 
     protected function enqueue_addon_resources(){
-        $this->add_style_depends( 'lastudio-kit-woocommerce' );
-        $this->add_script_depends('lastudio-kit-base' );
+	    if(!lastudio_kit_settings()->is_combine_js_css()) {
+		    $this->add_style_depends( 'lastudio-kit-woocommerce' );
+		    $this->add_script_depends( 'lastudio-kit-base' );
+	    }
     }
 
     public function get_name() {
@@ -475,6 +477,31 @@ class LaStudioKit_Woo_Products extends LaStudioKit_Base {
                 'label' => esc_html__( 'Image', 'lastudio-kit' ),
                 'type' => Controls_Manager::HEADING,
                 'separator' => 'before',
+            ]
+        );
+
+        $this->add_control(
+            'image_bg',
+            [
+                'label' => esc_html__( 'Background Color', 'lastudio-kit' ),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .woocommerce-loop-product__link .figure__object_fit' => 'background-color: {{VALUE}}',
+                ],
+                'condition' => [
+                    'enable_alt_image' => 'yes'
+                ]
+            ]
+        );
+
+        $this->add_control(
+            'image2_bg',
+            [
+                'label' => esc_html__( 'Crossfade Background Color', 'lastudio-kit' ),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .woocommerce-loop-product__link .figure__object_fit.p_img-second' => 'background-color: {{VALUE}}',
+                ],
             ]
         );
 

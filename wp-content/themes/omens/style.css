@@ -73,8 +73,8 @@ Domain Path:    /languages/
   --theme-h4-font-size: 24px;
   --theme-h5-font-size: 22px;
   --theme-h6-font-size: 20px;
-  --theme-body-font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Poppins, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --theme-three-font-family: "Rubik", sans-serif;
+  --theme-body-font-family: "acumin-pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Poppins, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --theme-three-font-family: "acumin-pro", sans-serif;
   --theme-three-font-weight: 400;
   --theme-header-vertical-width: 370px;
   --theme-header-vertical-width-small: 370px;
@@ -90,8 +90,8 @@ Domain Path:    /languages/
   --item_info: 100px;
   --adminbar-height: 0;
   --theme-heading-font-color: #272727;
-  --theme-heading-font-weight: 500;
-  --theme-heading-font-family: "Rubik", sans-serif;
+  --theme-heading-font-weight: 700;
+  --theme-heading-font-family: "acumin-pro", sans-serif;
   --theme-heading-font-style: inherit;
   --theme-heading-font-line-height: 1.2;
   --theme-heading-font-spacing: 0;
@@ -1762,20 +1762,15 @@ input[type=submit]::-moz-focus-inner {
 .lakit--transparency-yes.elementor-section.elementor-sticky:not(.elementor-sticky--effects) {
   background-color: var(--lakit-section-bg-color) !important;
 }
-.lakit--transparency-yes.elementor-section.elementor-sticky:not(.elementor-sticky--effects) .current-menu-item > .menu-item-link.menu-item-link-depth-0 {
-  color: var(--lakit-section-link-hover-color);
-}
 .lakit--transparency-yes.elementor-section.elementor-sticky:not(.elementor-sticky--effects) .main-color .lakit-hamburger-panel__toggle-icon,
 .lakit--transparency-yes.elementor-section.elementor-sticky:not(.elementor-sticky--effects) .main-color .lakit-hamburger-panel__toggle-label,
 .lakit--transparency-yes.elementor-section.elementor-sticky:not(.elementor-sticky--effects) .main-color .lakit-blocks-icon {
   color: inherit;
 }
-.lakit--transparency-yes.elementor-section.elementor-sticky:not(.elementor-sticky--effects) .main-color,
-.lakit--transparency-yes.elementor-section.elementor-sticky:not(.elementor-sticky--effects) .menu-item-link.menu-item-link-depth-0 {
+.lakit--transparency-yes.elementor-section.elementor-sticky:not(.elementor-sticky--effects) .main-color {
   color: var(--lakit-section-link-color);
 }
-.lakit--transparency-yes.elementor-section.elementor-sticky:not(.elementor-sticky--effects) .main-color:hover,
-.lakit--transparency-yes.elementor-section.elementor-sticky:not(.elementor-sticky--effects) .menu-item-link.menu-item-link-depth-0:hover {
+.lakit--transparency-yes.elementor-section.elementor-sticky:not(.elementor-sticky--effects) .main-color:hover {
   color: var(--lakit-section-link-hover-color);
 }
 .lakit--transparency-yes.elementor-section.elementor-sticky:not(.elementor-sticky--effects) .elementor-icon {
@@ -1783,10 +1778,6 @@ input[type=submit]::-moz-focus-inner {
 }
 .lakit--transparency-yes.elementor-section.elementor-sticky:not(.elementor-sticky--effects) .elementor-icon:hover {
   color: var(--lakit-section-link-hover-color) !important;
-}
-.lakit--transparency-yes.elementor-section.elementor-sticky:not(.elementor-sticky--effects) .elementor-icon svg,
-.lakit--transparency-yes.elementor-section.elementor-sticky:not(.elementor-sticky--effects) .elementor-icon i {
-  color: inherit;
 }
 .lakit--transparency-yes.elementor-section.elementor-sticky:not(.elementor-sticky--effects) .elementor-widget-text-editor,
 .lakit--transparency-yes.elementor-section.elementor-sticky:not(.elementor-sticky--effects) .elementor-heading-title {
@@ -1805,6 +1796,15 @@ input[type=submit]::-moz-focus-inner {
   fill: currentColor !important;
 }
 .lakit--transparency-yes.elementor-section.elementor-sticky:not(.elementor-sticky--effects) .elementor-icon-list-item:hover {
+  color: var(--lakit-section-link-hover-color);
+}
+.lakit--transparency-yes.elementor-section.elementor-sticky:not(.elementor-sticky--effects) .lakit-nav-wrap:not(.lakit-mobile-menu-active) .current-menu-item > .menu-item-link.menu-item-link-depth-0 {
+  color: var(--lakit-section-link-hover-color);
+}
+.lakit--transparency-yes.elementor-section.elementor-sticky:not(.elementor-sticky--effects) .lakit-nav-wrap:not(.lakit-mobile-menu-active) .menu-item-link.menu-item-link-depth-0 {
+  color: var(--lakit-section-link-color);
+}
+.lakit--transparency-yes.elementor-section.elementor-sticky:not(.elementor-sticky--effects) .lakit-nav-wrap:not(.lakit-mobile-menu-active) .menu-item-link.menu-item-link-depth-0:hover {
   color: var(--lakit-section-link-hover-color);
 }
 
@@ -3669,6 +3669,24 @@ body:not(.lakit--js-ready) .lakit-nav__item {
 }
 body:not(.lakit--js-ready) .lakit-nav__mobile-trigger {
   display: none;
+}
+
+.lakit-iconbox__box_icon.icon_pos_top {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.elementor-widget .wpcf7 form .wpcf7-response-output {
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+}
+
+.section-static .elementor-column,
+.section-static .elementor-column > .elementor-widget-wrap,
+.section-static > .elementor-container {
+  position: static;
 }
 
 /*------------------------------------*

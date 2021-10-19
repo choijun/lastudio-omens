@@ -19,7 +19,9 @@ if (!defined('WPINC')) {
 class LaStudioKit_Post_Comment extends LaStudioKit_Base {
 
     protected function enqueue_addon_resources(){
-        $this->add_style_depends( 'lastudio-kit-base' );
+	    if(!lastudio_kit_settings()->is_combine_js_css()) {
+		    $this->add_style_depends( 'lastudio-kit-base' );
+	    }
     }
 
     public function get_name() {

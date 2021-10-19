@@ -29,9 +29,6 @@
   &.elementor-sticky{
     &:not(.elementor-sticky--effects){
       background-color: var(--lakit-section-bg-color) !important;
-      .current-menu-item > .menu-item-link.menu-item-link-depth-0{
-        color: var(--lakit-section-link-hover-color);
-      }
       .main-color{
         .lakit-hamburger-panel__toggle-icon,
         .lakit-hamburger-panel__toggle-label,
@@ -39,8 +36,7 @@
           color: inherit;
         }
       }
-      .main-color,
-      .menu-item-link.menu-item-link-depth-0{
+      .main-color{
         color: var(--lakit-section-link-color);
         &:hover{
           color: var(--lakit-section-link-hover-color);
@@ -50,10 +46,6 @@
         color: var(--lakit-section-link-color) !important;
         &:hover{
           color: var(--lakit-section-link-hover-color) !important;
-        }
-        svg,
-        i{
-          color: inherit;
         }
       }
       .elementor-widget-text-editor,
@@ -73,6 +65,19 @@
         }
         &:hover{
           color: var(--lakit-section-link-hover-color);
+        }
+      }
+      .lakit-nav-wrap{
+        &:not(.lakit-mobile-menu-active){
+          .current-menu-item > .menu-item-link.menu-item-link-depth-0{
+            color: var(--lakit-section-link-hover-color);
+          }
+          .menu-item-link.menu-item-link-depth-0{
+            color: var(--lakit-section-link-color);
+            &:hover{
+              color: var(--lakit-section-link-hover-color);
+            }
+          }
         }
       }
     }

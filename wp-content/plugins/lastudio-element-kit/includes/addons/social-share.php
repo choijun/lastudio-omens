@@ -105,11 +105,19 @@ class LaStudioKit_Social_Share extends LaStudioKit_Base {
     ];
 
     protected function enqueue_addon_resources(){
-        wp_register_style( $this->get_name(), lastudio_kit()->plugin_url('assets/css/addons/social-share.css'), null, lastudio_kit()->get_version());
-        wp_register_script(  $this->get_name() , lastudio_kit()->plugin_url('assets/js/addons/social-share.js') , [ 'share-link', 'elementor-frontend' ],  lastudio_kit()->get_version() , true );
 
-        $this->add_style_depends( $this->get_name() );
-        $this->add_script_depends( $this->get_name() );
+	    $this->add_script_depends( 'share-link' );
+	    if(!lastudio_kit_settings()->is_combine_js_css()) {
+
+		    wp_register_style( $this->get_name(), lastudio_kit()->plugin_url( 'assets/css/addons/social-share.css' ), null, lastudio_kit()->get_version() );
+		    wp_register_script( $this->get_name(), lastudio_kit()->plugin_url( 'assets/js/addons/social-share.js' ), [
+			    'share-link',
+			    'elementor-frontend'
+		    ], lastudio_kit()->get_version(), true );
+
+		    $this->add_style_depends( $this->get_name() );
+		    $this->add_script_depends( $this->get_name() );
+	    }
     }
 
 	public function get_name() {

@@ -143,7 +143,7 @@
 			$( '#lakit-tabs-template-edit-modal .dialog-message').html( '<iframe src="' + link + '" id="lakit-tabs-edit-frame" width="100%" height="100%"></iframe>' );
 			$( '#lakit-tabs-template-edit-modal .dialog-message').append( '<div id="lakit-tabs-loading"><div class="elementor-loader-wrapper"><div class="elementor-loader"><div class="elementor-loader-boxes"><div class="elementor-loader-box"></div><div class="elementor-loader-box"></div><div class="elementor-loader-box"></div><div class="elementor-loader-box"></div></div></div><div class="elementor-loading-title">Loading</div></div></div>' );
 
-			$iframe = $( '#lakit-tabs-edit-frame');
+			$iframe = $( '#lakit-tabs-edit-frame' );
 			$loader = $( '#lakit-tabs-loading');
 
 			$iframe.on( 'load', function() {
@@ -152,7 +152,6 @@
 		},
 
 		getModal: function() {
-
 			if ( ! LaStudioKitEditor.modal ) {
 				this.modal = elementor.dialogsManager.createWidget( 'lightbox', {
 					id: 'lakit-tabs-template-edit-modal',
@@ -162,7 +161,6 @@
 					}
 				} );
 			}
-
 			return LaStudioKitEditor.modal;
 		},
 	};

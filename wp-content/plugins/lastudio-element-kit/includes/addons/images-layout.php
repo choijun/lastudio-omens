@@ -26,11 +26,13 @@ class LaStudioKit_Images_Layout extends LaStudioKit_Base {
     public $item_counter = 0;
 
     protected function enqueue_addon_resources(){
-        wp_register_style( $this->get_name(), lastudio_kit()->plugin_url('assets/css/addons/images-layout.css'), ['lastudio-kit-base'], lastudio_kit()->get_version());
+	    $this->add_script_depends( 'jquery-isotope' );
+	    if(!lastudio_kit_settings()->is_combine_js_css()) {
+		    wp_register_style( $this->get_name(), lastudio_kit()->plugin_url( 'assets/css/addons/images-layout.css' ), [ 'lastudio-kit-base' ], lastudio_kit()->get_version() );
 
-        $this->add_style_depends( $this->get_name() );
-        $this->add_script_depends( 'jquery-isotope' );
-        $this->add_script_depends( 'lastudio-kit-base' );
+		    $this->add_style_depends( $this->get_name() );
+		    $this->add_script_depends( 'lastudio-kit-base' );
+	    }
     }
 
     public function get_name() {
@@ -400,7 +402,7 @@ class LaStudioKit_Images_Layout extends LaStudioKit_Base {
         $this->add_responsive_control(
             'item_margin',
             array(
-                'label' => esc_html__( 'Items Margin', 'lastudio-kit' ),
+                'label' => esc_html__( 'Item Spacing', 'lastudio-kit' ),
                 'type'  => Controls_Manager::SLIDER,
                 'range' => array(
                     'px' => array(
@@ -412,6 +414,17 @@ class LaStudioKit_Images_Layout extends LaStudioKit_Base {
                     '{{WRAPPER}}' => '--lakit-carousel-item-left-space: {{SIZE}}{{UNIT}};--lakit-carousel-item-right-space: {{SIZE}}{{UNIT}};--lakit-gcol-left-space: {{SIZE}}{{UNIT}};--lakit-gcol-right-space: {{SIZE}}{{UNIT}};',
                     '{{WRAPPER}} ' . $css_scheme['item']          => 'padding: {{SIZE}}{{UNIT}};',
                     '{{WRAPPER}} ' . $css_scheme['list_container'] . ':not(.swiper-wrapper)' => 'margin-left: -{{SIZE}}{{UNIT}};margin-right: -{{SIZE}}{{UNIT}};',
+                )
+            )
+        );
+
+        $this->add_responsive_control(
+            'item_row_gap',
+            array(
+                'label' => esc_html__( 'Row Spacing', 'lastudio-kit' ),
+                'type'  => Controls_Manager::SLIDER,
+                'selectors' => array(
+                    '{{WRAPPER}} ' . $css_scheme['item']          => 'margin-bottom: {{SIZE}}{{UNIT}};',
                 )
             )
         );

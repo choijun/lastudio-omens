@@ -239,6 +239,7 @@
 				elementor.hooks.addFilter('editor/style/styleText', CustomCSS.addCustomCss);
 			}
 
+			elementor.hooks.addFilter('editor/style/styleText', CustomCSS.addCustomAttr);
 			// Page Layout Options
 			window.elementor.settings.page.addChangeCallback( 'lakit_header_vertical', function( newValue ) {
 				var $elementView = window.elementor.previewView.$el.closest('.lakit-site-wrapper');
@@ -260,6 +261,34 @@
 				$elementView.attr('class', _old_class.replace(/lakit-vheader--hide(\w+)/, 'lakit-vheader--hide' + newValue));
 			} );
 		},
+
+		addCustomAttr: function ( content, context ){
+			if (!context) {
+				return;
+			}
+			var model = context.model,
+				customAttr = model.get('settings').get('_attributes') || '';
+
+			if(customAttr != ''){
+				var tmpAttr = customAttr.split('\n');
+				var black_list = [ 'id', 'class', 'data-id', 'data-settings', 'data-element_type', 'data-widget_type', 'data-model-cid' ];
+
+				$.each(context.el.attributes, function (idx, attr){
+					if(!black_list.includes(attr.nodeName)){
+						context.el.removeAttr(attr.nodeName);
+					}
+				});
+				tmpAttr.forEach(function (_attr){
+					var xx = _attr.split('|');
+					if(!black_list.includes(xx[0])){
+						context.el.setAttribute(xx[0], xx[1] ? xx[1] : '');
+					}
+				})
+			}
+
+			return content;
+		},
+
 		addCustomCss: function (css, context) {
 
 			if (!context) {
@@ -267,8 +296,8 @@
 			}
 
 			var model = context.model,
-				customCSS = model.get('settings').get('custom_css');
-			var selector = '.elementor-element.elementor-element-' + model.get('id');
+				customCSS = model.get('settings').get('custom_css'),
+				selector = '.elementor-element.elementor-element-' + model.get('id');
 
 			if ('document' === model.get('elType')) {
 				selector = elementor.config.document.settings.cssWrapperSelector;
