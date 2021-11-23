@@ -118,3 +118,34 @@ body:not(.lakit--js-ready){
     position: static;
   }
 }
+.lakit-breadcrumbs__item {
+  vertical-align: middle;
+}
+
+[data-send2frm]{
+  .elementor-widget-container{
+    cursor: pointer;
+    &:after {
+      content: '\ea22';
+      font-family: 'LaStudioIcons';
+      background: var(--theme-secondary-color);
+      border-radius: 50%;
+      color: #fff;
+      position: absolute;
+      left: 1em;
+      top: 1em;
+      width: 1.2em;
+      height: 1.2em;
+      line-height: 1.2em;
+      font-size: 1em;
+      text-align: center;
+      opacity: 0;
+    }
+  }
+  &.selected,
+  &:hover{
+    .elementor-widget-container:after {
+      opacity: 1;
+    }
+  }
+}

@@ -52,7 +52,7 @@ if(!class_exists('LaStudioKit_Posts')) {
 		}
 
 		public function get_icon() {
-			return 'lastudio-kit-icon-posts';
+			return 'eicon-post-list';
 		}
 
 		public function get_keywords() {

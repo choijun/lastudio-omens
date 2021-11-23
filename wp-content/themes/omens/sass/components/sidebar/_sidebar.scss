@@ -91,6 +91,7 @@
   display: block;
   margin-bottom: 30px;
   font-size: var(--theme-h3-font-size);
+  letter-spacing: -0.04em;
 }
 
 .widget_calendar caption {
@@ -224,14 +225,16 @@
 }
 
 .la_product_tag_cloud,
+.widget_product_tag_cloud,
+.elementor-widget-wp-widget-tag_cloud,
 .widget_tag_cloud {
   .tagcloud{
-    font-size: 14px;
+    font-size: 1em;
   }
   a {
     font-size: inherit !important;
     display: inline-block;
-    padding-bottom: 8px;
+    padding-bottom: 3px;
 
     &:not(:last-child) {
       &:after {

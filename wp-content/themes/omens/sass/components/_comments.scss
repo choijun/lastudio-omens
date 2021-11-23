@@ -8,6 +8,7 @@
 	color: $heading-font-color;
 	font-family: $heading-font-family;
 	font-weight: $heading-font-weight;
+	letter-spacing: var(--theme-heading-font-spacing);
 }
 
 .comment-content ol li,
@@ -28,8 +29,7 @@
 	padding: 0 5px;
 }
 .comment-list{
-	margin: 0 0 3em;
-	font-size: 14px;
+	margin: 0 0 70px;
 	> .comment-container{
 		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 		padding-bottom: 25px;
@@ -331,6 +331,19 @@ p.no-comments{
 	margin-top: 1em;
 }
 
+.comments-area .comments-title,
+.comments-area > div#respond > .comment-reply-title {
+	font-size: var(--theme-h3-font-size);
+	letter-spacing: -0.03em;
+	font-weight: 600;
+	border-bottom: 2px solid;
+	padding-bottom: 20px;
+	line-height: 1;
+	margin-bottom: 40px;
+}
+.comment-list .comment-reply-title {
+	font-size: var(--theme-h5-font-size);
+}
 @media(max-width: 992px){
 	.comment-list>li .comment-container .comment-body {
 		margin-top: 10px;

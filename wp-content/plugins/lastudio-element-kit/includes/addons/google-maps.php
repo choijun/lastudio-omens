@@ -306,7 +306,7 @@ class LaStudioKit_Google_Maps extends LaStudioKit_Base {
      */
     public function _get_available_map_styles() {
 
-        $key           = 'lakit-gmap-style-' . lastudio_kit()->get_version();
+        $key           = 'lakit-gmap-style-' . lastudio_kit()->get_version(true);
         $plugin_styles = get_transient( $key );
 
         if ( ! $plugin_styles ) {

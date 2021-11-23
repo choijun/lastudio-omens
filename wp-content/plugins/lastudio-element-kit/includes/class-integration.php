@@ -104,6 +104,8 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
             add_action( 'init', [ $this, 'register_portfolio_content_type' ] );
 
             add_action('lastudio-kit/ajax/register_actions', [ $this, 'register_ajax_actions' ] );
+
+			add_filter( 'pre_get_posts', [ $this, 'setup_post_per_page_for_portfolio' ]);
 		}
 
 		/**
@@ -140,7 +142,7 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
 		 */
 		public function register_addons( $widgets_manager ) {
 
-			$avaliable_widgets = lastudio_kit_settings()->get( 'avaliable_widgets' );
+			$avaliable_widgets = lastudio_kit_settings()->get_option( 'avaliable_widgets' );
 
 			require lastudio_kit()->plugin_path( 'includes/base/class-widget-base.php' );
 
@@ -450,8 +452,7 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
 
             $rest_api_url = apply_filters( 'lastudio-kit/rest/frontend/url', get_rest_url() );
 
-            $template_cache = true;
-            $devMode = true;
+            $template_cache = filter_var(lastudio_kit_settings()->get_option('template-cache', false), FILTER_VALIDATE_BOOLEAN);
 
             $LaStudioKitSettings = [
 	            'templateApiUrl' => $rest_api_url . 'lastudio-kit-api/v1/elementor-template',
@@ -459,12 +460,13 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
 	            'homeURL'        => esc_url(home_url('/')),
 	            'ajaxUrl'        => esc_url( admin_url( 'admin-ajax.php' ) ),
 	            'isMobile'       => filter_var( wp_is_mobile(), FILTER_VALIDATE_BOOLEAN ) ? 'true' : 'false',
-	            'devMode'        => defined('WP_DEBUG') && WP_DEBUG ? 'true' : 'false',
-	            'cache_ttl'      => apply_filters('lastudio-kit/cache-management/time-to-life', !$template_cache ? 30 : (60 * 5)),
-	            'local_ttl'      => apply_filters('lastudio-kit/cache-management/local-time-to-life', !$template_cache ? 30 : (60 * 60 * 24)),
+	            'devMode'        => !$template_cache ? 'true' : 'false',
+	            'cache_ttl'      => apply_filters('lastudio-kit/cache-management/time-to-life', !$template_cache ? 30 : (60 * 30)),
+	            'local_ttl'      => apply_filters('lastudio-kit/cache-management/local-time-to-life', !$template_cache ? 120 : (60 * 60 * 24)),
 	            'themeName'      => get_template(),
 	            'i18n'           => [],
 	            'ajaxNonce'      => lastudio_kit()->ajax_manager->create_nonce(),
+	            'useFrontAjax'   => 'true'
             ];
 
             wp_localize_script('lastudio-kit-base', 'LaStudioKitSettings', $LaStudioKitSettings );
@@ -947,7 +949,7 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
         }
 
 		public function register_portfolio_content_type(){
-			$avaliable_extension = lastudio_kit_settings()->get('avaliable_extensions', []);
+			$avaliable_extension = lastudio_kit_settings()->get_option('avaliable_extensions', []);
 			if(!empty($avaliable_extension['portfolio_content_type']) && filter_var($avaliable_extension['portfolio_content_type'], FILTER_VALIDATE_BOOLEAN)){
 				register_post_type( 'la_portfolio', apply_filters('lastudio-kit/admin/portoflio/args', [
 					'label'                 => __( 'Portfolio', 'lastudio-kit' ),
@@ -1112,6 +1114,16 @@ if ( ! class_exists( 'LaStudio_Kit_Integration' ) ) {
 				'dev' => !empty($request['dev']) ? $request['dev'] : false
 			];
 			return $helper->widget_callback($args, 'ajax');
+		}
+
+		public function setup_post_per_page_for_portfolio( $query ){
+
+			if ( is_admin() || ! $query->is_main_query() ) {
+				return;
+			}
+			if ( is_post_type_archive( 'la_portfolio' ) || (is_tax() && is_tax(get_object_taxonomies( 'la_portfolio' ) ))) {
+				$query->set( 'posts_per_page', lastudio_kit_settings()->get_option( 'portfolio_per_page', 9 ) );
+			}
 		}
 	}
 

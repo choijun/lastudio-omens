@@ -98,3 +98,10 @@
 	justify-content: center;
 	flex-direction: column;
 }
+.post-navigation__arrow-wrapper {
+	display: flex;
+}
+.post-navigation__arrow-wrapper svg {
+	width: 1em;
+	height: auto;
+}

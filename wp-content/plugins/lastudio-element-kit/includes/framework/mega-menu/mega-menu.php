@@ -53,6 +53,12 @@ if( !class_exists('LaStudio_Kit_MegaMenu') ){
          */
         protected $meta_key = 'lakit_menu_settings';
 
+	    /**
+	     * Holder for current menu ID
+	     * @var integer
+	     */
+	    protected $current_menu_id = null;
+
         public function __construct( $args = array() ) {
 
             $this->path = $args['path'];
@@ -69,6 +75,10 @@ if( !class_exists('LaStudio_Kit_MegaMenu') ){
 
             add_action( 'wp_ajax_lakit_get_nav_item_settings', array( $this, 'get_nav_item_settings' ) );
             add_action( 'wp_ajax_lakit_save_nav_item_settings', array( $this, 'save_nav_item_settings' ) );
+
+            add_action( 'init', array( $this, 'edit_redirect' ), 0 );
+
+	        add_action( 'template_include', array( $this, 'set_post_type_template' ), 9999 );
         }
 
         public function admin_scripts(){
@@ -104,7 +114,8 @@ if( !class_exists('LaStudio_Kit_MegaMenu') ){
                 'LaStudioKitMenuConfig',
                 apply_filters( 'lastudio-kit/module/menu/admin/nav-settings-config', array(
                     'labels'        => array(
-                        'itemTriggerLabel' => __( 'MegaMenu', 'lastudio-kit' ),
+	                    'itemTriggerLabel'    => '<span class="dashicons dashicons-admin-generic"></span>' . __( 'Settings', 'lastudio-kit' ),
+	                    'itemMegaEnableLabel' => '<span class="dashicons dashicons-saved"></span>' . __( 'Mega Activated', 'lastudio-kit' ),
                     ),
                     'editURL'       => add_query_arg(
                         array(
@@ -114,8 +125,10 @@ if( !class_exists('LaStudio_Kit_MegaMenu') ){
                         ),
                         esc_url( admin_url( '/' ) )
                     ),
+                    'currentMenuId' => $this->get_selected_menu_id(),
                     'controlData'      => $this->default_nav_item_controls_data(),
                     'iconsFetchJson'   => lastudio_kit()->plugin_url( 'includes/framework/elementor-extension/assets/fonts/LaStudioIcons.json' ),
+                    'itemsSettings'    => $this->get_menu_items_settings(),
                 ) )
             );
 
@@ -181,64 +194,64 @@ if( !class_exists('LaStudio_Kit_MegaMenu') ){
         }
 
         public function default_nav_item_controls_data(){
-            return [
-                'menu_type' => array(
-                    'value'   => 'default',
-                    'options' => array(
-                        array(
-                            'label' => esc_html__( 'Default', 'lastudio-kit' ),
-                            'value' => 'default',
-                        ),
-                        array(
-                            'label' => esc_html__( 'Mega', 'lastudio-kit' ),
-                            'value' => 'mega',
-                        )
-                    ),
-                ),
-                'menu_icon_type' => array(
-                    'value'   => 'icon',
-                    'options' => array(
-                        array(
-                            'label' => esc_html__( 'Icon', 'lastudio-kit' ),
-                            'value' => 'icon',
-                        ),
-                        array(
-                            'label' => esc_html__( 'Svg', 'lastudio-kit' ),
-                            'value' => 'svg',
-                        )
-                    ),
-                ),
-                'menu_icon' => array(
-                    'value' => '',
-                ),
-                'menu_svg' => array(
-                    'value' => '',
-                ),
-                'icon_color' => array(
-                    'value' => '',
-                ),
-                'icon_size' => array(
-                    'value' => '',
-                ),
-                'menu_badge' => array(
-                    'value' => '',
-                ),
-                'badge_color' => array(
-                    'value' => '',
-                ),
-                'badge_bg_color' => array(
-                    'value' => '',
-                ),
-                'hide_item_text' => array(
-                    'value' => '',
-                ),
-                'force_full_width' => array(
-                    'value' => '',
-                ),
-                'menu_max_width' => array(
-                    'value' => '',
-                ),
-            ];
+	        return array(
+		        'enabled' => array(
+			        'value' => false,
+		        ),
+		        'custom_mega_menu_position' => array(
+			        'value'   => 'default',
+			        'options' => array(
+				        array(
+					        'label' => esc_html__( 'Default', 'lastudio-kit' ),
+					        'value' => 'default',
+				        ),
+				        array(
+					        'label' => esc_html__( 'Relative item', 'lastudio-kit' ),
+					        'value' => 'relative-item',
+				        )
+			        ),
+		        ),
+		        'custom_mega_menu_width' => array(
+			        'value' => '',
+		        ),
+		        'menu_icon_type' => array(
+			        'value'   => 'icon',
+			        'options' => array(
+				        array(
+					        'label' => esc_html__( 'Icon', 'lastudio-kit' ),
+					        'value' => 'icon',
+				        ),
+				        array(
+					        'label' => esc_html__( 'SVG', 'lastudio-kit' ),
+					        'value' => 'svg',
+				        )
+			        ),
+		        ),
+		        'menu_icon' => array(
+			        'value' => '',
+		        ),
+		        'menu_svg' => array(
+			        'value' => '',
+		        ),
+		        'icon_color' => array(
+			        'value' => '',
+		        ),
+		        'icon_size' => array(
+			        'value' => '',
+		        ),
+		        'menu_badge' => array(
+			        'value' => '',
+		        ),
+		        'badge_color' => array(
+			        'value' => '',
+		        ),
+		        'badge_bg_color' => array(
+			        'value' => '',
+		        ),
+		        'hide_item_text' => array(
+			        'value' => '',
+		        ),
+	        );
         }
 
         /**
@@ -379,6 +392,161 @@ if( !class_exists('LaStudio_Kit_MegaMenu') ){
 
             return call_user_func( $callback, $value );
         }
+
+	    /**
+	     * Get the current menu ID.
+	     *
+	     * @author Tom Hemsley (https://wordpress.org/plugins/megamenu/)
+	     * @return int
+	     */
+	    public function get_selected_menu_id() {
+
+		    if ( null !== $this->current_menu_id ) {
+			    return $this->current_menu_id;
+		    }
+
+		    $nav_menus            = wp_get_nav_menus( array('orderby' => 'name') );
+		    $menu_count           = count( $nav_menus );
+		    $nav_menu_selected_id = isset( $_REQUEST['menu'] ) ? (int) $_REQUEST['menu'] : 0;
+		    $add_new_screen       = ( isset( $_GET['menu'] ) && 0 == $_GET['menu'] ) ? true : false;
+
+		    $this->current_menu_id = $nav_menu_selected_id;
+
+		    // If we have one theme location, and zero menus, we take them right into editing their first menu
+		    $page_count = wp_count_posts( 'page' );
+		    $one_theme_location_no_menus = ( 1 == count( get_registered_nav_menus() ) && ! $add_new_screen && empty( $nav_menus ) && ! empty( $page_count->publish ) ) ? true : false;
+
+		    // Get recently edited nav menu
+		    $recently_edited = absint( get_user_option( 'nav_menu_recently_edited' ) );
+		    if ( empty( $recently_edited ) && is_nav_menu( $this->current_menu_id ) ) {
+			    $recently_edited = $this->current_menu_id;
+		    }
+
+		    // Use $recently_edited if none are selected
+		    if ( empty( $this->current_menu_id ) && ! isset( $_GET['menu'] ) && is_nav_menu( $recently_edited ) ) {
+			    $this->current_menu_id = $recently_edited;
+		    }
+
+		    // On deletion of menu, if another menu exists, show it
+		    if ( ! $add_new_screen && 0 < $menu_count && isset( $_GET['action'] ) && 'delete' == $_GET['action'] ) {
+			    $this->current_menu_id = $nav_menus[0]->term_id;
+		    }
+
+		    // Set $this->current_menu_id to 0 if no menus
+		    if ( $one_theme_location_no_menus ) {
+			    $this->current_menu_id = 0;
+		    } elseif ( empty( $this->current_menu_id ) && ! empty( $nav_menus ) && ! $add_new_screen ) {
+			    // if we have no selection yet, and we have menus, set to the first one in the list
+			    $this->current_menu_id = $nav_menus[0]->term_id;
+		    }
+
+		    return $this->current_menu_id;
+
+	    }
+
+	    /**
+	     * @return mixed
+	     */
+	    public function get_menu_items_settings() {
+		    $menu_items = $this->get_menu_items_object_data( $this->get_selected_menu_id() );
+
+		    $settings = [];
+
+		    if ( ! $menu_items ) {
+			    return $settings;
+		    }
+
+		    foreach ( $menu_items as $key => $item_obj ) {
+			    $item_id = $item_obj->ID;
+
+			    $settings[ $item_id ] = $this->get_item_settings( $item_id );
+		    }
+
+		    return $settings;
+	    }
+
+	    /**
+	     * [get_menu_items_object_data description]
+	     * @param  boolean $menu_id [description]
+	     * @return [type]           [description]
+	     */
+	    public function get_menu_items_object_data( $menu_id = false ) {
+
+		    if ( ! $menu_id ) {
+			    return false;
+		    }
+
+		    $menu = wp_get_nav_menu_object( $menu_id );
+
+		    $menu_items = wp_get_nav_menu_items( $menu );
+
+		    if ( ! $menu_items ) {
+			    return false;
+		    }
+
+		    return $menu_items;
+	    }
+
+	    /**
+	     * Edit redirect
+	     *
+	     * @return void
+	     */
+	    public function edit_redirect(){
+
+	    	if ( ! current_user_can( 'manage_options' ) ) {
+			    return;
+		    }
+
+		    if ( empty( $_REQUEST['lakit-open-editor'] ) ) {
+			    return;
+		    }
+
+		    if ( empty( $_REQUEST['item'] ) ) {
+			    return;
+		    }
+
+		    if ( empty( $_REQUEST['menu'] ) ) {
+			    return;
+		    }
+
+		    $menu_id      = intval( $_REQUEST['menu'] );
+		    $menu_item_id = intval( $_REQUEST['item'] );
+
+		    $edit_link = add_query_arg(
+			    array(
+				    'post'        => $menu_item_id,
+				    'action'      => 'elementor',
+				    'context'     => 'lakit-menu',
+				    'parent_menu' => $menu_id,
+			    ),
+			    admin_url( 'post.php' )
+		    );
+
+		    wp_redirect( $edit_link );
+
+		    die();
+	    }
+
+	    /**
+	     * Set blank template for editor
+	     */
+	    public function set_post_type_template( $template ) {
+
+		    $found = false;
+
+		    if ( is_singular( 'nav_menu_item' ) ) {
+			    $found    = true;
+			    $template = lastudio_kit()->plugin_path( 'templates/admin-templates/menu/blank.php' );
+		    }
+
+		    if ( $found ) {
+			    do_action( 'lastudio-kit/template-include/found' );
+		    }
+
+		    return $template;
+
+	    }
 
         /**
          * Returns the instance.

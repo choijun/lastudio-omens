@@ -271,7 +271,9 @@ if(!class_exists('Omens_Theme_Class')){
                 ),
             ) );
 
-            add_theme_support('lastudio', [
+	        remove_theme_support( 'widgets-block-editor' );
+
+	        add_theme_support('lastudio', [
                 'swatches'       => true,
                 'revslider'      => true,
                 'header-builder' => [
@@ -299,20 +301,18 @@ if(!class_exists('Omens_Theme_Class')){
          */
         public function theme_setup_default(){
             $check_theme = get_option('omens_has_init', false);
-            if(!$check_theme || !get_option('omens_options')){
-                update_option(
-                    'omens_options',
-                    json_decode('{"layout":"col-1c","body_boxed":"no","body_max_width":"1230","main_full_width":"no","page_loading_animation":"off","page_loading_style":"1","enable_breadcrumb": "off","breadcrumb_home_item":"text","body_font_family":{"font-family":"Poppins","extra-styles":["normal","italic","600","600italic","700","700italic"],"font-size":{"mobile":"16"},"responsive":"yes","unit":"px"},"headings_font_family":{"font-family":"Poppins","extra-styles":["normal","italic","600","600italic","700","700italic"]},"page_title_bar_heading_tag":"h1","page_title_bar_layout":"1","page_title_bar_background":{"background-color":"#fff"},"page_title_bar_space":{"mobile":{"top":"40","bottom":"40","unit":"px"},"mobile_landscape":{"top":"40","bottom":"40","unit":"px"},"tablet":{"top":"50","bottom":"50","unit":"px"},"laptop":{"top":"65","bottom":"65","unit":"px"}},"layout_blog":"col-2cr","blog_small_layout":"off","blog_design":"list-1","blog_post_column":{"mobile":"1","mobile_landscape":"1","tablet":"1","laptop":"2","desktop":"3"},"blog_thumbnail_height_mode":"original","blog_excerpt_length":"37","layout_single_post":"col-2cr","single_small_layout":"off","header_transparency_single_post":"no","blog_post_page_title":"post-title","featured_images_single":"on","single_post_thumbnail_size":"full","blog_post_title":"below","blog_comments":"on","layout_archive_product":"col-1c","header_transparency_archive_product":"inherit","main_full_width_archive_product":"no","main_space_archive_product":{"mobile":{"top":"30","bottom":"60","unit":"px"},"mobile_landscape":{"top":"","bottom":"","unit":"px"},"tablet":{"top":"60","bottom":"60","unit":"px"},"laptop":{"top":"","bottom":"","unit":"px"},"desktop":{"top":"","bottom":"","unit":"px"}},"catalog_mode":"off","catalog_mode_price":"off","shop_catalog_display_type":"grid","shop_catalog_grid_style":"1","woocommerce_catalog_columns":{"mobile":"1","mobile_landscape":"2","tablet":"3","laptop":"4","desktop":"4"},"woocommerce_shop_page_columns":{"mobile":"1","mobile_landscape":"2","tablet":"3","laptop":"4","desktop":"4"},"product_per_page_allow":"12,15,30","product_per_page_default":"12","woocommerce_pagination_type":"pagination","woocommerce_load_more_text":"Load More Products","woocommerce_enable_crossfade_effect":"off","woocommerce_show_rating_on_catalog":"off","woocommerce_show_addcart_btn":"on","woocommerce_show_quickview_btn":"on","woocommerce_show_wishlist_btn":"on","woocommerce_show_compare_btn":"on","layout_single_product":"col-1c","header_transparency_single_product":"no","main_full_width_single_product":"inherit","main_space_single_product":{"mobile":{"top":"20","bottom":"50","unit":"px"},"mobile_landscape":{"top":"30","bottom":"50","unit":"px"},"tablet":{"top":"70","bottom":"50","unit":"px"}},"woocommerce_product_page_design":"1","single_ajax_add_cart":"yes","move_woo_tabs_to_bottom":"yes","woocommerce_gallery_zoom":"yes","woocommerce_gallery_lightbox":"yes","product_single_hide_breadcrumb":"no","product_single_hide_page_title":"yes","product_single_hide_product_title":"no","product_gallery_column":{"mobile":"3","mobile_landscape":"3","tablet":"3","laptop":"3","desktop":"3"},"product_sharing":"off","related_products":"on","related_product_title":"","related_product_subtitle":"","related_products_columns":{"mobile":"1","mobile_landscape":"2","tablet":"3","laptop":"4","desktop":"4"},"upsell_products":"on","upsell_product_title":"","upsell_product_subtitle":"","upsell_products_columns":{"mobile":"1","mobile_landscape":"2","tablet":"3","laptop":"3","desktop":"4"},"crosssell_products":"on","crosssell_product_title":"","crosssell_product_subtitle":"","crosssell_products_columns":{"mobile":"1","mobile_landscape":"2","tablet":"3","laptop":"4","desktop":"4"},"footer_copyright":"2021 Created by LaStudio"}',true)
-                );
-
+            if(!$check_theme || !get_option('lastudio-kit-settings')){
                 update_option('omens_has_init', true);
-
                 update_option( 'elementor_cpt_support', array( 'page', 'post', 'la_portfolio') );
-                update_option( 'elementor_page_title_selector', '.page-header' );
-                update_option( 'elementor_editor_break_lines', 1 );
-                update_option( 'elementor_space_between_widgets', '0' );
-                update_option( 'elementor_unfiltered_files_upload', 1 );
-                update_option( 'elementor_edit_buttons', 'on' );
+	            update_option(
+		            'lastudio-kit-settings',
+		            [
+		            	'svg-uploads' => 'enabled',
+		            	'lastudio_kit_templates' => 'enabled',
+		            	'single_post_template' => 'templates/fullwidth.php',
+		            	'single_page_template' => 'templates/fullwidth.php',
+		            ]
+	            );
             }
         }
 

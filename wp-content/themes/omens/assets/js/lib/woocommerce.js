@@ -125,13 +125,16 @@
                     $('.wc-view-item a').removeClass('active');
                     _this.addClass('active');
                     _this.closest('.wc-view-item').find('>button>span').html(_this.text());
-                    var $ul_products = $parentWrap.find('ul.products[data-grid_layout]');
+                    var $ul_products = $parentWrap.find('[data-widget_current_query] ul.ul_products');
 
                     $ul_products.each(function () {
                         $(this).removeClass('products-list').addClass('products-grid');
-                        var _classname = $(this).attr('class').replace(/(\sblock-grid-\d)/g, ' block-grid-' + _col).replace(/(\slaptop-block-grid-\d)/g, ' laptop-block-grid-' + _col);
-                        $(this).attr('class', _classname);
                     });
+
+                    $ul_products.find('>li').each(function (){
+                        var _classname = $(this).attr('class').replace(/(\scol-desk-\d)/g, ' col-desk-' + _col).replace(/(\scol-lap-\d)/g, ' col-lap-' + _col);
+                        $(this).attr('class', _classname);
+                    })
 
                     if( $parentWrap.closest('.elementor-widget-wc-archive-products').length ){
                         var _classname = $parentWrap.attr('class').replace(/(\scolumns-\d)/g, ' columns-' + _col);
@@ -284,6 +287,11 @@
             if(!$parent.hasClass('active')){
                 $parent.addClass('active').siblings('div').removeClass('active');
             }
+        });
+
+        $document.on('click', '.wcr_resigter_link a', function (e){
+            e.preventDefault();
+            $('#customer_login .u-column2.col-2 h2').trigger('click');
         });
 
         /**
@@ -827,8 +835,8 @@
             '.woocommerce.lakit_wc_widget_current_query .woocommerce-pagination'
         ];
 
-        var target_to_init = '.woocommerce.lakit_wc_widget_current_query .woocommerce-pagination a, .la-advanced-product-filters-result a',
-            target_to_init2 = '.woo-widget-filter a, .wc-ordering a, .wc-view-count a, .woocommerce.product-sort-by a, .woocommerce.la-price-filter-list a, .woocommerce.widget_layered_nav a, .woocommerce.widget_product_tag_cloud li a, .woocommerce.widget_product_categories a',
+        var target_to_init = '.woocommerce.lakit_wc_widget_current_query .woocommerce-pagination:not(.lakit-ajax-pagination) a, .la-advanced-product-filters-result a',
+            target_to_init2 = '.woo-widget-filter a, .wc-ordering a, .wc-view-count a, .woocommerce.product-sort-by a, .woocommerce.la-price-filter-list a, .woocommerce.widget_layered_nav a, .woocommerce.widget_product_tag_cloud li a, .woocommerce.widget_product_categories a, .wc-block-product-categories-list-item > a',
             target_to_init3 = '.woocommerce.widget_product_tag_cloud:not(.la_product_tag_cloud) a';
 
         try{

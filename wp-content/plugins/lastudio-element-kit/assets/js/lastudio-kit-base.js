@@ -41,10 +41,10 @@
         localCache: {
             cache_key: typeof LaStudioKitSettings.themeName !== "undefined" ? LaStudioKitSettings.themeName : 'lakit',
             /**
-             * timeout for cache in seconds, default 5 mins
+             * timeout for cache in seconds, default 30 mins
              * @type {number}
              */
-            timeout: typeof LaStudioKitSettings.cache_ttl !== "undefined" && parseInt(LaStudioKitSettings.cache_ttl) > 0 ? parseInt(LaStudioKitSettings.cache_ttl) : (60 * 5),
+            timeout: typeof LaStudioKitSettings.cache_ttl !== "undefined" && parseInt(LaStudioKitSettings.cache_ttl) > 0 ? parseInt(LaStudioKitSettings.cache_ttl) : (60 * 30),
             timeout2: 60 * 10,
             /**
              * @type {{_: number, data: {}}}
@@ -106,6 +106,21 @@
                     LaStudioKits.log(ex);
                 }
             }
+        },
+        getCoords: function (elem){
+            var box = elem.getBoundingClientRect();
+            var body = document.body;
+            var docEl = document.documentElement;
+            var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+            var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+            var clientTop = docEl.clientTop || body.clientTop || 0;
+            var clientLeft = docEl.clientLeft || body.clientLeft || 0;
+            var top  = box.top +  scrollTop - clientTop;
+            var left = box.left + scrollLeft - clientLeft;
+            return { top: Math.round(top), left: Math.round(left) };
+        },
+        isRTL: function (){
+            return document.body.classList ? document.body.classList.contains('rtl') : /\brtl\b/g.test(document.body.className);
         },
         isPageSpeed: function () {
             return (typeof navigator !== "undefined" && (/(lighthouse|gtmetrix)/i.test(navigator.userAgent.toLocaleLowerCase()) || /mozilla\/5\.0 \(x11; linux x86_64\)/i.test(navigator.userAgent.toLocaleLowerCase())));
@@ -366,7 +381,8 @@
                     swiperOptions.thumbs = {
                         swiper: _thumb_swiper,
                     }
-                } else {
+                }
+                else {
                     LaStudioKits.carouselAsFor.push({
                         main: carousel_id,
                         thumb: elementSettings.asFor,
@@ -374,9 +390,8 @@
                         thumb_init: false
                     });
                 }
+                swiperOptions.slideToClickedSlide = true;
             }
-
-            swiperOptions.slideToClickedSlide = true;
 
             var $swiperContainer = $scope.find('.swiper-container');
 
@@ -632,6 +647,7 @@
                     if ($('body').hasClass('elementor-editor-active')) {
                         return false;
                     }
+
                     var $kitWrap,$parentContainer, $container, ajaxType, $parentNav, widgetId, itemSelector, templateId, pagedKey;
                     $parentNav = $(this).closest('.lakit-pagination');
                     $kitWrap = $(this).closest('.lastudio-kit');
@@ -752,6 +768,13 @@
                                 }
                             }),
                         };
+
+                        if(LaStudioKitSettings.useFrontAjax == 'true'){
+                            reqData['lakit-ajax'] = 'yes';
+                            delete reqData['action'];
+                            url_request = window.location.href;
+                        }
+
                         reqData[pagedKey] = LaStudioKits.getUrlParameter(pagedKey, _tmpURL);
                         reqData['lakitpagedkey'] = pagedKey;
 
@@ -759,7 +782,7 @@
 
                         var ajaxOpts = {
                             url: url_request,
-                            type: "POST",
+                            type: LaStudioKitSettings.useFrontAjax == 'true' ? 'GET' : 'POST',
                             cache: true,
                             dataType: 'html',
                             ajax_request_id: templateId + '_' + widgetId + '_' + pagedKey + '_' + LaStudioKits.getUrlParameter(pagedKey, _tmpURL),
@@ -1471,7 +1494,6 @@
                 });
             }
         },
-
         ajaxTemplateHelper: {
 
             need_reinit_js : false,
@@ -1587,26 +1609,32 @@
                     var arr_ids = [], _idx1 = 0, _idx2 = 0, _bk = 6;
 
                     var ajaxCalling = function (template_ids){
-                        window.duytest = Date.now();
-                        $.ajax({
-                            type: 'POST',
-                            url: window.LaStudioKitSettings.ajaxUrl,
-                            dataType: 'json',
-                            data: {
-                                'action': 'lakit_ajax',
-                                '_nonce': window.LaStudioKitSettings.ajaxNonce,
-                                'actions': JSON.stringify({
-                                    'elementor_template' : {
-                                        'action': 'elementor_template',
-                                        'data': {
-                                            'template_ids': template_ids,
-                                            'current_url': window.location.href,
-                                            'current_url_no_search': window.location.href.replace(window.location.search, ''),
-                                            'dev': window.LaStudioKitSettings.devMode
-                                        }
+
+                        var _ajax_data_sending = {
+                            'action': 'lakit_ajax',
+                            '_nonce': window.LaStudioKitSettings.ajaxNonce,
+                            'actions': JSON.stringify({
+                                'elementor_template' : {
+                                    'action': 'elementor_template',
+                                    'data': {
+                                        'template_ids': template_ids,
+                                        'current_url': window.location.href,
+                                        'current_url_no_search': window.location.href.replace(window.location.search, ''),
+                                        'dev': window.LaStudioKitSettings.devMode
                                     }
-                                }),
-                            },
+                                }
+                            })
+                        };
+                        if(LaStudioKitSettings.useFrontAjax == 'true'){
+                            _ajax_data_sending['lakit-ajax'] = 'yes';
+                            delete _ajax_data_sending['action'];
+                        }
+
+                        $.ajax({
+                            type: LaStudioKitSettings.useFrontAjax == 'true' ? 'GET' : 'POST',
+                            url:  LaStudioKitSettings.useFrontAjax == 'true' ? window.location.href : window.LaStudioKitSettings.ajaxUrl,
+                            dataType: 'json',
+                            data: _ajax_data_sending,
                             success: function (resp, textStatus, jqXHR) {
                                 var responses = resp.data.responses.elementor_template.data;
                                 $.each( responses, function( templateId, response ) {
@@ -1713,6 +1741,9 @@
     $(window).on('elementor/frontend/init', function () {
 
         window.elementorFrontend.hooks.addAction('frontend/element_ready/lakit-advanced-carousel.default', function ($scope) {
+            LaStudioKits.initCarousel($scope);
+        });
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/lakit-postformat-content.default', function ($scope) {
             LaStudioKits.initCarousel($scope);
         });
 
@@ -1874,6 +1905,155 @@
 
     "use strict";
 
+    function setMegaMenuPosition( $menu_item, $container, container_width, isVerticalMenu ){
+        if ($('.lakit-megamenu-inited', $menu_item).length) {
+            return false;
+        }
+        var $popup = $('> .lakit-nav__sub', $menu_item);
+        if ($popup.length == 0) return;
+        var megamenu_width = $popup.outerWidth();
+
+        if (megamenu_width > container_width) {
+            megamenu_width = container_width;
+        }
+
+        if (!isVerticalMenu) {
+            var container_padding_left = parseInt($container.css('padding-left')),
+                container_padding_right = parseInt($container.css('padding-right')),
+                parent_width = $popup.parent().outerWidth(),
+                left = 0,
+                container_offset = LaStudioKits.getCoords($container.get(0)),
+                megamenu_offset = LaStudioKits.getCoords($popup.get(0));
+            var megamenu_offset_x = megamenu_offset.left,
+                container_offset_x = container_offset.left;
+
+            if (megamenu_width > parent_width) {
+                left = -(megamenu_width - parent_width) / 2;
+            } else {
+                left = 0;
+            }
+
+            if (LaStudioKits.isRTL()) {
+                var megamenu_offset_x_swap = $(window).width() - (megamenu_width + megamenu_offset_x),
+                    container_offset_x_swap = $(window).width() - ($container.outerWidth() + container_offset_x);
+
+                if (megamenu_offset_x_swap - container_offset_x_swap - container_padding_right + left < 0) {
+                    left = -(megamenu_offset_x_swap - container_offset_x_swap - container_padding_right);
+                }
+
+                if (megamenu_offset_x_swap + megamenu_width + left > container_offset_x + $container.outerWidth() - container_padding_left) {
+                    left -= megamenu_offset_x_swap + megamenu_width + left - (container_offset_x + $container.outerWidth() - container_padding_left);
+                }
+
+                $popup.css('right', left).css('right');
+            }
+            else {
+                if (megamenu_offset_x - container_offset_x - container_padding_left + left < 0) {
+                    left = -1 * (megamenu_offset_x - container_offset_x - container_padding_left);
+                }
+
+                if (megamenu_offset_x + megamenu_width + left > container_offset_x + $container.outerWidth() - container_padding_right) {
+                    left = 0;
+                    left = -1 * (megamenu_offset_x + megamenu_width + left - (container_offset_x + $container.outerWidth() - container_padding_right));
+                }
+
+                if ($container.is('body')) {
+                    left = -1 * megamenu_offset_x;
+                }
+
+                $popup.css('left', left).css('left');
+            }
+        }
+
+        if (isVerticalMenu) {
+            var clientHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
+                itemOffset = $popup.offset(),
+                itemHeight = $popup.outerHeight(),
+                scrollTop = $(window).scrollTop();
+
+            if (itemOffset.top - scrollTop + itemHeight > clientHeight) {
+                var __top = clientHeight - (itemOffset.top + scrollTop + itemHeight + 50);
+
+                if (itemHeight >= clientHeight) {
+                    //__top = 1 - itemOffset.top - scrollTop;
+                    $popup.offset({
+                        top: document.getElementById('wpadminbar') && window.innerWidth > 600 ? 32 : 0
+                    });
+                }
+                else {
+                    $popup.css({
+                        top: __top
+                    });
+                }
+            }
+        }
+
+        $popup.addClass('lakit-megamenu-inited');
+    }
+
+    $(document).on('lastudiokit/frontend/megamenu:setposition', function (e, $megamenu){
+        if($megamenu.length){
+            $megamenu.each(function () {
+                var _that = $(this),
+                    container_width = 0,
+                    $container = _that.closest('.elementor-container'),
+                    isVerticalMenu = false;
+                container_width = $container.width();
+
+                if( _that.find('.lakit-nav').first().hasClass('lakit-nav--vertical-sub-bottom') ){
+                    return;
+                }
+
+                if( _that.find('.lakit-nav').first().hasClass('lakit-nav--vertical') ){
+                    isVerticalMenu = true;
+                    if ( $megamenu.closest('.lakit--is-vheader').length ) {
+                        container_width = $('.lakit-site-wrapper').outerWidth();
+                    }
+                    container_width = container_width - _that.outerWidth();
+                }
+
+                $('.lakit-nav__item--mega > .lakit-megamenu-inited', _that).removeClass('lakit-megamenu-inited');
+                $('.lakit-nav__item--mega > .lakit-nav__sub', _that).removeAttr('style');
+                $('.lakit-nav__item--mega', _that).each(function () {
+                    var $menu_item = $(this),
+                        $popup = $('> .lakit-nav__sub', $menu_item),
+                        item_max_width = parseInt(!!$popup.data('maxWidth') ? $popup.data('maxWidth') : $popup.css('maxWidth')),
+                        $_container = $container;
+
+                    var default_width = 1170;
+
+                    // if (container_width < default_width) {
+                    //     default_width = container_width;
+                    // }
+
+                    if (isNaN(item_max_width)) {
+                        item_max_width = default_width;
+                    }
+
+                    if (default_width > item_max_width) {
+                        default_width = parseInt(item_max_width);
+                    }
+
+                    if ($menu_item.hasClass('lakit-nav__item-force-fullwidth') && $menu_item.closest('.lakit--is-vheader').length == 0) {
+                        $popup.data('maxWidth', item_max_width).css('maxWidth', 'none');
+                        $popup.css('width', item_max_width);
+
+                        if (!isVerticalMenu) {
+                            default_width = $(window).width();
+                            $_container = $('body');
+                        }
+                        else {
+                            default_width = $('.lakit-site-wrapper').width();
+                        }
+                    }
+
+                    $popup.width(default_width);
+                    setMegaMenuPosition($menu_item, $_container, container_width, isVerticalMenu);
+                });
+            });
+        }
+    });
+
     $( window ).on( 'elementor/frontend/init', function (){
         elementor.hooks.addAction( 'frontend/element_ready/lakit-nav-menu.default', function ( $scope ){
             if ( $scope.data( 'initialized' ) ) {
@@ -1929,7 +2109,8 @@
 
                 $( document ).on( 'touchstart.lakitNavMenu', prepareHideSubMenus );
                 $( document ).on( 'touchend.lakitNavMenu', hideSubMenus );
-            } else {
+            }
+            else {
                 $scope.find( '.lakit-nav:not(.lakit-nav--vertical-sub-bottom)' ).on( 'click.lakitNavMenu', '.menu-item > a', clickItem );
             }
 
@@ -2099,6 +2280,7 @@
             // END Vertical Layout: Sub-menu at the bottom
 
             // Mobile trigger click event
+            $( '.lakit-nav__mobile-trigger', $scope ).off('click.lakitNavMenu');
             $( '.lakit-nav__mobile-trigger', $scope ).on( 'click.lakitNavMenu', function( event ) {
                 event.preventDefault();
                 $( this ).closest( '.lakit-nav-wrap' ).toggleClass( mobileActiveClass );
@@ -2107,7 +2289,8 @@
             // START Mobile Layout: Left-side, Right-side
             if ( 'ontouchend' in window ) {
                 $( document ).on( 'touchend.lakitMobileNavMenu', removeMobileActiveClass );
-            } else {
+            }
+            else {
                 $( document ).on( 'click.lakitMobileNavMenu', removeMobileActiveClass );
             }
 
@@ -2226,6 +2409,14 @@
 
                 observer.observe( $anchor[0] );
             }
+
+
+            // START MegaMenu
+            $(document).trigger('lastudiokit/frontend/megamenu:setposition', [ $scope.find('.lakit-nav--enable-megamenu').first() ]);
+            $(window).on('resize', function (){
+                $(document).trigger('lastudiokit/frontend/megamenu:setposition', [ $scope.find('.lakit-nav--enable-megamenu').first() ]);
+            })
+            // END MegaMenu
 
             if ( LaStudioKits.isEditMode() ) {
                 $scope.data( 'initialized', false );

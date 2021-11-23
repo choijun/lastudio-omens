@@ -201,6 +201,9 @@ if ( ! class_exists( 'LaStudio_Kit_Settings' ) ) {
                 'svg-uploads'             => [
                     'value' => $this->get( 'svg-uploads', 'enabled' ),
                 ],
+                'template-cache'             => [
+                    'value' => $this->get( 'template-cache', '' ),
+                ],
                 'lastudio_kit_templates'           => [
                     'value' => $this->get( 'lastudio_kit_templates', 'enabled' ),
                 ],
@@ -233,6 +236,9 @@ if ( ! class_exists( 'LaStudio_Kit_Settings' ) ) {
                 ],
                 'weather_api_key'         => [
                     'value' => $this->get( 'weather_api_key', '' ),
+                ],
+                'portfolio_per_page'         => [
+                    'value' => $this->get( 'portfolio_per_page', '' ),
                 ],
                 'avaliable_widgets'       => [
                     'value'   => $active_widgets,

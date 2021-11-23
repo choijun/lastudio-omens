@@ -181,6 +181,9 @@ class LaStudioKit_Post_Excerpt extends LaStudioKit_Base {
     }
 
     protected function render() {
+
+        global $post;
+
         $excerpt = get_the_excerpt();
 
         if ( empty( $excerpt ) )
@@ -223,46 +226,6 @@ class LaStudioKit_Post_Excerpt extends LaStudioKit_Base {
         $html .= sprintf( '</%s>', $settings['html_tag'] );
 
         echo $html;
-    }
-
-    protected function content_template() {
-        ?>
-        <#
-        var excerpt = "<?php echo htmlspecialchars( get_the_excerpt() ); ?>";
-
-        var link_url;
-        switch( settings.link_to ) {
-        case 'custom':
-        link_url = settings.link.url;
-        break;
-        case 'post':
-        link_url = '<?php echo esc_url( get_the_permalink() ); ?>';
-        break;
-        case 'home':
-        link_url = '<?php echo esc_url( get_home_url() ); ?>';
-        break;
-        case 'none':
-        default:
-        link_url = false;
-        }
-        var target = settings.link.is_external ? 'target="_blank"' : '';
-
-        var animation_class = '';
-        if ( '' !== settings.hover_animation ) {
-        animation_class = 'elementor-animation-' + settings.hover_animation;
-        }
-
-        var html = '<' + settings.html_tag + ' class="lakit-post-except ' + animation_class + '">';
-        if ( link_url ) {
-        html += '<a href="' + link_url + '" ' + target + '>' + excerpt + '</a>';
-        } else {
-        html += excerpt;
-        }
-        html += '</' + settings.html_tag + '>';
-
-        print( html );
-        #>
-        <?php
     }
     
 }

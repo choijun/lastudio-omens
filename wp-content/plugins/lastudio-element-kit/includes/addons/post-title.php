@@ -226,48 +226,5 @@ class LaStudioKit_Post_Title extends LaStudioKit_Base {
 
         echo $html;
     }
-
-    protected function content_template() {
-
-        global $post;
-
-        ?>
-        <#
-        var title = "<?php echo get_the_title($post); ?>";
-
-        var link_url;
-        switch( settings.link_to ) {
-        case 'custom':
-        link_url = settings.link.url;
-        break;
-        case 'post':
-        link_url = '<?php echo esc_url( get_the_permalink($post) ); ?>';
-        break;
-        case 'home':
-        link_url = '<?php echo esc_url( get_home_url() ); ?>';
-        break;
-        case 'none':
-        default:
-        link_url = false;
-        }
-        var target = settings.link.is_external ? 'target="_blank"' : '';
-
-        var animation_class = '';
-        if ( '' !== settings.hover_animation ) {
-        animation_class = 'elementor-animation-' + settings.hover_animation;
-        }
-
-        var html = '<' + settings.html_tag + ' class="lakit-post-title ' + animation_class + '">';
-        if ( link_url ) {
-        html += '<a href="' + link_url + '" ' + target + '>' + title + '</a>';
-        } else {
-        html += title;
-        }
-        html += '</' + settings.html_tag + '>';
-
-        print( html );
-        #>
-        <?php
-    }
     
 }

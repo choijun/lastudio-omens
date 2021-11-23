@@ -35,6 +35,10 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
         return [ 'lastudiokit-builder' ];
     }
 
+    protected function is_support_megamenu(){
+	    return lastudio_kit()->get_theme_support('elementor::mega-menu');
+    }
+
     protected function register_controls() {
 
         $this->_start_controls_section(
@@ -92,6 +96,26 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
             )
         );
 
+        if($this->is_support_megamenu()){
+	        $this->_add_control(
+		        'show_megamenu',
+		        array(
+			        'label'   => esc_html__( 'Show MegaMenu', 'lastudio-kit' ),
+			        'type'    => Controls_Manager::SWITCHER,
+		        )
+	        );
+	        $this->_add_control(
+		        'enable_ajax_megamenu',
+		        array(
+			        'label'   => esc_html__( 'Ajax load MegaMenu', 'lastudio-kit' ),
+			        'type'    => Controls_Manager::SWITCHER,
+			        'condition' => array(
+				        'show_megamenu!' => '',
+			        ),
+		        )
+	        );
+        }
+
         $this->_add_control(
             'dropdown_icon',
             array(
@@ -106,10 +130,26 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
             'show_items_desc',
             array(
                 'label'   => esc_html__( 'Show Items Description', 'lastudio-kit' ),
-                'type'    => Controls_Manager::SWITCHER,
-                'default' => 'yes',
+                'type'    => Controls_Manager::SWITCHER
             )
         );
+
+	    $this->_add_control(
+		    'line_animation',
+		    array(
+			    'label'   => esc_html__( 'Line Animation', 'lastudio-kit' ),
+			    'type'    => Controls_Manager::SELECT,
+			    'default' => 'none',
+			    'options' => [
+			    	'none'  => esc_html__( 'None', 'lastudio-kit' ),
+			    	'left'  => esc_html__( 'From Left', 'lastudio-kit' ),
+			    	'right' => esc_html__( 'From Right', 'lastudio-kit' ),
+			    	'center' => esc_html__( 'From Center', 'lastudio-kit' ),
+			    	'center2' => esc_html__( 'From Center & Push', 'lastudio-kit' ),
+			    ],
+			    'prefix_class' => 'lakit-nav-line-animation-'
+		    )
+	    );
 
         $this->_add_responsive_control(
             'menu_alignment',
@@ -142,10 +182,10 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     'space-between' => 'justify-content: space-between; text-align: left;--lakit-navmenu--item-flex-grow:1;--lakit-navmenu--item-margin: auto',
                 ),
                 'selectors' => array(
-                    '{{WRAPPER}} .lakit-nav--horizontal' => '{{VALUE}}',
-                    '{{WRAPPER}} .lakit-nav--vertical .menu-item-link-top' => '{{VALUE}}',
-                    '{{WRAPPER}} .lakit-nav--vertical-sub-bottom .menu-item-link-sub' => '{{VALUE}}',
-                    '{{WRAPPER}} .lakit-mobile-menu.lakit-active--mbmenu .menu-item-link' => '{{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-{{ID}}.lakit-nav--horizontal' => '{{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-{{ID}}.lakit-nav--vertical .lakit-nav-id-{{ID}} > .menu-item-link-top' => '{{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-{{ID}}.lakit-nav--vertical-sub-bottom .lakit-nav-id-{{ID}} > .menu-item-link-sub' => '{{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-{{ID}}.lakit-mobile-menu.lakit-active--mbmenu .lakit-nav-id-{{ID}} > .menu-item-link' => '{{VALUE}}',
                 )
             )
         );
@@ -156,8 +196,8 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'type'       => Controls_Manager::HIDDEN,
                 'default'    => 'style',
                 'selectors'  => array(
-                    'body:not(.rtl) {{WRAPPER}} .lakit-nav--horizontal .lakit-nav__sub' => 'text-align: left;',
-                    'body.rtl {{WRAPPER}} .lakit-nav--horizontal .lakit-nav__sub' => 'text-align: right;',
+                    'body:not(.rtl) {{WRAPPER}} .lakit-nav--horizontal .lakit-nav-id-{{ID}} > .lakit-nav__sub' => 'text-align: left;',
+                    'body.rtl {{WRAPPER}} .lakit-nav--horizontal .lakit-nav-id-{{ID}} > .lakit-nav__sub' => 'text-align: right;',
                 ),
                 'condition' => array(
                     'layout' => 'horizontal',
@@ -413,7 +453,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     ),
                 ),
                 'selectors' => array(
-                    '{{WRAPPER}} .lakit-nav-wrap' => 'width: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav-wrap.lakit-nav-wrap-{{ID}}' => 'width: {{SIZE}}{{UNIT}};',
                 ),
                 'condition' => array(
                     'layout' => 'vertical',
@@ -448,7 +488,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     'right'  => 'margin-left: auto; margin-right: 0;',
                 ),
                 'selectors' => array(
-                    '{{WRAPPER}} .lakit-nav-wrap' => '{{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-wrap.lakit-nav-wrap-{{ID}}' => '{{VALUE}}',
                 ),
                 'condition'  => array(
                     'layout' => 'vertical',
@@ -472,7 +512,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'label'  => esc_html__( 'Background Color', 'lastudio-kit' ),
                 'type'   => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .menu-item-link-top' => 'background-color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link-top' => 'background-color: {{VALUE}}',
                 ),
             ),
             25
@@ -484,23 +524,25 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'label'  => esc_html__( 'Text Color', 'lastudio-kit' ),
                 'type'   => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .menu-item-link-top' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link-top' => 'color: {{VALUE}}',
                 ),
             ),
             25
         );
 
-        $this->_add_control(
-            'nav_items_text_bg_color',
-            array(
-                'label'  => esc_html__( 'Text Background Color', 'lastudio-kit' ),
-                'type'   => Controls_Manager::COLOR,
-                'selectors' => array(
-                    '{{WRAPPER}} .menu-item-link-top .lakit-nav-link-text' => 'background-color: {{VALUE}}',
-                ),
-            ),
-            75
-        );
+        if( $this->is_support_megamenu() ){
+	        $this->_add_control(
+		        'nav_items_icon_color',
+		        array(
+			        'label'  => esc_html__( 'Menu Icon Color', 'lastudio-kit' ),
+			        'type'   => Controls_Manager::COLOR,
+			        'selectors' => array(
+				        '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link-top .lakit-nav-item-icon' => 'color: {{VALUE}}',
+			        ),
+		        ),
+		        25
+	        );
+        }
 
         $this->_add_control(
             'nav_items_text_icon_color',
@@ -508,7 +550,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'label'  => esc_html__( 'Dropdown Icon Color', 'lastudio-kit' ),
                 'type'   => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .menu-item-link-top .lakit-nav-arrow' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link-top .lakit-nav-arrow' => 'color: {{VALUE}}',
                 ),
             ),
             25
@@ -518,7 +560,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
             Group_Control_Typography::get_type(),
             array(
                 'name'     => 'nav_items_typography',
-                'selector' => '{{WRAPPER}} .menu-item-link-top .lakit-nav-link-text',
+                'selector' => '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link-top .lakit-nav-link-text',
             ),
             50
         );
@@ -538,7 +580,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'label'  => esc_html__( 'Background Color', 'lastudio-kit' ),
                 'type'   => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .menu-item:hover > .menu-item-link-top' => 'background-color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}}:hover > .menu-item-link-top' => 'background-color: {{VALUE}}',
                 ),
             ),
             25
@@ -550,22 +592,10 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'label'  => esc_html__( 'Text Color', 'lastudio-kit' ),
                 'type'   => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .menu-item:hover > .menu-item-link-top' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}}:hover > .menu-item-link-top' => 'color: {{VALUE}}',
                 ),
             ),
             25
-        );
-
-        $this->_add_control(
-            'nav_items_text_bg_color_hover',
-            array(
-                'label'  => esc_html__( 'Text Background Color', 'lastudio-kit' ),
-                'type'   => Controls_Manager::COLOR,
-                'selectors' => array(
-                    '{{WRAPPER}} .menu-item:hover > .menu-item-link-top .lakit-nav-link-text' => 'background-color: {{VALUE}}',
-                ),
-            ),
-            75
         );
 
         $this->_add_control(
@@ -577,19 +607,31 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     'nav_items_border_border!' => '',
                 ),
                 'selectors' => array(
-                    '{{WRAPPER}} .menu-item:hover > .menu-item-link-top' => 'border-color: {{VALUE}};',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}}:hover > .menu-item-link-top' => 'border-color: {{VALUE}};',
                 ),
             ),
             75
         );
-
+	    if( $this->is_support_megamenu() ){
+		    $this->_add_control(
+			    'nav_items_icon_color_hover',
+			    array(
+				    'label'  => esc_html__( 'Menu Icon Color', 'lastudio-kit' ),
+				    'type'   => Controls_Manager::COLOR,
+				    'selectors' => array(
+					    '{{WRAPPER}} .lakit-nav-id-{{ID}}:hover > .menu-item-link-top .lakit-nav-item-icon' => 'color: {{VALUE}}',
+				    ),
+			    ),
+			    25
+		    );
+	    }
         $this->_add_control(
             'nav_items_text_icon_color_hover',
             array(
                 'label'  => esc_html__( 'Dropdown Icon Color', 'lastudio-kit' ),
                 'type'   => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .menu-item:hover > .menu-item-link-top .lakit-nav-arrow' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}}:hover > .menu-item-link-top .lakit-nav-arrow' => 'color: {{VALUE}}',
                 ),
             ),
             25
@@ -599,7 +641,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
             Group_Control_Typography::get_type(),
             array(
                 'name'     => 'nav_items_typography_hover',
-                'selector' => '{{WRAPPER}} .menu-item:hover > .menu-item-link-top .lakit-nav-link-text',
+                'selector' => '{{WRAPPER}} .lakit-nav-id-{{ID}}:hover > .menu-item-link-top .lakit-nav-link-text',
             ),
             50
         );
@@ -619,7 +661,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'label'  => esc_html__( 'Background Color', 'lastudio-kit' ),
                 'type'   => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .menu-item.current-menu-item .menu-item-link-top' => 'background-color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}}.current-menu-item > .menu-item-link-top' => 'background-color: {{VALUE}}',
                 ),
             ),
             25
@@ -631,22 +673,10 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'label'  => esc_html__( 'Text Color', 'lastudio-kit' ),
                 'type'   => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .menu-item.current-menu-item .menu-item-link-top' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}}.current-menu-item > .menu-item-link-top' => 'color: {{VALUE}}',
                 ),
             ),
             25
-        );
-
-        $this->_add_control(
-            'nav_items_text_bg_color_active',
-            array(
-                'label'  => esc_html__( 'Text Background Color', 'lastudio-kit' ),
-                'type'   => Controls_Manager::COLOR,
-                'selectors' => array(
-                    '{{WRAPPER}} .menu-item.current-menu-item .menu-item-link-top .lakit-nav-link-text' => 'background-color: {{VALUE}}',
-                ),
-            ),
-            75
         );
 
         $this->_add_control(
@@ -658,19 +688,31 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     'nav_items_border_border!' => '',
                 ),
                 'selectors' => array(
-                    '{{WRAPPER}} .menu-item.current-menu-item .menu-item-link-top' => 'border-color: {{VALUE}};',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}}.current-menu-item > .menu-item-link-top' => 'border-color: {{VALUE}};',
                 ),
             ),
             75
         );
-
+	    if( $this->is_support_megamenu() ){
+		    $this->_add_control(
+			    'nav_items_icon_color_active',
+			    array(
+				    'label'  => esc_html__( 'Menu Icon Color', 'lastudio-kit' ),
+				    'type'   => Controls_Manager::COLOR,
+				    'selectors' => array(
+					    '{{WRAPPER}} .lakit-nav-id-{{ID}}.current-menu-item > .menu-item-link-top .lakit-nav-item-icon' => 'color: {{VALUE}}',
+				    ),
+			    ),
+			    25
+		    );
+	    }
         $this->_add_control(
             'nav_items_text_icon_color_active',
             array(
                 'label'  => esc_html__( 'Dropdown Icon Color', 'lastudio-kit' ),
                 'type'   => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .menu-item.current-menu-item .menu-item-link-top .lakit-nav-arrow' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}}.current-menu-item > .menu-item-link-top .lakit-nav-arrow' => 'color: {{VALUE}}',
                 ),
             ),
             25
@@ -680,7 +722,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
             Group_Control_Typography::get_type(),
             array(
                 'name'     => 'nav_items_typography_active',
-                'selector' => '{{WRAPPER}} .menu-item.current-menu-item .menu-item-link-top .lakit-nav-link-text',
+                'selector' => '{{WRAPPER}} .lakit-nav-id-{{ID}}.current-menu-item > .menu-item-link-top .lakit-nav-link-text',
             ),
             50
         );
@@ -696,7 +738,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%', 'em' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} .menu-item-link-top' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link-top' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
                 'separator' => 'before',
             ),
@@ -710,7 +752,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%', 'em' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} .lakit-nav > .lakit-nav__item' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link-top' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
             ),
             25
@@ -722,7 +764,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'name'        => 'nav_items_border',
                 'label'       => esc_html__( 'Border', 'lastudio-kit' ),
                 'placeholder' => '1px',
-                'selector'    => '{{WRAPPER}} .menu-item-link-top',
+                'selector'    => '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link-top',
             ),
             75
         );
@@ -734,11 +776,26 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} .menu-item-link-top' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link-top' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
             ),
             75
         );
+
+        if( $this->is_support_megamenu() ){
+	        $this->_add_responsive_control(
+		        'nav_items_micon_size',
+		        array(
+			        'label'      => esc_html__( 'Menu Icon Size', 'lastudio-kit' ),
+			        'type'       => Controls_Manager::SLIDER,
+			        'size_units' => array( 'px', 'em' ),
+			        'selectors' => array(
+				        '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link-top .lakit-nav-item-icon' => 'font-size: {{SIZE}}{{UNIT}};',
+			        ),
+		        ),
+		        50
+	        );
+        }
 
         $this->_add_responsive_control(
             'nav_items_icon_size',
@@ -756,7 +813,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     'dropdown_icon!' => '',
                 ),
                 'selectors' => array(
-                    '{{WRAPPER}} .menu-item-link-top .lakit-nav-arrow' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link-top .lakit-nav-arrow' => 'font-size: {{SIZE}}{{UNIT}};',
                 ),
             ),
             50
@@ -778,10 +835,9 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     'dropdown_icon!' => '',
                 ),
                 'selectors'  => array(
-                    '{{WRAPPER}} .menu-item-link-top .lakit-nav-arrow' => 'margin-left: {{SIZE}}{{UNIT}};',
-                    '{{WRAPPER}} .lakit-nav--vertical-sub-left-side .menu-item-link-top .lakit-nav-arrow' => 'margin-right: {{SIZE}}{{UNIT}}; margin-left: 0;',
-
-                    '{{WRAPPER}} .lakit-mobile-menu.lakit-active--mbmenu .lakit-nav--vertical-sub-left-side .menu-item-link-top .lakit-nav-arrow' => 'margin-left: {{SIZE}}{{UNIT}}; margin-right: 0;',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link-top .lakit-nav-arrow' => 'margin-left: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav--vertical-sub-left-side .lakit-nav-id-{{ID}} > .menu-item-link-top .lakit-nav-arrow' => 'margin-right: {{SIZE}}{{UNIT}}; margin-left: 0;',
+                    '{{WRAPPER}} .lakit-mobile-menu.lakit-active--mbmenu .lakit-nav--vertical-sub-left-side .lakit-nav-id-{{ID}} > .menu-item-link-top .lakit-nav-arrow' => 'margin-left: {{SIZE}}{{UNIT}}; margin-right: 0;',
                 ),
             ),
             50
@@ -804,7 +860,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
             Group_Control_Typography::get_type(),
             array(
                 'name'      => 'nav_items_desc_typography',
-                'selector'  => '{{WRAPPER}} .menu-item-link-top .lakit-nav-item-desc',
+                'selector'  => '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link-top .lakit-nav-item-desc',
                 'condition' => array(
                     'show_items_desc' => 'yes',
                 ),
@@ -849,7 +905,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     ),
                 ),
                 'selectors' => array(
-                    '{{WRAPPER}} .lakit-nav__sub' => 'width: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} > .lakit-nav__sub' => 'width: {{SIZE}}{{UNIT}};',
                 ),
                 'conditions' => array(
                     'relation' => 'or',
@@ -886,7 +942,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'label'  => esc_html__( 'Background Color', 'lastudio-kit' ),
                 'type'   => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .lakit-nav__sub' => 'background-color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} > .lakit-nav__sub' => 'background-color: {{VALUE}}',
                 ),
             ),
             25
@@ -898,7 +954,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'name'        => 'sub_items_container_border',
                 'label'       => esc_html__( 'Border', 'lastudio-kit' ),
                 'placeholder' => '1px',
-                'selector'    => '{{WRAPPER}} .lakit-nav__sub',
+                'selector'    => '{{WRAPPER}} .lakit-nav-id-{{ID}} > .lakit-nav__sub',
             ),
             75
         );
@@ -910,9 +966,9 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} .lakit-nav__sub' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    '{{WRAPPER}} .lakit-nav__sub > .menu-item:first-child > .menu-item-link' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} 0 0;',
-                    '{{WRAPPER}} .lakit-nav__sub > .menu-item:last-child > .menu-item-link' => 'border-radius: 0 0 {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} > .lakit-nav__sub' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} > .lakit-nav__sub > .menu-item:first-child > .menu-item-link' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} 0 0;',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} > .lakit-nav__sub > .menu-item:last-child > .menu-item-link' => 'border-radius: 0 0 {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
             ),
             75
@@ -922,7 +978,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
             Group_Control_Box_Shadow::get_type(),
             array(
                 'name'     => 'sub_items_container_box_shadow',
-                'selector' => '{{WRAPPER}} .lakit-nav__sub',
+                'selector' => '{{WRAPPER}} .lakit-nav-id-{{ID}} > .lakit-nav__sub',
             ),
             75
         );
@@ -935,7 +991,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%', 'em' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} .lakit-nav__sub' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} > .lakit-nav__sub' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
             ),
             25
@@ -954,9 +1010,9 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     ),
                 ),
                 'selectors'  => array(
-                    '{{WRAPPER}} .lakit-nav--horizontal .lakit-nav-depth-0' => 'margin-top: {{SIZE}}{{UNIT}};',
-                    '{{WRAPPER}} .lakit-nav--vertical-sub-left-side .lakit-nav-depth-0' => 'margin-right: {{SIZE}}{{UNIT}};',
-                    '{{WRAPPER}} .lakit-nav--vertical-sub-right-side .lakit-nav-depth-0' => 'margin-left: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav--horizontal .lakit-nav-id-{{ID}} > .lakit-nav-depth-0' => 'margin-top: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav--vertical-sub-left-side .lakit-nav-id-{{ID}} > .lakit-nav-depth-0' => 'margin-right: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav--vertical-sub-right-side .lakit-nav-id-{{ID}} > .lakit-nav-depth-0' => 'margin-left: {{SIZE}}{{UNIT}};',
                 ),
                 'conditions' => array(
                     'relation' => 'or',
@@ -1000,8 +1056,8 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     ),
                 ),
                 'selectors'  => array(
-                    '{{WRAPPER}} .lakit-nav-depth-0 .lakit-nav__sub' => 'margin-left: {{SIZE}}{{UNIT}};',
-                    '{{WRAPPER}} .lakit-nav--vertical-sub-left-side .lakit-nav-depth-0 .lakit-nav__sub' => 'margin-right: {{SIZE}}{{UNIT}}; margin-left: 0;',
+                    '{{WRAPPER}} .lakit-nav-depth-0 .lakit-nav-id-{{ID}} > .lakit-nav__sub' => 'margin-left: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav--vertical-sub-left-side .lakit-nav-depth-0 .lakit-nav-id-{{ID}} > .lakit-nav__sub' => 'margin-right: {{SIZE}}{{UNIT}}; margin-left: 0;',
                 ),
                 'conditions' => array(
                     'relation' => 'or',
@@ -1046,7 +1102,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
             Group_Control_Typography::get_type(),
             array(
                 'name'     => 'sub_items_typography',
-                'selector' => '{{WRAPPER}} .menu-item-link-sub .lakit-nav-link-text',
+                'selector' => '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link-sub .lakit-nav-link-text',
             ),
             50
         );
@@ -1066,7 +1122,8 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'label'  => esc_html__( 'Background Color', 'lastudio-kit' ),
                 'type'   => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .menu-item-link-sub' => 'background-color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link-sub' => 'background-color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-{{ID}}' => '--mm-subitem-bg: {{VALUE}}',
                 ),
             ),
             25
@@ -1078,7 +1135,8 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'label'  => esc_html__( 'Text Color', 'lastudio-kit' ),
                 'type'   => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .menu-item-link-sub' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link-sub' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-{{ID}}' => '--mm-subitem-color: {{VALUE}}',
                 ),
             ),
             25
@@ -1099,7 +1157,8 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'label'  => esc_html__( 'Background Color', 'lastudio-kit' ),
                 'type'   => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .menu-item:hover > .menu-item-link-sub' => 'background-color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}}:hover > .menu-item-link-sub' => 'background-color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-{{ID}}' => '--mm-subitem-bg-hover: {{VALUE}}',
                 ),
             ),
             25
@@ -1111,7 +1170,8 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'label'  => esc_html__( 'Text Color', 'lastudio-kit' ),
                 'type'   => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .menu-item:hover > .menu-item-link-sub' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}}:hover > .menu-item-link-sub' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-{{ID}}' => '--mm-subitem-color-hover: {{VALUE}}',
                 ),
             ),
             25
@@ -1132,7 +1192,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'label'  => esc_html__( 'Background Color', 'lastudio-kit' ),
                 'type'   => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .menu-item.current-menu-item > .menu-item-link-sub' => 'background-color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}}.current-menu-item > .menu-item-link-sub' => 'background-color: {{VALUE}}',
                 ),
             ),
             25
@@ -1144,7 +1204,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'label'  => esc_html__( 'Text Color', 'lastudio-kit' ),
                 'type'   => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .menu-item.current-menu-item > .menu-item-link-sub' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}}.current-menu-item > .menu-item-link-sub' => 'color: {{VALUE}}',
                 ),
             ),
             25
@@ -1161,7 +1221,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%', 'em' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} .menu-item-link-sub' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link-sub' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
                 'separator' => 'before',
             ),
@@ -1174,12 +1234,28 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%', 'em' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} .menu-item-link-sub' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link-sub' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
                 'separator' => 'before',
             ),
             25
         );
+
+
+	    if( $this->is_support_megamenu() ){
+		    $this->_add_responsive_control(
+			    'sub_items_micon_size',
+			    array(
+				    'label'      => esc_html__( 'Menu Icon Size', 'lastudio-kit' ),
+				    'type'       => Controls_Manager::SLIDER,
+				    'size_units' => array( 'px', 'em' ),
+				    'selectors' => array(
+					    '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link-sub .lakit-nav-item-icon' => 'font-size: {{SIZE}}{{UNIT}};',
+				    ),
+			    ),
+			    50
+		    );
+	    }
 
         $this->_add_responsive_control(
             'sub_items_icon_size',
@@ -1197,7 +1273,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     'dropdown_icon!' => '',
                 ),
                 'selectors' => array(
-                    '{{WRAPPER}} .menu-item-link-sub .lakit-nav-arrow' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link-sub .lakit-nav-arrow' => 'font-size: {{SIZE}}{{UNIT}};',
                 ),
             ),
             50
@@ -1219,10 +1295,9 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     'dropdown_icon!' => '',
                 ),
                 'selectors'  => array(
-                    '{{WRAPPER}} .menu-item-link-sub .lakit-nav-arrow' => 'margin-left: {{SIZE}}{{UNIT}};',
-                    '{{WRAPPER}} .lakit-nav--vertical-sub-left-side .menu-item-link-sub .lakit-nav-arrow' => 'margin-right: {{SIZE}}{{UNIT}}; margin-left: 0;',
-
-                    '{{WRAPPER}} .lakit-mobile-menu.lakit-active--mbmenu .lakit-nav--vertical-sub-left-side .menu-item-link-sub .lakit-nav-arrow' => 'margin-left: {{SIZE}}{{UNIT}}; margin-right: 0;',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link-sub .lakit-nav-arrow' => 'margin-left: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav--vertical-sub-left-side .lakit-nav-id-{{ID}} > .menu-item-link-sub .lakit-nav-arrow' => 'margin-right: {{SIZE}}{{UNIT}}; margin-left: 0;',
+                    '{{WRAPPER}} .lakit-mobile-menu.lakit-active--mbmenu .lakit-nav--vertical-sub-left-side .lakit-nav-id-{{ID}} > .menu-item-link-sub .lakit-nav-arrow' => 'margin-left: {{SIZE}}{{UNIT}}; margin-right: 0;',
                 ),
             ),
             50
@@ -1242,7 +1317,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
             Group_Control_Border::get_type(),
             array(
                 'name'     => 'sub_items_divider',
-                'selector' => '{{WRAPPER}} .lakit-nav__sub > .lakit-nav-item-sub:not(:last-child)',
+                'selector' => '{{WRAPPER}} .lakit-nav-id-{{ID}} > .lakit-nav__sub > .lakit-nav-item-sub:not(:last-child)',
                 'exclude'  => array( 'width' ),
             ),
             75
@@ -1262,7 +1337,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     'size' => 1,
                 ),
                 'selectors' => array(
-                    '{{WRAPPER}} .lakit-nav__sub > .lakit-nav-item-sub:not(:last-child)' => 'border-width: 0; border-bottom-width: {{SIZE}}{{UNIT}}',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} > .lakit-nav__sub > .lakit-nav-item-sub:not(:last-child)' => 'border-width: 0; border-bottom-width: {{SIZE}}{{UNIT}}',
                 ),
                 'condition' => array(
                     'sub_items_divider_border!' => '',
@@ -1288,7 +1363,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
             Group_Control_Typography::get_type(),
             array(
                 'name'      => 'sub_items_desc_typography',
-                'selector'  => '{{WRAPPER}} .menu-item-link-sub .lakit-nav-item-desc',
+                'selector'  => '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link-sub .lakit-nav-item-desc',
                 'condition' => array(
                     'show_items_desc' => 'yes',
                 ),
@@ -1297,6 +1372,127 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
         );
 
         $this->_end_controls_section();
+
+        if( $this->is_support_megamenu() ){
+
+	        $this->_start_controls_section(
+		        'badge_section',
+		        array(
+			        'label'      => esc_html__( 'Badge', 'lastudio-kit' ),
+			        'tab'        => Controls_Manager::TAB_STYLE,
+			        'show_label' => false,
+		        )
+	        );
+
+	        $this->_add_control(
+		        'badge_bg',
+		        array(
+			        'label'  => esc_html__( 'Background Color', 'lastudio-kit' ),
+			        'type'   => Controls_Manager::COLOR,
+			        'selectors' => array(
+				        '{{WRAPPER}} .lakit-nav-{{ID}}' => '--mm-badge-bg: {{VALUE}}',
+			        ),
+		        ),
+		        25
+	        );
+	        $this->_add_control(
+		        'badge_color',
+		        array(
+			        'label'  => esc_html__( 'Color', 'lastudio-kit' ),
+			        'type'   => Controls_Manager::COLOR,
+			        'selectors' => array(
+				        '{{WRAPPER}} .lakit-nav-{{ID}}' => '--mm-badge-color: {{VALUE}}',
+			        ),
+		        ),
+		        25
+	        );
+
+	        $this->_add_control(
+		        'badge_position',
+		        array(
+			        'label'   => esc_html__( 'Position', 'lastudio-kit' ),
+			        'type'    => Controls_Manager::SELECT,
+			        'default' => 'default',
+			        'options' => array(
+				        'default' => esc_html__( 'Default', 'lastudio-kit' ),
+				        'left'   => esc_html__( 'Left', 'lastudio-kit' ),
+				        'center'   => esc_html__( 'Center', 'lastudio-kit' ),
+				        'right'   => esc_html__( 'Right', 'lastudio-kit' ),
+				        'custom'   => esc_html__( 'Custom', 'lastudio-kit' ),
+			        ),
+			        'prefix_class' => 'lakit-nav--badge-pos-'
+		        )
+	        );
+
+	        $this->_add_control(
+		        'badge_position_custom',
+		        array(
+			        'label'      => esc_html__( 'Left', 'lastudio-kit' ),
+			        'type'       => Controls_Manager::SLIDER,
+			        'size_units' => array( 'px', 'em', '%' ),
+			        'condition' => array(
+				        'badge_position' => 'custom',
+			        ),
+			        'selectors' => array(
+				        '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link .lakit-nav-item-badge' => 'left: {{SIZE}}{{UNIT}};',
+			        ),
+		        ),
+		        50
+	        );
+
+
+	        $this->_add_responsive_control(
+		        'badge_padding',
+		        array(
+			        'label'      => esc_html__( 'Padding', 'lastudio-kit' ),
+			        'type'       => Controls_Manager::DIMENSIONS,
+			        'size_units' => array( 'px', '%', 'em' ),
+			        'selectors'  => array(
+				        '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link .lakit-nav-item-badge' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+			        ),
+		        ),
+		        25
+	        );
+
+	        $this->_add_responsive_control(
+		        'badge_margin',
+		        array(
+			        'label'      => esc_html__( 'Margin', 'lastudio-kit' ),
+			        'type'       => Controls_Manager::DIMENSIONS,
+			        'size_units' => array( 'px', '%', 'em' ),
+			        'selectors'  => array(
+				        '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link .lakit-nav-item-badge' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+			        ),
+		        ),
+		        25
+	        );
+
+	        $this->_add_control(
+		        'badge_radius',
+		        array(
+			        'label'      => esc_html__( 'Border Radius', 'lastudio-kit' ),
+			        'type'       => Controls_Manager::DIMENSIONS,
+			        'size_units' => array( 'px', '%' ),
+			        'selectors'  => array(
+				        '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link .lakit-nav-item-badge' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+			        ),
+		        ),
+		        75
+	        );
+
+	        $this->_add_group_control(
+		        Group_Control_Border::get_type(),
+		        array(
+			        'name'        => 'badge_border',
+			        'label'       => esc_html__( 'Border', 'lastudio-kit' ),
+			        'placeholder' => '1px',
+			        'selector'    => '{{WRAPPER}} .lakit-nav-id-{{ID}} > .menu-item-link .lakit-nav-item-badge',
+		        ),
+		        75
+	        );
+
+	        $this->_end_controls_section();
+        }
 
         $this->_start_controls_section(
             'mobile_trigger_styles',
@@ -1322,7 +1518,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'label'  => esc_html__( 'Background Color', 'lastudio-kit' ),
                 'type'   => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .lakit-nav__mobile-trigger' => 'background-color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-wrap-{{ID}} > .lakit-nav__mobile-trigger' => 'background-color: {{VALUE}}',
                 ),
             ),
             25
@@ -1334,7 +1530,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'label'  => esc_html__( 'Text Color', 'lastudio-kit' ),
                 'type'   => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .lakit-nav__mobile-trigger' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-wrap-{{ID}} > .lakit-nav__mobile-trigger' => 'color: {{VALUE}}',
                 ),
             ),
             25
@@ -1355,7 +1551,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'label'  => esc_html__( 'Background Color', 'lastudio-kit' ),
                 'type'   => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .lakit-nav__mobile-trigger:hover' => 'background-color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-wrap-{{ID}} > .lakit-nav__mobile-trigger:hover' => 'background-color: {{VALUE}}',
                 ),
             ),
             25
@@ -1367,7 +1563,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'label'  => esc_html__( 'Text Color', 'lastudio-kit' ),
                 'type'   => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .lakit-nav__mobile-trigger:hover' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-wrap-{{ID}} > .lakit-nav__mobile-trigger:hover' => 'color: {{VALUE}}',
                 ),
             ),
             25
@@ -1382,7 +1578,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     'mobile_trigger_border_border!' => '',
                 ),
                 'selectors' => array(
-                    '{{WRAPPER}} .lakit-nav__mobile-trigger:hover' => 'border-color: {{VALUE}};',
+                    '{{WRAPPER}} .lakit-nav-wrap-{{ID}} > .lakit-nav__mobile-trigger:hover' => 'border-color: {{VALUE}};',
                 ),
             ),
             75
@@ -1398,7 +1594,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'name'        => 'mobile_trigger_border',
                 'label'       => esc_html__( 'Border', 'lastudio-kit' ),
                 'placeholder' => '1px',
-                'selector'    => '{{WRAPPER}} .lakit-nav__mobile-trigger',
+                'selector'    => '{{WRAPPER}} .lakit-nav-wrap-{{ID}} > .lakit-nav__mobile-trigger',
                 'separator'   => 'before',
             ),
             75
@@ -1411,7 +1607,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} .lakit-nav__mobile-trigger' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav-wrap-{{ID}} > .lakit-nav__mobile-trigger' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
             ),
             75
@@ -1434,7 +1630,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     ),
                 ),
                 'selectors'  => array(
-                    '{{WRAPPER}} .lakit-nav__mobile-trigger' => 'width: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav-wrap-{{ID}} > .lakit-nav__mobile-trigger' => 'width: {{SIZE}}{{UNIT}};',
                 ),
                 'separator' => 'before',
             ),
@@ -1454,7 +1650,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     ),
                 ),
                 'selectors'  => array(
-                    '{{WRAPPER}} .lakit-nav__mobile-trigger' => 'height: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav-wrap-{{ID}} > .lakit-nav__mobile-trigger' => 'height: {{SIZE}}{{UNIT}};',
                 ),
             ),
             50
@@ -1473,7 +1669,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     ),
                 ),
                 'selectors'  => array(
-                    '{{WRAPPER}} .lakit-nav__mobile-trigger' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav-wrap-{{ID}} > .lakit-nav__mobile-trigger' => 'font-size: {{SIZE}}{{UNIT}};',
                 ),
             ),
             50
@@ -1506,7 +1702,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     ),
                 ),
                 'selectors' => array(
-                    '{{WRAPPER}} .lakit-active--mbmenu .lakit-nav' => 'width: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-active--mbmenu .lakit-nav-{{ID}}' => 'width: {{SIZE}}{{UNIT}};',
                 ),
                 'condition' => array(
                     'mobile_menu_layout' => array(
@@ -1535,7 +1731,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     ),
                 ),
                 'selectors' => array(
-                    '{{WRAPPER}} .lakit-active--mbmenu .lakit-nav' => 'max-height: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-active--mbmenu .lakit-nav-{{ID}}' => 'max-height: {{SIZE}}{{UNIT}};',
                 ),
                 'condition' => array(
                     'mobile_menu_layout' => 'full-width',
@@ -1550,7 +1746,55 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'label' => esc_html__( 'Background color', 'lastudio-kit' ),
                 'type'  => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .lakit-active--mbmenu .lakit-nav' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .lakit-active--mbmenu .lakit-nav-{{ID}}' => 'background-color: {{VALUE}};',
+                ),
+            ),
+            25
+        );
+
+        $this->_add_control(
+            'mobile_menu_item_text_color',
+            array(
+                'label' => esc_html__( 'Menu Item Color', 'lastudio-kit' ),
+                'type'  => Controls_Manager::COLOR,
+                'selectors' => array(
+                    '{{WRAPPER}} .lakit-active--mbmenu .lakit-nav-id-{{ID}} > .menu-item-link-top' => 'color: {{VALUE}};',
+                ),
+            ),
+            25
+        );
+        $this->_add_control(
+            'mobile_menu_item_bg_color',
+            array(
+                'label' => esc_html__( 'Menu Item Background Color', 'lastudio-kit' ),
+                'type'  => Controls_Manager::COLOR,
+                'selectors' => array(
+                    '{{WRAPPER}} .lakit-active--mbmenu .lakit-nav-id-{{ID}} > .menu-item-link-top' => 'background-color: {{VALUE}};',
+                ),
+            ),
+            25
+        );
+
+        $this->_add_control(
+            'mobile_menu_item_text_color_hover',
+            array(
+                'label' => esc_html__( 'Menu Item Active Color', 'lastudio-kit' ),
+                'type'  => Controls_Manager::COLOR,
+                'selectors' => array(
+                    '{{WRAPPER}} .lakit-active--mbmenu .lakit-nav-id-{{ID}}:hover > .menu-item-link-top' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .lakit-active--mbmenu .lakit-nav-id-{{ID}}.current-menu-item > .menu-item-link-top' => 'color: {{VALUE}};',
+                ),
+            ),
+            25
+        );
+        $this->_add_control(
+            'mobile_menu_item_bg_color_hover',
+            array(
+                'label' => esc_html__( 'Menu Item Active Background Color', 'lastudio-kit' ),
+                'type'  => Controls_Manager::COLOR,
+                'selectors' => array(
+	                '{{WRAPPER}} .lakit-active--mbmenu .lakit-nav-id-{{ID}}:hover > .menu-item-link-top' => 'background-color: {{VALUE}};',
+	                '{{WRAPPER}} .lakit-active--mbmenu .lakit-nav-id-{{ID}}.current-menu-item > .menu-item-link-top' => 'background-color: {{VALUE}};',
                 ),
             ),
             25
@@ -1563,7 +1807,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} .lakit-active--mbmenu .lakit-nav' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-active--mbmenu .lakit-nav-{{ID}}' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
             ),
             25
@@ -1573,7 +1817,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
             Group_Control_Box_Shadow::get_type(),
             array(
                 'name'     => 'mobile_menu_box_shadow',
-                'selector' => '{{WRAPPER}} .lakit-active--mbmenu.lakit-mobile-menu-active .lakit-nav',
+                'selector' => '{{WRAPPER}} .lakit-active--mbmenu.lakit-mobile-menu-active .lakit-nav-{{ID}}',
             ),
             75
         );
@@ -1600,7 +1844,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'label' => esc_html__( 'Color', 'lastudio-kit' ),
                 'type'  => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .lakit-nav__mobile-close-btn' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .lakit-nav-{{ID}} > .lakit-nav__mobile-close-btn' => 'color: {{VALUE}};',
                 ),
                 'condition' => array(
                     'mobile_menu_layout' => array(
@@ -1625,7 +1869,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     ),
                 ),
                 'selectors' => array(
-                    '{{WRAPPER}} .lakit-nav__mobile-close-btn' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-nav-{{ID}} > .lakit-nav__mobile-close-btn' => 'font-size: {{SIZE}}{{UNIT}};',
                 ),
                 'condition' => array(
                     'mobile_menu_layout' => array(
@@ -1659,7 +1903,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%', 'em' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} .lakit-logo' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-logo.lakit-nav-id-{{ID}}' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
                 'separator' => 'before',
             ),
@@ -1696,7 +1940,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .lakit-logo' => 'width: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .lakit-logo.lakit-nav-id-{{ID}}' => 'width: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
@@ -1722,7 +1966,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     ),
                 ),
                 'selectors' => array(
-                    '{{WRAPPER}} .lakit-logo' => 'justify-content: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-logo.lakit-nav-id-{{ID}}' => 'justify-content: {{VALUE}}',
                 ),
             ),
             25
@@ -1754,7 +1998,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     ),
                 ),
                 'selectors' => array(
-                    '{{WRAPPER}} .lakit-logo__link' => 'align-items: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} .lakit-logo__link' => 'align-items: {{VALUE}}',
                 ),
                 'condition' => array(
                     'logo_type'    => 'both',
@@ -1786,7 +2030,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                 'label'     => esc_html__( 'Color', 'lastudio-kit' ),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => array(
-                    '{{WRAPPER}} .lakit-logo__text' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} .lakit-logo__text' => 'color: {{VALUE}}',
                 ),
             ),
             25
@@ -1796,7 +2040,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
             Group_Control_Typography::get_type(),
             array(
                 'name'     => 'text_logo_typography',
-                'selector' => '{{WRAPPER}} .lakit-logo__text',
+                'selector' => '{{WRAPPER}} .lakit-nav-id-{{ID}} .lakit-logo__text',
             ),
             50
         );
@@ -1817,8 +2061,8 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     ),
                 ),
                 'selectors'  => array(
-                    '{{WRAPPER}} .lakit-logo-display-block .lakit-logo__img'  => 'margin-bottom: {{SIZE}}{{UNIT}}',
-                    '{{WRAPPER}} .lakit-logo-display-inline .lakit-logo__img' => 'margin-right: {{SIZE}}{{UNIT}}',
+                    '{{WRAPPER}} .lakit-logo-display-block.lakit-nav-id-{{ID}} .lakit-logo__img'  => 'margin-bottom: {{SIZE}}{{UNIT}}',
+                    '{{WRAPPER}} .lakit-logo-display-inline.lakit-nav-id-{{ID}} .lakit-logo__img' => 'margin-right: {{SIZE}}{{UNIT}}',
                 ),
                 'condition'  => array(
                     'logo_type' => 'both',
@@ -1847,7 +2091,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
                     ),
                 ),
                 'selectors' => array(
-                    '{{WRAPPER}} .lakit-logo__text' => 'text-align: {{VALUE}}',
+                    '{{WRAPPER}} .lakit-nav-id-{{ID}} .lakit-logo__text' => 'text-align: {{VALUE}}',
                 ),
                 'condition' => array(
                     'logo_type'    => 'both',
@@ -1917,6 +2161,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
         require_once lastudio_kit()->plugin_path( 'includes/class-nav-walker.php' );
 
         $this->add_render_attribute( 'nav-wrapper', 'class', 'lakit-nav-wrap' );
+        $this->add_render_attribute( 'nav-wrapper', 'class', 'lakit-nav-wrap-' . $this->get_id() );
 
         if ( $trigger_visible ) {
             $this->add_render_attribute( 'nav-wrapper', 'class', 'lakit-mobile-menu' );
@@ -1929,6 +2174,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
         }
 
         $this->add_render_attribute( 'nav-menu', 'class', 'lakit-nav' );
+        $this->add_render_attribute( 'nav-menu', 'class', 'lakit-nav-' . $this->get_id()  );
 
         if ( isset( $settings['layout'] ) ) {
             $this->add_render_attribute( 'nav-menu', 'class', 'lakit-nav--' . esc_attr( $settings['layout'] ) );
@@ -1946,14 +2192,21 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
             $menu_html = '<div ' . $this->get_render_attribute_string( 'nav-menu' ) . '>%3$s' . $close_btn . '</div>';
         }
 
+	    $show_megamenu = isset($settings['show_megamenu']) ? filter_var($settings['show_megamenu'], FILTER_VALIDATE_BOOLEAN) : false;
+        if($show_megamenu){
+	        $this->add_render_attribute( 'nav-wrapper', 'class', 'lakit-nav--enable-megamenu' );
+        }
         $args = array(
             'menu'            => $settings['nav_menu'],
             'fallback_cb'     => '',
             'items_wrap'      => $menu_html,
             'walker'          => new \LaStudio_Kit_Nav_Walker,
             'widget_settings' => array(
-                'dropdown_icon'   => $settings['dropdown_icon'],
-                'show_items_desc' => $settings['show_items_desc'],
+                'dropdown_icon'         => isset($settings['dropdown_icon']) ? $settings['dropdown_icon'] : '',
+                'show_items_desc'       => isset($settings['show_items_desc']) ? $settings['show_items_desc'] : '',
+                'show_megamenu'         => $show_megamenu,
+                'enable_ajax_megamenu'  => isset($settings['enable_ajax_megamenu']) ? $settings['enable_ajax_megamenu'] : '',
+                'widget_id'             => $this->get_id(),
             ),
         );
 
@@ -2025,6 +2278,7 @@ class LaStudioKit_Nav_Menu extends LaStudioKit_Base {
             'lakit-logo',
             'lakit-logo-type-' . $settings['logo_type'],
             'lakit-logo-display-' . $settings['logo_display'],
+            'lakit-nav-id-' . $this->get_id(),
         );
 
         return implode( ' ', $classes );

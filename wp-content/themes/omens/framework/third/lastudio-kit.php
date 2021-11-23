@@ -102,9 +102,9 @@ if(!function_exists('omens_lakit_product_change_box_selector')){
     }
 }
 
-add_filter('lastudio-kit/posts/format-icon', 'bakerfreh_lakit_change_postformat_icon', 10, 2);
-if(!function_exists('bakerfreh_lakit_change_postformat_icon')){
-    function bakerfreh_lakit_change_postformat_icon( $icon, $type ){
+add_filter('lastudio-kit/posts/format-icon', 'omens_lakit_change_postformat_icon', 10, 2);
+if(!function_exists('omens_lakit_change_postformat_icon')){
+    function omens_lakit_change_postformat_icon( $icon, $type ){
         return $icon;
     }
 }
@@ -126,3 +126,12 @@ add_action('elementor/element/lakit-portfolio/section_settings/before_section_en
 		]
 	);
 }, 10 );
+
+if(!function_exists('omens_elementor_register_custom_widgets')){
+	function omens_elementor_register_custom_widgets(){
+		require_once get_theme_file_path('/framework/third/elementor/postformat-widget.php');
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Omens_Elementor_PostFormat_Content_Widget() );
+	}
+}
+
+add_action( 'elementor/widgets/widgets_registered', 'omens_elementor_register_custom_widgets' );

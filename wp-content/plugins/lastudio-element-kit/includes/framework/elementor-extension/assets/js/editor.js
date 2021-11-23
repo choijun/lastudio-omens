@@ -260,6 +260,27 @@
 				var _old_class = $elementView.attr('class');
 				$elementView.attr('class', _old_class.replace(/lakit-vheader--hide(\w+)/, 'lakit-vheader--hide' + newValue));
 			} );
+
+
+			// Vertical Document Settings
+			window.elementor.settings.page.addChangeCallback( 'lakit_doc_enable_header_transparency', function( newValue ) {
+				var $elementView = window.elementor.previewView.$el.closest('body');
+				if(newValue == 'yes'){
+					$elementView.addClass('lakitdoc-enable-header-transparency');
+				}
+				else{
+					$elementView.removeClass('lakitdoc-enable-header-transparency');
+				}
+			} );
+			window.elementor.settings.page.addChangeCallback( 'lakit_doc_swap_logo', function( newValue ) {
+				var $elementView = window.elementor.previewView.$el.closest('body');
+				if(newValue == 'yes'){
+					$elementView.addClass('lakitdoc-swap-logo');
+				}
+				else{
+					$elementView.removeClass('lakitdoc-swap-logo');
+				}
+			} );
 		},
 
 		addCustomAttr: function ( content, context ){

@@ -568,7 +568,8 @@ class WC_Shortcode_Products {
 
 		if ( isset( $transient_value['value'], $transient_value['version'] ) && $transient_value['version'] === $transient_version ) {
 			$results = $transient_value['value'];
-		} else {
+		}
+		else {
 			$query = new WP_Query( $this->query_args );
 
 			$paginated = ! $query->get( 'no_found_rows' );

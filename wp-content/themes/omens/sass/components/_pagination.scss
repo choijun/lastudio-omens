@@ -292,3 +292,27 @@ ul.page-numbers{
     border-radius: 0;
   }
 }
+
+.elementor-lakit-post-navigation.style2{
+  .post-navigation__next--title,
+  .post-navigation__prev--title{
+    margin: 6px 0 20px;
+  }
+  .elementor-post-navigation__link__next,
+  .elementor-post-navigation__link__prev{
+    width: 200px;
+    max-width: 100%;
+    > span{
+      white-space: break-spaces;
+      line-height: 1.3;
+    }
+  }
+  .elementor-post-navigation .elementor-post-navigation__link a {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .elementor-post-navigation .elementor-post-navigation__prev a {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+}

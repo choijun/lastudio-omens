@@ -397,7 +397,7 @@ class LaStudioKit_Woo_Single_Product_Images extends LaStudioKit_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => array( 'px', '%', 'em' ),
                 'selectors'  => array(
-                    '{{WRAPPER}} .zoominner' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .flex-control-thumbs li img' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ),
             )
         );

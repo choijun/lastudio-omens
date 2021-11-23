@@ -66,12 +66,22 @@ class Element_Visibility {
             'type' => \Elementor\Controls_Manager::SELECT2,
             'render_type' => 'none',
             'options'     => $this->get_roles(),
-            'default'     => [],
             'multiple'    => true,
             'label_block' => true,
-            'condition'   => [
-                'lakit_vlogic_enabled'     => 'yes',
-                'lakit_vlogic_role_hidden' => [],
+            'conditions' => [
+	            'relation' => 'and',
+	            'terms' => [
+		            [
+			            'name' => 'lakit_vlogic_enabled',
+			            'operator' => '==',
+			            'value' => 'yes'
+		            ],
+		            [
+			            'name' => 'lakit_vlogic_role_hidden',
+			            'operator' => '==',
+			            'value' => ''
+		            ]
+	            ]
             ],
         ]);
         $element->add_control('lakit_vlogic_role_hidden', [
@@ -79,12 +89,22 @@ class Element_Visibility {
             'type' => \Elementor\Controls_Manager::SELECT2,
             'render_type' => 'none',
             'options'     => $this->get_roles(),
-            'default'     => [],
             'multiple'    => true,
             'label_block' => true,
-            'condition'   => [
-                'lakit_vlogic_enabled'     => 'yes',
-                'lakit_vlogic_role_visible' => [],
+            'conditions' => [
+	            'relation' => 'and',
+	            'terms' => [
+		            [
+			            'name' => 'lakit_vlogic_enabled',
+			            'operator' => '==',
+			            'value' => 'yes'
+		            ],
+		            [
+			            'name' => 'lakit_vlogic_role_visible',
+			            'operator' => '==',
+			            'value' => ''
+		            ]
+	            ]
             ],
         ]);
         $element->end_controls_section();

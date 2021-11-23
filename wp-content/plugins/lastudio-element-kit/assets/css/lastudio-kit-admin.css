@@ -122,3 +122,38 @@
 .lastudio-kit-settings-page__fonts-manager .cx-vui-title {
   margin-bottom: 30px;
 }
+
+.lastudio-kit-settings-page .cx-vui-switcher--on .cx-vui-switcher__trigger{
+  background: #ED2A11;
+}
+.lastudio-kit-settings-page .cx-vui-switcher--on .cx-vui-switcher__panel{
+  background: #f5dfdc;
+}
+.lastudio-kit-settings-page .cx-vui-button--style-accent{
+  background: #23282d;
+}
+.lastudio-kit-settings-page .cx-vui-button--style-accent:hover{
+  background: #ED2A11;
+}
+.lastudio-kit-settings-page .cx-vui-repeater-item__title{
+  color: inherit;
+  font-weight: bold;
+}
+.lastudio-kit-settings-page .cx-vui-repeater-item__collapse path{
+  fill: currentColor;
+}
+.lastudio-kit-settings-page .cx-vui-repeater-item__clean:hover path,
+.lastudio-kit-settings-page .cx-vui-repeater-item__copy:hover path{
+  fill: #ED2A11
+}
+.cx-element-wrap .upload-button {
+  background: #23282d;
+  border: none;
+  box-shadow: 0 4px 4px #23282d3d;
+}
+.cx-element-wrap .upload-button:hover{
+  background: #ED2A11;
+}
+.cx-element-wrap .upload-button:before {
+  display: none;
+}

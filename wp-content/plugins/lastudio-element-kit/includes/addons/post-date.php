@@ -33,7 +33,7 @@ class LaStudioKit_Post_Date extends LaStudioKit_Base {
     }
 
     public function get_icon() {
-        return 'far fa-clock';
+        return 'eicon-countdown';
     }
 
     public function get_categories() {
@@ -194,6 +194,8 @@ class LaStudioKit_Post_Date extends LaStudioKit_Base {
 
     protected function render() {
 
+        global $post;
+
         $settings = $this->get_settings();
 
         // Backwards compitability check
@@ -251,58 +253,6 @@ class LaStudioKit_Post_Date extends LaStudioKit_Base {
         $html .= sprintf( '</%s>', $settings['html_tag'] );
 
         echo $html;
-    }
-
-    protected function content_template() {
-        ?>
-        <#
-        // Backwards compitability check
-        var datetype;
-        if (settings.date_type) {
-        datetype = settings.date_type;
-        } else {
-        datetype = "publish";
-        }
-
-        var data_fields = [];
-        data_fields[ "modified" ] = "<?php echo get_the_modified_date(); ?>";
-        data_fields[ "publish" ] = "<?php echo get_the_date(); ?>";
-
-        var date = data_fields[ datetype ];
-
-        var link_url;
-        switch( settings.link_to ) {
-        case 'custom':
-        link_url = settings.link.url;
-        break;
-        case 'post':
-        link_url = '<?php echo esc_url( get_the_permalink() ); ?>';
-        break;
-        case 'home':
-        link_url = '<?php echo esc_url( get_home_url() ); ?>';
-        break;
-        case 'none':
-        default:
-        link_url = false;
-        }
-        var target = settings.link.is_external ? 'target="_blank"' : '';
-
-        var animation_class = '';
-        if ( '' !== settings.hover_animation ) {
-        animation_class = 'elementor-animation-' + settings.hover_animation;
-        }
-
-        var html = '<' + settings.html_tag + ' class="lakit-post-date ' + animation_class + '">';
-        if ( link_url ) {
-        html += '<a href="' + link_url + '" ' + target + '>' + date + '</a>';
-        } else {
-        html += date;
-        }
-        html += '</' + settings.html_tag + '>';
-
-        print( html );
-        #>
-        <?php
     }
     
 }

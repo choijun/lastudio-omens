@@ -299,6 +299,34 @@ if ( ! class_exists( 'LaStudio_Kit_SVG_Manager' ) ) {
 			}
 			return self::$instance;
 		}
+
+		/**
+		 * get_inline_svg
+		 * @param $attachment_id
+		 *
+		 * @return bool|mixed|string
+		 */
+		public static function get_inline_svg( $attachment_id ) {
+			$svg = get_post_meta( $attachment_id, '_elementor_inline_svg', true );
+
+			if ( ! empty( $svg ) ) {
+				return $svg;
+			}
+
+			$attachment_file = get_attached_file( $attachment_id );
+
+			if ( ! $attachment_file ) {
+				return '';
+			}
+
+			$svg = @file_get_contents( $attachment_file );
+
+			if ( ! empty( $svg ) ) {
+				update_post_meta( $attachment_id, '_elementor_inline_svg', $svg );
+			}
+
+			return $svg;
+		}
 	}
 
 }

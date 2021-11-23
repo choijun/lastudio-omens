@@ -249,7 +249,7 @@ if ( ! class_exists( 'LaStudio_Kit_Helper' ) ) {
 		 * @param  array  $attr [description]
 		 * @return string
 		 */
-		public function get_image_by_url( $url = null, $attr = array() ) {
+		public function get_image_by_url( $url = null, $attr = array(), $wrapper = true ) {
 
 			$url = esc_url( $url );
 
@@ -278,6 +278,10 @@ if ( ! class_exists( 'LaStudio_Kit_Helper' ) ) {
 			}
 
 			set_transient( $key, $svg, DAY_IN_SECONDS );
+
+			if ( ! $wrapper ) {
+				return $svg;
+			}
 
 			unset( $attr['alt'] );
 

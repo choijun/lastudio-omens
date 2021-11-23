@@ -165,14 +165,14 @@
   border-width: 0 5px 0 0;
 }
 .lastudio-kit-dashboard-settings-page .plugin-settings-toggle__link:hover{
-  border-color: #0073aa;
+  border-color: #ED2A11;
   background-color: #000;
 }
 .lastudio-kit-dashboard-settings-page .plugin-settings-toggle__link:hover span{
   color: #fff
 }
 .lastudio-kit-dashboard-settings-page .plugin-settings-toggle__link.active{
-  border-color: #0073aa;
+  border-color: #ED2A11;
   background-color: #000;
 }
 .lastudio-kit-dashboard-settings-page .plugin-settings-toggle__link.active span{

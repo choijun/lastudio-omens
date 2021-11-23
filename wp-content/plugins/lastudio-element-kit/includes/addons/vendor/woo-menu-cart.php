@@ -214,22 +214,22 @@ class LaStudioKit_Woo_Menu_Cart extends LaStudioKit_Base {
                 'cart_list_title' => '.lakit-cart__list-title',
                 'cart_list_close' => '.lakit-cart__close-button',
 
-                'cart_empty_message'    => '.widget_shopping_cart .woocommerce-mini-cart__empty-message',
-                'cart_product_list'     => '.widget_shopping_cart .woocommerce-mini-cart',
-                'cart_product_item'     => '.widget_shopping_cart .woocommerce-mini-cart-item',
-                'cart_product_link'     => '.widget_shopping_cart .woocommerce-mini-cart-item a:not(.remove)',
-                'cart_product_img'      => '.widget_shopping_cart .woocommerce-mini-cart-item img',
-                'cart_product_quantity' => '.widget_shopping_cart .woocommerce-mini-cart-item .quantity',
-                'cart_product_amount'   => '.widget_shopping_cart .woocommerce-mini-cart-item .amount',
-                'cart_product_remove'   => '.widget_shopping_cart .woocommerce-mini-cart-item .remove',
+                'cart_empty_message'    => '.widget_shopping_cart_content .woocommerce-mini-cart__empty-message',
+                'cart_product_list'     => '.widget_shopping_cart_content .woocommerce-mini-cart',
+                'cart_product_item'     => '.widget_shopping_cart_content .woocommerce-mini-cart-item',
+                'cart_product_link'     => '.widget_shopping_cart_content .woocommerce-mini-cart-item a:not(.remove)',
+                'cart_product_img'      => '.widget_shopping_cart_content .woocommerce-mini-cart-item img',
+                'cart_product_quantity' => '.widget_shopping_cart_content .woocommerce-mini-cart-item .quantity',
+                'cart_product_amount'   => '.widget_shopping_cart_content .woocommerce-mini-cart-item .amount',
+                'cart_product_remove'   => '.widget_shopping_cart_content .woocommerce-mini-cart-item .remove',
 
-                'cart_list_total'        => '.widget_shopping_cart .woocommerce-mini-cart__total',
-                'cart_list_total_title'  => '.widget_shopping_cart .woocommerce-mini-cart__total strong',
-                'cart_list_total_amount' => '.widget_shopping_cart .woocommerce-mini-cart__total .amount',
+                'cart_list_total'        => '.widget_shopping_cart_content .woocommerce-mini-cart__total',
+                'cart_list_total_title'  => '.widget_shopping_cart_content .woocommerce-mini-cart__total strong',
+                'cart_list_total_amount' => '.widget_shopping_cart_content .woocommerce-mini-cart__total .amount',
 
-                'cart_list_buttons' => '.widget_shopping_cart .woocommerce-mini-cart__buttons.buttons',
-                'view_cart_button'  => '.widget_shopping_cart .woocommerce-mini-cart__buttons.buttons .button.wc-forward:not(.checkout)',
-                'checkout_button'   => '.widget_shopping_cart .woocommerce-mini-cart__buttons.buttons .button.checkout.wc-forward',
+                'cart_list_buttons' => '.widget_shopping_cart_content .woocommerce-mini-cart__buttons.buttons',
+                'view_cart_button'  => '.widget_shopping_cart_content .woocommerce-mini-cart__buttons.buttons .button.wc-forward:not(.checkout)',
+                'checkout_button'   => '.widget_shopping_cart_content .woocommerce-mini-cart__buttons.buttons .button.checkout.wc-forward',
             )
         );
 

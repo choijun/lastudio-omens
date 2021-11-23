@@ -53,4 +53,5 @@
     }
     ?>
 
+    <?php do_action('lastudio-kit-dashboard/js-page-templates/general-settings'); ?>
 </div>

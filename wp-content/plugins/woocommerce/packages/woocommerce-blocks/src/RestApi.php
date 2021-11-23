@@ -61,6 +61,10 @@ class RestApi {
 			]
 		);
 
+		if(is_wp_error($namespace_index)){
+			return null;
+		}
+
 		$response_data = $namespace_index->get_data();
 
 		return isset( $response_data['routes'] ) ? $response_data['routes'] : null;

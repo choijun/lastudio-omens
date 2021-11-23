@@ -10,8 +10,22 @@ class Header_Vertical {
         add_action('elementor/theme/before_do_header', [ $this, 'add_open_wrap' ], 0 );
         add_action('wp_footer', [ $this, 'add_close_wrap' ], -1001 );
         add_action('elementor/element/header/document_settings/before_section_end', [ $this, 'register_control_settings' ]);
-
         add_action('elementor/element/section/section_advanced/after_section_end', [ $this, 'add_transparency_controls' ]);
+
+	    /**
+	     * Add header controls to Page/Archive/Single location
+	     */
+	    add_action( 'elementor/element/archive/document_settings/before_section_end',  [ $this, 'add_header_control_to_elementor_location' ]  );
+	    add_action( 'elementor/element/single/document_settings/before_section_end', [ $this, 'add_header_control_to_elementor_location' ] );
+	    add_action( 'elementor/element/single-post/document_settings/before_section_end', [ $this, 'add_header_control_to_elementor_location' ] );
+	    add_action( 'elementor/element/single-page/document_settings/before_section_end', [ $this, 'add_header_control_to_elementor_location' ] );
+	    add_action( 'elementor/element/wp-page/document_settings/before_section_end', [ $this, 'add_header_control_to_elementor_location' ] );
+	    add_action( 'elementor/element/wp-post/document_settings/before_section_end', [ $this, 'add_header_control_to_elementor_location' ] );
+	    add_action( 'elementor/element/search-results/document_settings/before_section_end', [ $this, 'add_header_control_to_elementor_location' ] );
+	    add_action( 'elementor/element/error-404/document_settings/before_section_end', [ $this, 'add_header_control_to_elementor_location' ] );
+	    add_action( 'elementor/element/product/document_settings/before_section_end', [ $this, 'add_header_control_to_elementor_location' ] );
+	    add_action( 'elementor/element/product-archive/document_settings/before_section_end', [ $this, 'add_header_control_to_elementor_location' ] );
+	    add_filter( 'body_class', [ $this, 'body_class' ], 20);
     }
 
     public function add_transparency_controls( $stack ){
@@ -205,6 +219,161 @@ class Header_Vertical {
         }
         $lakit_site_wrapper_open = false;
     }
+
+	/**
+	 * Add header controls to Page/Archive/Single location
+	 */
+	public function add_header_control_to_elementor_location( $stack ){
+		$stack->add_control(
+			'lakit_doc_enable_header_transparency',
+			[
+				'label' => __( 'Enable Header Transparency ?', 'lastudio-kit' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+			]
+		);
+		$stack->add_control(
+			'lakit_doc_header_transparency_note',
+			[
+				'type' => \Elementor\Controls_Manager::RAW_HTML,
+				'raw' => __( 'Note: This option may not work properly in some cases', 'lastudio-kit' ),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-warning',
+				'condition' => array(
+					'lakit_doc_enable_header_transparency' => 'yes',
+				),
+			]
+		);
+		$stack->add_control(
+			'lakit_doc_swap_logo',
+			[
+				'label' => __( 'Swap Logos ?', 'lastudio-kit' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'condition' => array(
+					'lakit_doc_enable_header_transparency' => 'yes',
+				),
+			]
+		);
+		$stack->add_control(
+			'lakit_doc_header_bg_color',
+			array(
+				'label' => esc_html__( 'Header Background Color', 'lastudio-kit' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}}' => '--lakit-doc-headerts-bg-color: {{VALUE}}',
+				),
+				'condition' => array(
+					'lakit_doc_enable_header_transparency' => 'yes',
+				),
+			)
+		);
+		$stack->add_control(
+			'lakit_doc_header_text_color',
+			array(
+				'label' => esc_html__( 'Header Text Color', 'lastudio-kit' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}}' => '--lakit-doc-headerts-text-color: {{VALUE}}',
+				),
+				'condition' => array(
+					'lakit_doc_enable_header_transparency' => 'yes',
+				),
+			)
+		);
+		$stack->add_control(
+			'lakit_doc_header_link_color',
+			array(
+				'label' => esc_html__( 'Header Link Color', 'lastudio-kit' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}}' => '--lakit-doc-headerts-link-color: {{VALUE}}',
+				),
+				'condition' => array(
+					'lakit_doc_enable_header_transparency' => 'yes',
+				),
+			)
+		);
+		$stack->add_control(
+			'lakit_doc_header_link_hover_color',
+			array(
+				'label' => esc_html__( 'Header Link Hover Color', 'lastudio-kit' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}}' => '--lakit-doc-headerts-link-hover-color: {{VALUE}}',
+				),
+				'condition' => array(
+					'lakit_doc_enable_header_transparency' => 'yes',
+				),
+			)
+		);
+		$stack->add_control(
+			'lakit_doc_header_button_color',
+			array(
+				'label' => esc_html__( 'Header Button Color', 'lastudio-kit' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}}' => '--lakit-doc-headerts-button-color: {{VALUE}}',
+				),
+				'condition' => array(
+					'lakit_doc_enable_header_transparency' => 'yes',
+				),
+			)
+		);
+		$stack->add_control(
+			'lakit_doc_header_button_bgcolor',
+			array(
+				'label' => esc_html__( 'Header Button Background Color', 'lastudio-kit' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}}' => '--lakit-doc-headerts-button-bgcolor: {{VALUE}}',
+				),
+				'condition' => array(
+					'lakit_doc_enable_header_transparency' => 'yes',
+				),
+			)
+		);
+		$stack->add_control(
+			'lakit_doc_header_button_hover_color',
+			array(
+				'label' => esc_html__( 'Header Button Hover Color', 'lastudio-kit' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}}' => '--lakit-doc-headerts-button-hover-color: {{VALUE}}',
+				),
+				'condition' => array(
+					'lakit_doc_enable_header_transparency' => 'yes',
+				),
+			)
+		);
+		$stack->add_control(
+			'lakit_doc_header_button_hover_bgcolor',
+			array(
+				'label' => esc_html__( 'Header Button Hover Background Color', 'lastudio-kit' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}}' => '--lakit-doc-headerts-button-hover-bgcolor: {{VALUE}}',
+				),
+				'condition' => array(
+					'lakit_doc_enable_header_transparency' => 'yes',
+				),
+			)
+		);
+	}
+
+	public function body_class( $classes ){
+		$tmp = join('|', $classes);
+		preg_match('/elementor-page-(\d+)/i', $tmp, $matches);
+		if(!empty($matches[1])){
+			$settings = get_post_meta( $matches[1], '_elementor_page_settings', true );
+			if(!empty($settings['lakit_doc_enable_header_transparency']) && $settings['lakit_doc_enable_header_transparency'] == 'yes'){
+				$classes[] = 'lakitdoc-enable-header-transparency';
+				if(!empty($settings['lakit_doc_swap_logo']) && $settings['lakit_doc_swap_logo'] == 'yes'){
+					$classes[] = 'lakitdoc-swap-logo';
+				}
+			}
+		}
+		return $classes;
+	}
 }
 
 new Header_Vertical();

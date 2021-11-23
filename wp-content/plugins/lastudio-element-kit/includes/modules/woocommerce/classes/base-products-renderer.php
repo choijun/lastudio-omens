@@ -11,6 +11,16 @@ abstract class Base_Products_Renderer extends \WC_Shortcode_Products {
 
     private static $has_init = false;
 
+	const DEFAULT_COLUMNS_AND_ROWS = 4;
+
+	protected function get_limit(){
+		$settings = $this->settings;
+		$rows = ! empty( $settings['rows'] ) ? $settings['rows'] : self::DEFAULT_COLUMNS_AND_ROWS;
+		$columns = ! empty( $settings['columns'] ) ? $settings['columns'] : self::DEFAULT_COLUMNS_AND_ROWS;
+
+		return intval( $columns * $rows );
+	}
+
 	/**
 	 * Override original `get_content` that returns an HTML wrapper even if no results found.
 	 *
@@ -83,7 +93,7 @@ abstract class Base_Products_Renderer extends \WC_Shortcode_Products {
         if( !empty($this->settings['allow_order']) && !empty($this->settings['show_result_count']) && $this->settings['allow_order'] === 'yes' && $this->settings['show_result_count'] === 'yes' ) {
             $allow_extra_filters = true;
         }
-        wc_set_loop_prop('lakit_loop_allow_extra_filters', $allow_extra_filters );
+        \wc_set_loop_prop('lakit_loop_allow_extra_filters', $allow_extra_filters );
 
 
         $enable_carousel = false;
@@ -134,7 +144,7 @@ abstract class Base_Products_Renderer extends \WC_Shortcode_Products {
             $wrapper_classes[] = 'swiper-container';
         }
 
-        wc_set_loop_prop('lakit_loop_item_classes', $loop_item_classes );
+        \wc_set_loop_prop('lakit_loop_item_classes', $loop_item_classes );
 
         $has_masonry_filter = false;
 
@@ -146,8 +156,8 @@ abstract class Base_Products_Renderer extends \WC_Shortcode_Products {
 
         $before .= '<div class="'.esc_attr(join(' ', $wrapper_classes)).'">';
 
-        wc_set_loop_prop('lakit_loop_before', $before );
-        wc_set_loop_prop('lakit_has_masonry_filter', $has_masonry_filter );
+        \wc_set_loop_prop('lakit_loop_before', $before );
+        \wc_set_loop_prop('lakit_has_masonry_filter', $has_masonry_filter );
 
         $after = '</div>';
         if($enable_carousel){
@@ -164,15 +174,15 @@ abstract class Base_Products_Renderer extends \WC_Shortcode_Products {
         }
         $after .= '</div>';
 
-        wc_set_loop_prop('lakit_loop_after', $after );
+        \wc_set_loop_prop('lakit_loop_after', $after );
 
-        wc_set_loop_prop('lakit_layout', $layout);
-        wc_set_loop_prop('lakit_preset', $preset);
-        wc_set_loop_prop('lakit_type', $this->type );
-        wc_set_loop_prop('lakit_enable_carousel', $enable_carousel );
+        \wc_set_loop_prop('lakit_layout', $layout);
+        \wc_set_loop_prop('lakit_preset', $preset);
+        \wc_set_loop_prop('lakit_type', $this->type );
+        \wc_set_loop_prop('lakit_enable_carousel', $enable_carousel );
 
         $item_html_tag = !empty($this->settings['item_html_tag']) ? $this->settings['item_html_tag'] : 'h2';
-        wc_set_loop_prop('lakit_item_html_tag', $item_html_tag );
+        \wc_set_loop_prop('lakit_item_html_tag', $item_html_tag );
 
         $image_size = 'woocommerce_thumbnail';
         $enable_alt_image = false;
@@ -185,13 +195,13 @@ abstract class Base_Products_Renderer extends \WC_Shortcode_Products {
             $enable_alt_image = true;
         }
 
-        wc_set_loop_prop('lakit_enable_alt_image', $enable_alt_image );
-        wc_set_loop_prop('lakit_image_size', $image_size );
+        \wc_set_loop_prop('lakit_enable_alt_image', $enable_alt_image );
+        \wc_set_loop_prop('lakit_image_size', $image_size );
 
     }
 
     public function override_hook(){
-
+    	
         add_filter( 'woocommerce_pagination_args', [ $this, 'woocommerce_pagination_args' ], 1001  );
         if( !self::$has_init ){
             self::$has_init = true;
@@ -288,7 +298,7 @@ abstract class Base_Products_Renderer extends \WC_Shortcode_Products {
 
         global $product;
 
-        $output = '<div class="figure__object_fit p_img-first">'.woocommerce_get_product_thumbnail( $image_size ).'</div>';
+        $output = '<div class="figure__object_fit p_img-first">'.\woocommerce_get_product_thumbnail( $image_size ).'</div>';
         if($enable_alt_image){
             $gallery_image_ids = $product->get_gallery_image_ids();
             if(!empty($gallery_image_ids[0])){
@@ -301,7 +311,7 @@ abstract class Base_Products_Renderer extends \WC_Shortcode_Products {
 
     public function woocommerce_pagination(){
         ob_start();
-        woocommerce_pagination();
+        \woocommerce_pagination();
         $output = ob_get_clean();
 
         $output = str_replace('woocommerce-pagination', 'woocommerce-pagination lakit-pagination clearfix lakit-ajax-pagination', $output);

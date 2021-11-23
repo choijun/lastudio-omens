@@ -82,8 +82,11 @@
   position: absolute;
   top: 5px;
   right: -25px;
-  line-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 50px;
+  height: 50px;
   cursor: pointer;
   text-align: center;
   color: #fff;
@@ -96,9 +99,9 @@
 }
 
 .featherlight .featherlight-close-icon:hover {
-background-color: $primary-color;
-color: #fff;
-@include rotate(90);
+  background-color: $primary-color;
+  color: #fff;
+  @include rotate(90);
 }
 
 .featherlight .featherlight-image {
@@ -109,6 +112,7 @@ color: #fff;
 
 .featherlight-iframe .featherlight-content {
   /* removed the border for image croping since iframe is edge to edge */
+  background: none;
   border-bottom: 0;
   padding: 0;
   -webkit-overflow-scrolling: touch;
@@ -123,7 +127,7 @@ color: #fff;
   width: 1170px;
   height: calc( 1170px * .5625 );
   @media (max-width: 1200px) {
-    height: calc(100vh * .5625);
+    height: calc(100vw * .5625);
   }
 }
 
@@ -194,10 +198,13 @@ html.with-featherlight {
     left: calc(50% - 25px);
     right: auto;
     top: auto;
-    bottom: -50px;
+    bottom: -30px;
     width: 40px;
     height: 40px;
-    line-height: 38px;
     font-size: 14px;
+  }
+  .featherlight-iframe .featherlight-outer,
+  .featherlight-iframe .featherlight-content{
+    max-width: 100%;
   }
 }

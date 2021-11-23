@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 ?><!DOCTYPE html>
-<html <?php language_attributes(); ?><?php omens_schema_markup( 'html' ); ?>>
+<html <?php language_attributes(); ?>>
 <head>
     <meta charset="<?php bloginfo( 'charset' ); ?>">
     <link rel="profile" href="//gmpg.org/xfn/11">

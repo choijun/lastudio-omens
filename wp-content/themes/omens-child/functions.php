@@ -67,9 +67,32 @@ add_action('admin_head', function (){
 	</style>
 	<?php
 });
+
+
+add_filter('lakit_breadcrumbs/page_title', function ( $title ){
+    if(is_singular('post')){
+      $post_format = get_post_format();
+      if(!empty($post_format) && $post_format !== 'standard'){
+          $title = sprintf('<h6 class="lakit-breadcrumbs__title">%s Post</h6>', ucfirst($post_format));
+      }
+      elseif (is_single('standard-post')) {
+	      $title = '<h6 class="lakit-breadcrumbs__title">Standard Post</h6>';
+      }
+    }
+    return $title;
+}, 20, 1);
+
 //add_action('woocommerce_after_shop_loop_item_title','woocommerce_template_loop_price', 10);
 
 //require_once 'demo/disable-emoji.php';
 //require_once 'demo/disable-resource.php';
 //require_once 'demo/for-demo.php';
 //require_once 'demo/wp-rocket.php';
+
+
+add_action('elementor/widget/before_render_content', function ( $instance ){
+	if( is_admin() && class_exists('\WC_Query') && is_null( WC_Query::get_main_query() ) && is_woocommerce() ){
+		global $wp_query;
+		WC()->query->product_query($wp_query);
+	}
+});

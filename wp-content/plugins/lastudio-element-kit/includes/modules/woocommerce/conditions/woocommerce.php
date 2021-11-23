@@ -38,6 +38,6 @@ class Woocommerce extends ThemeBuilder\Conditions\Condition_Base {
 	}
 
 	public function check( $args ) {
-		return is_woocommerce() || Module::is_product_search();
+		return \is_woocommerce() || Module::is_product_search();
 	}
 }

@@ -1,5 +1,22 @@
 <div class="lastudio-kit-settings-page lastudio-kit-settings-page__integratios">
   <div class="cx-vui-subtitle cx-vui-subtitle--divider" v-html="'<?php _e('General', 'lastudio-kit'); ?>'"></div>
+
+    <cx-vui-switcher name="template-cache"
+      label="<?php _e('Template cache', 'lastudio-kit'); ?>"
+      description="<?php _e('Enable or disable template cache', 'lastudio-kit'); ?>"
+      :wrapper-css="[ 'equalwidth' ]"
+      return-true="true"
+      return-false="false"
+      v-model="pageOptions['template-cache'].value">
+    </cx-vui-switcher>
+    <cx-vui-input
+      name="portfolio_per_page"
+      label="<?php _e('Portfolio Per Page', 'lastudio-kit'); ?>"
+      description="<?php echo esc_html__('Number portfolio items per page', 'lastudio-kit');?>"
+      :wrapper-css="[ 'equalwidth' ]"
+      size="fullwidth"
+      v-model="pageOptions.portfolio_per_page.value"></cx-vui-input>
+
   <cx-vui-switcher name="svg-uploads"
     label="<?php _e('SVG images upload status', 'lastudio-kit'); ?>"
     description="<?php _e('Enable or disable SVG images uploading', 'lastudio-kit'); ?>"
@@ -8,6 +25,7 @@
     return-false="disabled"
     v-model="pageOptions['svg-uploads'].value">
   </cx-vui-switcher>
+
   <div class="cx-vui-subtitle cx-vui-subtitle--divider" v-html="'<?php _e('Google Maps', 'lastudio-kit'); ?>'"></div>
 
   <cx-vui-input

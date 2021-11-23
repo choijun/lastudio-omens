@@ -81,7 +81,7 @@ if ( ! class_exists( 'CX_Control_Colorpicker' ) ) {
 					$html .= '<label class="cx-label" for="' . esc_attr( $this->settings['id'] ) . '">' . esc_html( $this->settings['label'] ) . '</label> ';
 				}
 				$html .= '<div class="cx-ui-colorpicker-wrapper">';
-					$html .= '<input type="text" id="' . esc_attr( $this->settings['id'] ) . '" class="cx-ui-colorpicker" name="' . esc_attr( $this->settings['name'] ) . '" value="' . esc_html( $this->settings['value'] ) . '"/>';
+					$html .= '<input type="text" data-alpha-enabled="true" id="' . esc_attr( $this->settings['id'] ) . '" class="cx-ui-colorpicker" name="' . esc_attr( $this->settings['name'] ) . '" value="' . esc_html( $this->settings['value'] ) . '"/>';
 				$html .= '</div>';
 			$html .= '</div>';
 

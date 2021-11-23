@@ -80,6 +80,10 @@ if (!class_exists('LaStudio_Kit_Ajax_Manager')) {
     	public function __construct() {
 			add_action('wp_ajax_nopriv_lakit_ajax', [ $this, 'handle_ajax_request' ] );
 			add_action('wp_ajax_lakit_ajax', [ $this, 'handle_ajax_request' ] );
+			add_action('lakit_ajax_do_ajax', [ $this, 'handle_ajax_request' ] );
+
+		    add_action( 'init', array( __CLASS__, 'define_ajax' ), 0 );
+		    add_action( 'template_redirect', array( __CLASS__, 'do_lakit_ajax' ), 0 );
 		}
 
 
@@ -122,6 +126,11 @@ if (!class_exists('LaStudio_Kit_Ajax_Manager')) {
 			         ->send_error( 401 );
 		    }
 
+		    if(empty($_REQUEST['actions'])){
+			    $this->add_response_data( false, esc_html__( 'Action not found.', 'lastudio-kit' ) )
+			         ->send_error( 401 );
+		    }
+
 		    /**
 		     * Register ajax actions.
 		     *
@@ -136,6 +145,11 @@ if (!class_exists('LaStudio_Kit_Ajax_Manager')) {
 		    do_action( 'lastudio-kit/ajax/register_actions', $this );
 
 		    $this->requests = json_decode( stripslashes( $_REQUEST['actions'] ), true );
+
+		    if(empty($this->requests)){
+			    $this->add_response_data( false, esc_html__( 'Action not found.', 'lastudio-kit' ) )
+			         ->send_error( 401 );
+		    }
 
 		    foreach ( $this->requests as $id => $action_data ) {
 			    $this->current_action_id = $id;
@@ -289,5 +303,68 @@ if (!class_exists('LaStudio_Kit_Ajax_Manager')) {
 
 		    return $this;
 	    }
+
+	    /**
+	     * Set Lakit AJAX constant and headers.
+	     */
+	    public static function define_ajax() {
+		    // phpcs:disable
+		    if ( ! empty( $_REQUEST['lakit-ajax'] ) ) {
+
+			    if ( ! defined( 'DOING_AJAX' ) ) {
+				    define( 'DOING_AJAX', true );
+			    }
+
+			    if ( defined('WP_DEBUG') && (! WP_DEBUG || ( WP_DEBUG && ! WP_DEBUG_DISPLAY )) ) {
+				    @ini_set( 'display_errors', 0 ); // Turn off display_errors during AJAX events to prevent malformed JSON.
+			    }
+			    $GLOBALS['wpdb']->hide_errors();
+		    }
+		    // phpcs:enable
+	    }
+
+	    /**
+	     * Check for Lakit Ajax request and fire action.
+	     */
+	    public static function do_lakit_ajax() {
+
+		    // phpcs:disable WordPress.Security.NonceVerification.Recommended
+		    if ( ! empty( $_REQUEST['lakit-ajax'] ) ) {
+			    self::lakit_ajax_headers();
+			    do_action( 'lakit_ajax_do_ajax' );
+			    wp_die();
+		    }
+		    // phpcs:enable
+	    }
+
+	    /**
+	     * Send headers for Lakit Ajax Requests.
+	     *
+	     * @since 1.0.0
+	     */
+	    private static function lakit_ajax_headers() {
+		    if ( ! headers_sent() ) {
+			    send_origin_headers();
+			    send_nosniff_header();
+			    if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+				    define( 'DONOTCACHEPAGE', true );
+			    }
+			    if ( ! defined( 'DONOTCACHEOBJECT' ) ) {
+				    define( 'DONOTCACHEOBJECT', true );
+			    }
+			    if ( ! defined( 'DONOTCACHEDB' ) ) {
+				    define( 'DONOTCACHEDB', true );
+			    }
+			    nocache_headers();
+			    header( 'Content-Type: text/html; charset=' . get_option( 'blog_charset' ) );
+			    header( 'X-Robots-Tag: noindex' );
+			    status_header( 200 );
+		    }
+		    elseif ( defined('WP_DEBUG') && WP_DEBUG ) {
+			    headers_sent( $file, $line );
+			    trigger_error( "lakit_ajax_headers cannot set headers - headers already sent by {$file} on line {$line}", E_USER_NOTICE ); // @codingStandardsIgnoreLine
+		    }
+	    }
+
     }
 }

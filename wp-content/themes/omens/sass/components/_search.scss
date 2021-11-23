@@ -95,7 +95,7 @@ form.search-form{
       }
     }
     .search_result__item-title {
-      font-size: 1.15em;
+      font-size: 1.125em;
       font-family: var(--theme-heading-font-family);
       font-weight: var(--theme-heading-font-weight);
       line-height: normal;
@@ -193,7 +193,7 @@ form.search-form{
   &.woocommerce {
     .search_result_grid {
       &:not(.is-minimal-result) {
-        --theme-search-item-col: 4;
+        --theme-search-item-col: 3;
         @media(max-width: 1300px) {
           --theme-search-item-col: 3;
         }
@@ -211,10 +211,10 @@ form.search-form{
 .lakit-ajax-searchform{
   &.searched{
     .lakit-search__popup--full-screen {
-      background-color: #fff;
+      background-color: #fff !important;
       color: $secondary-color;
       .lakit-search__form{
-        border-color: $secondary-color;
+        border-color: $secondary-color !important;
         margin-bottom: 30px;
       }
       .lakit-search__field{

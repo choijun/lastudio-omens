@@ -26,6 +26,7 @@
                         name="mega-menu-tab"
                         label="<?php _e( 'Mega Content', 'lastudio-kit' ); ?>"
                         key="mega-menu-tab"
+                        v-if="isTopItem"
                     >
                         <div class="cx-vui-tabs-panel__inner" v-if="!getItemDataState">
 
@@ -42,7 +43,7 @@
 
                             <cx-vui-switcher
                                 name="enabled"
-                                label="<?php _e( 'Mega submenu enabled', 'lastudio-kit' ); ?>"
+                                label="<?php _e( 'Use Mega content', 'lastudio-kit' ); ?>"
                                 :wrapper-css="[ 'equalwidth' ]"
                                 return-true="true"
                                 return-false="false"
@@ -51,7 +52,7 @@
 
                             <div class="cx-vui-component cx-vui-component--equalwidth">
                                 <div class="cx-vui-component__meta">
-                                    <label class="cx-vui-component__label"><?php _e( 'Mega menu item content', 'lastudio-kit' ); ?></label>
+                                    <label class="cx-vui-component__label"><?php _e( 'Mega content', 'lastudio-kit' ); ?></label>
                                 </div>
                                 <div class="cx-vui-component__control">
                                     <cx-vui-button
@@ -59,7 +60,7 @@
                                         size="mini"
                                         @click="openEditor"
                                     >
-                                        <span slot="label"><?php _e( 'Edit Mega Menu Item Content', 'lastudio-kit' ); ?></span>
+                                        <span slot="label"><?php _e( 'Edit Mega content', 'lastudio-kit' ); ?></span>
                                     </cx-vui-button>
                                 </div>
                             </div>
@@ -67,7 +68,7 @@
                             <cx-vui-select
                                 name="custom_mega_menu_position"
                                 label="<?php _e( 'Mega menu position', 'lastudio-kit' ); ?>"
-                                description="<?php _e( 'Megamenu container position relative to item. Desktop layout only.', 'lastudio-kit' ); ?>"
+                                description="<?php _e( 'Megamenu container position relative to item.', 'lastudio-kit' ); ?>"
                                 :wrapper-css="[ 'equalwidth' ]"
                                 size="fullwidth"
                                 :options-list="controlData['custom_mega_menu_position']['options']"
@@ -79,7 +80,7 @@
                             <cx-vui-input
                                 name="custom_mega_menu_width"
                                 label="<?php _e( 'Custom mega menu width', 'lastudio-kit' ); ?>"
-                                description="<?php _e( 'Set custom mega menu width for this item(px). Desktop layout only.', 'lastudio-kit' ); ?>"
+                                description="<?php _e( 'Set custom mega menu width for this item(px).', 'lastudio-kit' ); ?>"
                                 :wrapper-css="[ 'equalwidth' ]"
                                 size="fullwidth"
                                 type="number"
@@ -126,8 +127,8 @@
                             <cx-vui-iconpicker
                                 name="menu_icon"
                                 label="<?php _e( 'Item icon', 'lastudio-kit' ); ?>"
-                                icon-base="fa"
-                                icon-prefix="fa-"
+                                icon-base="lastudioicon"
+                                icon-prefix="lastudioicon-"
                                 :icons="iconSet"
                                 :wrapper-css="[ 'equalwidth' ]"
                                 size="fullwidth"
@@ -251,65 +252,6 @@
                                 return-false="false"
                                 v-model="controlData['hide_item_text']['value']">
                             </cx-vui-switcher>
-
-                            <cx-vui-dimensions
-                                name="item_padding"
-                                label="<?php _e( 'Set custom padding for this item', 'lastudio-kit' ); ?>"
-                                :wrapper-css="[ 'equalwidth' ]"
-                                :units="[
-									{
-										unit: 'px',
-										min: 0,
-										max: 100,
-										step: 1
-									}
-								]"
-                                v-model="controlData['item_padding']['value']"
-                            >
-                            </cx-vui-dimensions>
-
-                            <div class="save-control">
-                                <cx-vui-button
-                                    button-style="accent-border"
-                                    size="mini"
-                                    @click="saveItemSettings"
-                                    :loading="itemSavingState"
-                                >
-                                    <span slot="label"><?php _e( 'Save', 'lastudio-kit' ); ?></span>
-                                </cx-vui-button>
-                            </div>
-                        </div>
-
-                    </cx-vui-tabs-panel>
-
-                    <cx-vui-tabs-panel
-                        name="vertical-menu-tab"
-                        label="<?php _e( 'Vertical Menu Widget', 'lastudio-kit' ); ?>"
-                        key="vertical-menu-tab"
-                        v-if="isTopItem"
-                    >
-                        <div class="cx-vui-tabs-panel__inner" v-if="!getItemDataState">
-                            <cx-vui-input
-                                name="mega_menu_width"
-                                label="<?php _e( 'Custom mega menu width', 'lastudio-kit' ); ?>"
-                                description="<?php _e( 'Set custom mega menu width for this item (px)', 'lastudio-kit' ); ?>"
-                                :wrapper-css="[ 'equalwidth' ]"
-                                size="fullwidth"
-                                type="number"
-                                :min="200"
-                                :max="2000"
-                                :step="100"
-                                v-model="controlData['mega_menu_width']['value']">
-                            </cx-vui-input>
-
-                            <cx-vui-select
-                                name="vertical_mega_menu_position"
-                                label="<?php _e( 'Vertical mega menu position', 'lastudio-kit' ); ?>"
-                                :wrapper-css="[ 'equalwidth' ]"
-                                size="fullwidth"
-                                :options-list="controlData['vertical_mega_menu_position']['options']"
-                                v-model="controlData['vertical_mega_menu_position']['value']">
-                            </cx-vui-select>
 
                             <div class="save-control">
                                 <cx-vui-button

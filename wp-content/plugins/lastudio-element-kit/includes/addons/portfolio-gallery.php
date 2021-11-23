@@ -399,7 +399,8 @@ class LaStudioKit_Portfolio_Gallery extends LaStudioKit_Base {
             $params[] = apply_filters('lastudio_wp_get_attachment_image_url', $image_data[0]);
             $params[] = $image_data[1];
             $params[] = $image_data[2];
-        } else {
+        }
+        else {
             $params[] = $image_item['url'];
             $params[] = 1200;
             $params[] = 800;

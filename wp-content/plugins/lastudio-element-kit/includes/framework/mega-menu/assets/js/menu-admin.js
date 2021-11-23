@@ -16,17 +16,31 @@
         },
 
         initEvents: function() {
-            $( document ).on( 'click.LakitMenuAdmin', '.lakit-menu-item-trigger', this.openItemSettingPopup );
+            $( document ).on( 'click', '.lakit-menu-item-settings__trigger', this.openItemSettingPopup );
+            $( document ).on( 'sortstop', '#menu-to-edit', this.updateMenuItemDeep );
         },
 
         initTriggers: function() {
 
+            let itemsSettings = navSettingsConfig.itemsSettings;
+
             $( '#menu-to-edit .menu-item' ).each( function() {
                 var $this = $( this ),
                     depth = LaStudioMenuNavSettings.getItemDepth( $this ),
-                    id    = LaStudioMenuNavSettings.getItemId( $this );
+                    id    = LaStudioMenuNavSettings.getItemId( $this ),
+                    infoTemplate    = '';
 
-                $this.find( '.item-title' ).append( `<span class="lakit-menu-item-trigger" data-item-id="${ id }" data-item-depth="${ depth }">${ navSettingsConfig.labels.itemTriggerLabel }</span>` );
+                $this.addClass( 'lakit-menu-item' );
+
+                if ( itemsSettings.hasOwnProperty( id ) && itemsSettings[ id ].hasOwnProperty( 'menu_type' ) ) {
+                    if ( 'mega' === itemsSettings[ id ][ 'menu_type' ] ) {
+                        infoTemplate = `<span class="lakit-menu-item-settings__info-label mega-enabled">${ navSettingsConfig.labels.itemMegaEnableLabel }</span>`;
+                    }
+                }
+
+                let triggerTemplate = `<span class="lakit-menu-item-settings__trigger" data-item-id="${ id }" data-item-depth="${ depth }">${ navSettingsConfig.labels.itemTriggerLabel }</span>`;
+
+                $this.append( `<span class="lakit-menu-item-settings"><span class="jet-menu-item-settings__info">${ infoTemplate }</span>${ triggerTemplate }</span>` );
             });
 
         },
@@ -35,7 +49,6 @@
 
             this.navItemsSettingsInstance = new Vue( {
                 el: '#lakit-menu-settings-nav',
-
                 data: {
                     navSettings: navSettingsConfig,
                     controlData: navSettingsConfig.controlData,
@@ -52,7 +65,6 @@
 
                 mounted: function() {
                     let self = this;
-
                     // Get icons set
                     fetch( self.navSettings.iconsFetchJson, {
                         mode: 'cors'
@@ -61,12 +73,13 @@
                     } ).then( function( json ) {
                         self.iconSet = json.icons;
                     } );
+
                 },
 
                 watch: {
                     itemId: function( newValue, prevValue ) {
                         this.getItemData();
-                    }
+                    },
                 },
 
                 computed: {
@@ -94,7 +107,7 @@
                     },
 
                     defaultActiveTab: function() {
-                        //return 0 === this.itemDepth ? 'mega-menu-tab' : 'icon-tab';
+                        return 0 === this.itemDepth ? 'mega-menu-tab' : 'icon-tab';
                         return 'mega-menu-tab';
                     }
 
@@ -205,7 +218,6 @@
 
         getItemId: function( $item ) {
             let id = $item.attr( 'id' );
-
             return id.replace( 'menu-item-', '' );
         },
 
@@ -216,7 +228,7 @@
                 return 0;
             }
 
-            return depthClass[0].replace( 'menu-item-depth-', '' );
+            return parseInt(depthClass[0].replace( 'menu-item-depth-', '' ));
         },
 
         oneOf: function( value, validList ) {
@@ -228,6 +240,13 @@
             }
 
             return false;
+        },
+
+        updateMenuItemDeep: function (event, ui){
+            setTimeout(function (){
+                var deep = LaStudioMenuNavSettings.getItemDepth( ui.item );
+                $('.lakit-menu-item-settings__trigger', ui.item).attr('data-item-depth', deep).data('item-depth', deep);
+            }, 150);
         }
     }
 

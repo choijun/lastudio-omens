@@ -278,7 +278,7 @@ if(!class_exists('Omens_WooCommerce_Config')){
             if(!empty($availability['class']) && $availability['class'] == 'out-of-stock' && !empty($availability['availability'])){
                 printf('<span class="la-custom-badge badge-out-of-stock">%s</span>', esc_html($availability['availability']));
             }
-            $product_badges = omens_get_post_meta($product->get_id(), 'product_badges');
+            $product_badges = get_post_meta($product->get_id(), 'product_badges', true);
             if(empty($product_badges)){
                 return;
             }
@@ -507,11 +507,11 @@ if(!class_exists('Omens_WooCommerce_Config')){
         public function change_per_page_default($cols){
             $per_page_array = omens_woo_get_product_per_page_array();
             $per_page = omens_woo_get_product_per_page();
-            if(!empty($per_page_array) && ( in_array($per_page, $per_page_array) || count($per_page_array) == 1  )){
+            if( !empty($per_page) && !empty($per_page_array) && ( in_array($per_page, $per_page_array) || count($per_page_array) == 1  )){
                 $cols = $per_page;
             }
             else{
-                $cols = $per_page;
+	            $cols = $per_page;
             }
             return $cols;
         }
@@ -627,35 +627,6 @@ if(!class_exists('Omens_WooCommerce_Config')){
             return $array;
         }
 
-        private function get_product_per_page_option(){
-            $per_page_array = apply_filters('omens/filter/get_product_per_page_array', omens_get_option('product_per_page_allow', ''));
-            if(!empty($per_page_array)){
-                $per_page_array = explode(',', $per_page_array);
-                $per_page_array = array_map('trim', $per_page_array);
-                $per_page_array = array_map('absint', $per_page_array);
-                asort($per_page_array);
-                return $per_page_array;
-            }
-            else{
-                return array();
-            }
-        }
-        private function get_product_per_row_option(){
-            $per_page_array = apply_filters('omens/filter/get_product_per_row_array', omens_get_option('product_per_row_allow', ''));
-            if(!empty($per_page_array)){
-                $per_page_array = explode(',', $per_page_array);
-                $per_page_array = array_map('trim', $per_page_array);
-                $per_page_array = array_map('absint', $per_page_array);
-                asort($per_page_array);
-                return $per_page_array;
-            }
-            else{
-                return array();
-            }
-        }
-        private function get_current_product_per_page(){
-            return apply_filters('omens/filter/get_product_per_page', omens_get_option('product_per_page_default', 9));
-        }
         public function add_toolbar_open(){
             if(wc_get_loop_prop('lakit_loop_allow_extra_filters')){
                 echo '<div class="wc-toolbar-container">';
@@ -668,9 +639,9 @@ if(!class_exists('Omens_WooCommerce_Config')){
                 $view_mode = apply_filters('omens/filter/catalog_view_mode', 'grid');
                 $woocommerce_toggle_grid_list = true;
                 $active_shop_filter = true;
-                $per_page_array = $this->get_product_per_page_option();
-                $per_row_array = $this->get_product_per_row_option();
-                $per_page =  $this->get_current_product_per_page();
+                $per_page_array = omens_woo_get_product_per_page_array();
+                $per_row_array = omens_woo_get_product_per_row_array();
+                $per_page =  omens_woo_get_product_per_page();
                 $current_url = add_query_arg(null, null);
                 $current_url = remove_query_arg(array('page', 'paged', 'mode_view', 'la_doing_ajax'), $current_url);
                 $current_url = preg_replace('/\/page\/\d+/', '', $current_url);

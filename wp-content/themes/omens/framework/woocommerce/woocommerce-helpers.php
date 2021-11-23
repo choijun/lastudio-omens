@@ -45,7 +45,7 @@ add_filter('woocommerce_product_additional_information_heading', '__return_empty
 
 if(!function_exists('omens_woo_get_product_per_page_array')){
     function omens_woo_get_product_per_page_array(){
-        $per_page_array = apply_filters('omens/filter/get_product_per_page_array', omens_get_option('product_per_page_allow', ''));
+        $per_page_array = apply_filters('omens/filter/get_product_per_page_array', omens_get_theme_mod('wc_per_page_allow', ''));
         if(!empty($per_page_array)){
             $per_page_array = explode(',', $per_page_array);
             $per_page_array = array_map('trim', $per_page_array);
@@ -61,7 +61,7 @@ if(!function_exists('omens_woo_get_product_per_page_array')){
 
 if(!function_exists('omens_woo_get_product_per_row_array')){
     function omens_woo_get_product_per_row_array(){
-        $per_page_array = apply_filters('omens/filter/get_product_per_row_array', omens_get_option('product_per_row_allow', ''));
+        $per_page_array = apply_filters('omens/filter/get_product_per_row_array', omens_get_theme_mod('wc_per_row_allow', ''));
         if(!empty($per_page_array)){
             $per_page_array = explode(',', $per_page_array);
             $per_page_array = array_map('trim', $per_page_array);
@@ -77,7 +77,7 @@ if(!function_exists('omens_woo_get_product_per_row_array')){
 
 if(!function_exists('omens_woo_get_product_per_page')){
     function omens_woo_get_product_per_page(){
-        return apply_filters('omens/filter/get_product_per_page', omens_get_option('product_per_page_default', 9));
+        return apply_filters('omens/filter/get_product_per_page', omens_get_theme_mod('wc_per_page_default', 12));
     }
 }
 
@@ -223,7 +223,7 @@ if ( !function_exists('omens_modify_text_woocommerce_catalog_orderby') ){
 if(!function_exists('omens_add_custom_badge_for_product')){
     function omens_add_custom_badge_for_product(){
         global $product;
-        $product_badges = omens_get_post_meta($product->get_id(), 'product_badges');
+        $product_badges = get_post_meta($product->get_id(), '_la_product_badges', true);
         if(empty($product_badges)){
             return;
         }
@@ -444,16 +444,15 @@ if(!function_exists('omens_wc_product_bulk_edit_save')){
     function omens_wc_product_bulk_edit_save( $product ){
         $product_id = $product->get_id();
         if ( isset( $_REQUEST['la_custom_badge'], $_REQUEST['la_custom_badge']['enable_custom_badge'] ) ) {
-            $old_data = omens_get_post_meta($product_id);
+	        $old_data = get_post_meta($product->get_id(), '_la_product_badges', true);
             $enable = $_REQUEST['la_custom_badge']['enable_custom_badge'];
             if( 'removeall' == $enable ) {
-                $old_data['product_badges'] = array();
-                update_post_meta( $product_id, '_omens_post_options', $old_data );
+	            $old_data = [];
+                update_post_meta( $product_id, '_la_product_badges', $old_data );
             }
             elseif( 'addnew' == $enable && !empty($_REQUEST['la_custom_badge']['product_badges'])) {
                 $product_badges = $_REQUEST['la_custom_badge']['product_badges'];
-                $old_data['product_badges'] = $product_badges;
-                update_post_meta( $product_id, '_omens_post_options', $old_data );
+                update_post_meta( $product_id, '_la_product_badges', $old_data );
             }
         }
     }
@@ -486,3 +485,13 @@ if(!function_exists('omens_wc_render_variation_templates')){
     }
 }
 add_action('wp_footer', 'omens_wc_render_variation_templates');
+
+if(!function_exists('omens_wc_add_register_link_to_login_frm')){
+    function omens_wc_add_register_link_to_login_frm(){
+        if( 'yes' === get_option( 'woocommerce_enable_myaccount_registration' ) ){
+            echo sprintf('<p class="wcr_resigter_link"><span>%1$s</span><a href="%3$s">%2$s</a></p>', esc_html__('Don’t have account ?', 'omens'), esc_html__('Sign up now', 'omens'), wc_get_page_permalink('myaccount'));
+        }
+    }
+}
+add_action('woocommerce_login_form_end', 'omens_wc_add_register_link_to_login_frm');
+

@@ -191,7 +191,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
             if ( 0 < $item_count ) {
 
                 // Open the unordered list.
-                $breadcrumb .= '<ul class="trail-items"'. omens_get_schema_markup( 'breadcrumb' ) .'>';
+                $breadcrumb .= '<ul class="trail-items">';
 
                 // Add the number of items and item list order schema.
                 if( is_paged() && false ){
@@ -209,7 +209,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
                     preg_match( '/(<a.*?>)(.*?)(<\/a>)/i', $item, $matches );
 
                     // Wrap the item text with appropriate itemprop.
-                    $item = !empty( $matches ) ? sprintf( '%s<span'. omens_get_schema_markup( 'author_name' ) .'>%s</span>%s', $matches[1], $matches[2], $matches[3] ) : sprintf( '<span'. omens_get_schema_markup( 'author_name' ) .'>%s</span>', $item );
+                    $item = !empty( $matches ) ? sprintf( '%s<span>%s</span>%s', $matches[1], $matches[2], $matches[3] ) : sprintf( '<span>%s</span>', $item );
 
                     // Add list item classes.
                     $item_class = 'trail-item';
@@ -221,27 +221,17 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
                     }
 
                     // Create list item attributes.
-                    $attributes = 'class="' . $item_class . '"'. omens_get_schema_markup( 'breadcrumb_list' ) .'';
+                    $attributes = 'class="' . $item_class . '"';
 
                     // Separator
                     if ( $item_count === $item_position ) {
                         $sep = '';
-                        if(false){
-                            $current_url = home_url(add_query_arg(null, null));
-                            $tmp = sprintf( '<meta content="%s"'. omens_get_schema_markup( 'item' ) .' />', $current_url );
-                            $item .= $tmp;
-                        }
                     } else {
                         $sep = $separator;
                     }
 
                     // Build the meta position HTML.
-                    if( false ){
-                        $meta = sprintf( '<meta content="%s"'. omens_get_schema_markup( 'position' ) .' />', absint( $item_position ) );
-                    }
-                    else{
-                        $meta = '';
-                    }
+	                $meta = '';
 
                     // Build the list item.
                     $breadcrumb .= sprintf( '<li %s>%s%s%s</li>', $attributes, $item, $sep, $meta );
@@ -255,7 +245,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
 
                 // Wrap the breadcrumb trail.
                 $breadcrumb = sprintf(
-                    '<%1$s aria-label="%2$s" class="site-breadcrumbs'. $p_class .'"'. omens_get_schema_markup( 'breadcrumb_itemprop' ) .'>%3$s%4$s%5$s</%1$s>',
+                    '<%1$s aria-label="%2$s" class="site-breadcrumbs'. $p_class .'">%3$s%4$s%5$s</%1$s>',
                     tag_escape( $this->args['container'] ),
                     esc_attr( $this->labels['aria_label'] ),
                     $this->args['before'],
@@ -548,7 +538,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
             $label   = $network ? get_bloginfo( 'name' ) : $text;
             $rel     = $network ? '' : ' rel="home"';
 
-            $this->items[] = sprintf( '<a href="%s"%s aria-label="' .$this->labels['home']. '" %s>%s%s</a>', esc_url( home_url() ), $rel, omens_get_schema_markup('item'), $icon, $label );
+            $this->items[] = sprintf( '<a href="%s"%s aria-label="' .$this->labels['home']. '">%s%s</a>', esc_url( home_url() ), $rel, $icon, $label );
         }
 
         /**
@@ -631,7 +621,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
                 if ( 'blog' == $posts_tax
                     && ( 'posts' !== get_option( 'show_on_front' ) && 0 < $post_id ) ) {
                     $page_id = get_option( 'page_for_posts');
-                    $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_permalink( $page_id ) ), omens_get_schema_markup('item'), get_the_title( $page_id ) );
+                    $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_permalink( $page_id ) ), get_the_title( $page_id ) );
                 }
                 else {
                     $this->add_post_terms( $post_id, $posts_tax );
@@ -644,11 +634,11 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
 
                 if ( 'shop' == $products_tax ) {
                     $shop_id = wc_get_page_id( 'shop' );
-                    $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_permalink( $shop_id ) ), omens_get_schema_markup('item'), get_the_title( $shop_id ) );
+                    $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_permalink( $shop_id ) ), get_the_title( $shop_id ) );
                 }
                 if ( 'all' == $products_tax ) {
                     $shop_id = wc_get_page_id( 'shop' );
-                    $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_permalink( $shop_id ) ), omens_get_schema_markup('item'), get_the_title( $shop_id ) );
+                    $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_permalink( $shop_id ) ), get_the_title( $shop_id ) );
                     $this->add_post_terms( $post_id, 'product_cat' );
                 }
                 else {
@@ -664,12 +654,12 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
 
                 if ( 'portfolio' == $portfolio_tax ) {
                     if( ! empty( $portfolio_id )){
-                        $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_permalink( $portfolio_id ) ), omens_get_schema_markup('item'), get_the_title( $portfolio_id ) );
+                        $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_permalink( $portfolio_id ) ), get_the_title( $portfolio_id ) );
                     }
                     else{
                         $post_type_object = get_post_type_object( 'la_portfolio' );
                         $label = ! empty( $post_type_object->labels->archive_title ) ? $post_type_object->labels->archive_title : $post_type_object->labels->name;
-                        $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_post_type_archive_link( 'la_portfolio' ) ), omens_get_schema_markup('item'), esc_html($label) );
+                        $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_post_type_archive_link( 'la_portfolio' ) ), esc_html($label) );
                     }
                 }
                 else {
@@ -689,7 +679,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
             if ( $post_title = single_post_title( '', false ) ) {
 
                 if ( 1 < get_query_var( 'page' ) || is_paged() )
-                    $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_permalink( $post_id ) ), omens_get_schema_markup('item'), $post_title );
+                    $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_permalink( $post_id ) ), $post_title );
 
                 elseif ( true === $this->args['show_title'] )
                     $this->items[] = $post_title;
@@ -758,7 +748,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
                                 $label = apply_filters( 'post_type_archive_title', $label, $post_type_object->name );
 
                                 // Add the post type archive link to the trail.
-                                $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_post_type_archive_link( $post_type_object->name ) ), omens_get_schema_markup('item'), $label );
+                                $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_post_type_archive_link( $post_type_object->name ) ), $label );
 
                                 $done_post_type = true;
 
@@ -778,7 +768,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
                     $post_id = get_option( 'page_for_posts' );
 
                     if ( 'posts' !== get_option( 'show_on_front' ) && 0 < $post_id )
-                        $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_permalink( $post_id ) ), omens_get_schema_markup('item'), get_the_title( $post_id ) );
+                        $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_permalink( $post_id ) ), get_the_title( $post_id ) );
 
                     // If the post type is not 'post'.
                 }
@@ -796,7 +786,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
                     $label 	= apply_filters( 'post_type_archive_title', $label, $post_type_object->name );
                     $url 	= apply_filters( 'post_type_archive_url', get_post_type_archive_link( $post_type_object->name ) );
 
-                    $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( $url ), omens_get_schema_markup('item'), $label );
+                    $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( $url ), $label );
                 }
             }
 
@@ -838,7 +828,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
 
             // Add the post type [plural] name to the trail end.
             if ( is_paged() ){
-                $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_post_type_archive_link( $post_type_object->name ) ), omens_get_schema_markup('item'), post_type_archive_title( '', false ) );
+                $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_post_type_archive_link( $post_type_object->name ) ), post_type_archive_title( '', false ) );
             }
             elseif ( true === $this->args['show_title'] ){
 
@@ -875,7 +865,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
 
             // Add the author's display name to the trail end.
             if ( is_paged() )
-                $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_author_posts_url( $user_id ) ), omens_get_schema_markup('item'), get_the_author_meta( 'display_name', $user_id ) );
+                $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_author_posts_url( $user_id ) ), get_the_author_meta( 'display_name', $user_id ) );
 
             elseif ( true === $this->args['show_title'] )
                 $this->items[] = get_the_author_meta( 'display_name', $user_id );
@@ -950,12 +940,12 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
             $day   = sprintf( $this->labels['archive_day'],   get_the_time( esc_html_x( 'j', 'daily archives date format',   'omens' ) ) );
 
             // Add the year and month items.
-            $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_year_link( get_the_time( 'Y' ) ) ), omens_get_schema_markup('item'), $year );
-            $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ) ), omens_get_schema_markup('item'), $month );
+            $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_year_link( get_the_time( 'Y' ) ) ), $year );
+            $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ) ), $month );
 
             // Add the day item.
             if ( is_paged() )
-                $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_day_link( get_the_time( 'Y' ) ), get_the_time( 'm' ), get_the_time( 'd' ) ), omens_get_schema_markup('item'), $day );
+                $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_day_link( get_the_time( 'Y' ) ), get_the_time( 'm' ), get_the_time( 'd' ) ), $day );
 
             elseif ( true === $this->args['show_title'] )
                 $this->items[] = $day;
@@ -978,7 +968,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
             $week = sprintf( $this->labels['archive_week'],  get_the_time( esc_html_x( 'W', 'weekly archives date format', 'omens' ) ) );
 
             // Add the year item.
-            $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_year_link( get_the_time( 'Y' ) ) ), omens_get_schema_markup('item'), $year );
+            $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_year_link( get_the_time( 'Y' ) ) ), $year );
 
             // Add the week item.
             if ( is_paged() )
@@ -1005,11 +995,11 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
             $month = sprintf( $this->labels['archive_month'], get_the_time( esc_html_x( 'F', 'monthly archives date format', 'omens' ) ) );
 
             // Add the year item.
-            $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_year_link( get_the_time( 'Y' ) ) ), omens_get_schema_markup('item'), $year );
+            $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_year_link( get_the_time( 'Y' ) ) ), $year );
 
             // Add the month item.
             if ( is_paged() )
-                $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ) ), omens_get_schema_markup('item'), $month );
+                $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ) ), $month );
 
             elseif ( true === $this->args['show_title'] )
                 $this->items[] = $month;
@@ -1032,7 +1022,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
 
             // Add the year item.
             if ( is_paged() )
-                $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_year_link( get_the_time( 'Y' ) ) ), omens_get_schema_markup('item'), $year );
+                $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_year_link( get_the_time( 'Y' ) ) ), $year );
 
             elseif ( true === $this->args['show_title'] )
                 $this->items[] = $year;
@@ -1067,7 +1057,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
         protected function add_search_items() {
 
             if ( is_paged() )
-                $this->items[] = sprintf( '<a href="%s" %s>%s%s</a>', esc_url( get_search_link() ), omens_get_schema_markup('item'), '<span class="breadcrumb-search">'. $this->labels['search'] .'</span>', ' &#8220;'. get_search_query() .'&#8221;' );
+                $this->items[] = sprintf( '<a href="%s">%s%s</a>', esc_url( get_search_link() ), '<span class="breadcrumb-search">'. $this->labels['search'] .'</span>', ' &#8220;'. get_search_query() .'&#8221;' );
 
             elseif ( true === $this->args['show_title'] )
                 $this->items[] = '<span class="breadcrumb-search">'. $this->labels['search'] .'</span>' . ' &#8220;'. get_search_query() .'&#8221;';
@@ -1107,7 +1097,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
                     break;
 
                 // Add the formatted post link to the array of parents.
-                $parents[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_permalink( $post_id ) ), omens_get_schema_markup('item'), get_the_title( $post_id ) );
+                $parents[] = sprintf( '<a href="%s">%s</a>', esc_url( get_permalink( $post_id ) ), get_the_title( $post_id ) );
 
                 // If there's no longer a post parent, break out of the loop.
                 if ( 0 >= $post->post_parent )
@@ -1174,7 +1164,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
                 // Core filter hook.
                 $label = apply_filters( 'post_type_archive_title', $label, $post_type_object->name );
 
-                $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_post_type_archive_link( $post_type ) ), omens_get_schema_markup('item'), $label );
+                $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_post_type_archive_link( $post_type ) ), $label );
             }
         }
 
@@ -1238,7 +1228,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
                     $this->add_term_parents( $term->parent, $taxonomy );
 
                 // Add the category archive link to the trail.
-                $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_term_link( $term, $taxonomy ) ), omens_get_schema_markup('item'), $term->name );
+                $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_term_link( $term, $taxonomy ) ), $term->name );
             }
         }
 
@@ -1322,7 +1312,7 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
                 $term = get_term( $term_id, $taxonomy );
 
                 // Add the formatted term link to the array of parent terms.
-                $parents[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_term_link( $term, $taxonomy ) ), omens_get_schema_markup('item'), $term->name );
+                $parents[] = sprintf( '<a href="%s">%s</a>', esc_url( get_term_link( $term, $taxonomy ) ), $term->name );
 
                 // Set the parent term's parent as the parent ID.
                 $term_id = $term->parent;
@@ -1371,19 +1361,19 @@ if( !class_exists('Omens_Breadcrumb_Trail') ) {
 
                     // If using the %year% tag, add a link to the yearly archive.
                     if ( '%year%' == $tag )
-                        $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_year_link( get_the_time( 'Y', $post_id ) ) ), omens_get_schema_markup('item'), sprintf( $this->labels['archive_year'], get_the_time( esc_html_x( 'Y', 'yearly archives date format',  'omens' ) ) ) );
+                        $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_year_link( get_the_time( 'Y', $post_id ) ) ), sprintf( $this->labels['archive_year'], get_the_time( esc_html_x( 'Y', 'yearly archives date format',  'omens' ) ) ) );
 
                     // If using the %monthnum% tag, add a link to the monthly archive.
                     elseif ( '%monthnum%' == $tag )
-                        $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_month_link( get_the_time( 'Y', $post_id ), get_the_time( 'm', $post_id ) ) ), omens_get_schema_markup('item'), sprintf( $this->labels['archive_month'], get_the_time( esc_html_x( 'F', 'monthly archives date format', 'omens' ) ) ) );
+                        $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_month_link( get_the_time( 'Y', $post_id ), get_the_time( 'm', $post_id ) ) ), sprintf( $this->labels['archive_month'], get_the_time( esc_html_x( 'F', 'monthly archives date format', 'omens' ) ) ) );
 
                     // If using the %day% tag, add a link to the daily archive.
                     elseif ( '%day%' == $tag )
-                        $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_day_link( get_the_time( 'Y', $post_id ), get_the_time( 'm', $post_id ), get_the_time( 'd', $post_id ) ) ), omens_get_schema_markup('item'), sprintf( $this->labels['archive_day'], get_the_time( esc_html_x( 'j', 'daily archives date format', 'omens' ) ) ) );
+                        $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_day_link( get_the_time( 'Y', $post_id ), get_the_time( 'm', $post_id ), get_the_time( 'd', $post_id ) ) ),  sprintf( $this->labels['archive_day'], get_the_time( esc_html_x( 'j', 'daily archives date format', 'omens' ) ) ) );
 
                     // If using the %author% tag, add a link to the post author archive.
                     elseif ( '%author%' == $tag )
-                        $this->items[] = sprintf( '<a href="%s" %s>%s</a>', esc_url( get_author_posts_url( $post->post_author ) ), omens_get_schema_markup('item'), get_the_author_meta( 'display_name', $post->post_author ) );
+                        $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_author_posts_url( $post->post_author ) ), get_the_author_meta( 'display_name', $post->post_author ) );
 
                     // If using the %category% tag, add a link to the first category archive to match permalinks.
                     elseif ( '%category%' == $tag ) {

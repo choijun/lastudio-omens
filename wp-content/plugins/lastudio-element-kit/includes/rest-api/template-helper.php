@@ -74,7 +74,9 @@ class Template_Helper {
             return $type == 'rest' ? rest_ensure_response( $template_data ) : $template_data;
         }
 
-        if( 'elementor_library' !== get_post_type($template_id) ){
+	    $rest_allow_types = apply_filters('lastudio-kit/rest/elmenetor/allow_types', ['elementor_library', 'nav_menu_item']);
+
+        if( !in_array(get_post_type($template_id), $rest_allow_types) ){
 	        $template_data = [
 		        'template_content' => '',
 		        'template_scripts' => [],
@@ -217,6 +219,10 @@ class Template_Helper {
     public function get_elementor_template_scripts( $template_id ) {
 
         $document = lastudio_kit()->elementor()->documents->get( $template_id );
+
+        if(!$document){
+        	return;
+        }
 
         $main_post = $document->get_main_post();
 

@@ -80,9 +80,6 @@
     };
 
     LaStudio.utils.hashCode = function (s) {
-        // if(la_theme_config.is_dev){
-        //     return s;
-        // }
         var hash = 0;
         if (s.length == 0) return hash;
 
@@ -93,87 +90,6 @@
         }
 
         return Math.abs(hash);
-    };
-
-    LaStudio.utils.validCache = function () {
-        var expiry = typeof la_theme_config.local_ttl !== "undefined" && parseInt(la_theme_config.local_ttl) > 0 ? parseInt(la_theme_config.local_ttl) : 60 * 30; // 30 mins
-
-        var cacheKey = 'omens_cache_timeout' + LaStudio.utils.hashCode(la_theme_config.home_url);
-        var whenCached = localStorage.getItem(cacheKey);
-
-        if (whenCached !== null) {
-
-            var age = (Date.now() - whenCached) / 1000;
-
-            if (age > expiry) {
-                Object.keys(localStorage).forEach(function (key) {
-                    if (key.indexOf('omens') === 0) {
-                        localStorage.removeItem(key);
-                    }
-                });
-                localStorage.setItem(cacheKey, Date.now());
-            }
-        } else {
-            localStorage.setItem(cacheKey, Date.now());
-        }
-    };
-
-    LaStudio.utils.AjaxRequest = function (url, options) {
-        var expiry = LaStudio.utils.localCache.timeout,
-            opt_body = '';
-
-        if (typeof options === 'number') {
-            expiry = options;
-            options = undefined;
-        }
-        else if (typeof options === 'object') {
-            expiry = options.seconds || expiry;
-
-            if (typeof options.body !== 'undefined') {
-                if (typeof options.body === 'object') {
-                    opt_body = JSON.stringify(options.body);
-                } else {
-                    opt_body = options.body;
-                }
-            }
-        }
-
-        if (expiry <= 0) {
-            expiry = 1;
-        } // Use the URL as the cache key to localStorage
-
-
-        var cacheKey = 'omens' + LaStudio.utils.hashCode(LaStudio.global.removeURLParameter(url, '_') + opt_body);
-        var cached = localStorage.getItem(cacheKey);
-        var whenCached = localStorage.getItem(cacheKey + ':ts');
-
-        if (cached !== null && whenCached !== null) {
-            var age = (Date.now() - whenCached) / 1000;
-
-            if (age < expiry) {
-                var response = new Response(new Blob([cached]));
-                return Promise.resolve(response);
-            } else {
-                // We need to clean up this old key
-                localStorage.removeItem(cacheKey);
-                localStorage.removeItem(cacheKey + ':ts');
-            }
-        }
-
-        return fetch(url, options).then(function (response) {
-            if (response.status === 200) {
-                var ct = response.headers.get('Content-Type');
-
-                if (ct && (ct.match(/application\/json/i) || ct.match(/text\//i))) {
-                    response.clone().text().then(function (content) {
-                        localStorage.setItem(cacheKey, content);
-                        localStorage.setItem(cacheKey + ':ts', Date.now());
-                    });
-                }
-            }
-
-            return response;
-        });
     };
 
     LaStudio.global.isPageSpeed = function () {
@@ -221,7 +137,8 @@
         //   - https://youtube.googleapis.com/v/My2FRPA3Gf8
         // - Supported Vimeo URL formats:
         //   - http://vimeo.com/25451551
-        //   - http://player.vimeo.com/video/25451551
+        //   - https://vimeo.com/641193052/febd3489c9
+        //   - https://player.vimeo.com/video/25451551
         // - Also supports relative URLs:
         //   - //player.vimeo.com/video/25451551
         var _playlist = LaStudio.global.getUrlParameter('playlist', url);
@@ -232,11 +149,18 @@
             if (_playlist) {
                 return 'https://www.youtube.com/embed/' + RegExp.$6 + '?autoplay=1&playlist=' + _playlist + '&loop=1&rel=0&iv_load_policy3';
             }
-
             return 'https://www.youtube.com/embed/' + RegExp.$6 + '?autoplay=1&loop=1&rel=0&iv_load_policy3';
-        } else if (RegExp.$3.indexOf('vimeo') > -1) {
+        }
+        else if (RegExp.$3.indexOf('vimeo') > -1) {
             url.match(/^.*(vimeo\.com\/)((channels\/[A-z]+\/)|(groups\/[A-z]+\/videos\/)|(showcase\/[0-9]+\/video\/))?([0-9]+)/);
-            return 'https://player.vimeo.com/video/' + RegExp.$6 + '?autoplay=1&loop=1&title=0&byline=0&portrait=0';
+            var vimeo_url = 'https://player.vimeo.com/video/' + RegExp.$6 + '?autoplay=1&loop=1&title=0&byline=0&portrait=0';
+            var hparam = LaStudio.global.getUrlParameter('h',url);
+            if(hparam){
+                vimeo_url = LaStudio.global.addQueryArg(vimeo_url, 'h', hparam);
+            }
+            if(window.innerWidth < 1200){
+                vimeo_url = LaStudio.global.addQueryArg(vimeo_url, 'muted', '1');
+            }
         }
 
         return url;
@@ -304,7 +228,8 @@
             if(_scrollbarwidth == 0){
                 if(information.platform == 'mac'){
                     _scrollbarwidth = 15;
-                }else if(information.platform == 'ios'){
+                }
+                else if(information.platform == 'ios'){
                     _scrollbarwidth = 10;
                 }
             }
@@ -503,32 +428,6 @@
         }
 
         $('body').trigger('lastudio-fix-ios-limit-image-resource').trigger('lastudio-lazy-images-load').trigger('jetpack-lazy-images-load').trigger('lastudio-object-fit');
-    };
-
-    LaStudio.global.loadStyle = function (style, uri) {
-        if (LaStudio.utils.localCache.addedStyles.hasOwnProperty(style) && LaStudio.utils.localCache.addedStyles[style] === uri) {
-            return style;
-        }
-
-        LaStudio.utils.localCache.addedStyles[style] = uri;
-        return new Promise(function (resolve, reject) {
-            var tag = document.createElement('link');
-            tag.id = style;
-            tag.rel = 'stylesheet';
-            tag.href = uri;
-            tag.type = 'text/css';
-            tag.media = 'all';
-
-            tag.onload = function () {
-                resolve(style);
-            };
-
-            tag.onerror = function (){
-                reject(`Can not load css file "${uri}"`);
-            }
-
-            document.head.appendChild(tag);
-        });
     };
 
     LaStudio.global.loadScriptAsync = function (script, uri, callback, async) {
@@ -1407,10 +1306,22 @@
 
         $sidebar_inner.addClass('--inited');
 
+        $('.widget_block > .widget-title:only-child', $sidebar_inner).each(function (){
+            var $that = $(this),
+                $parent = $that.closest('.widget_block'),
+                $next = $parent.next('.widget_block');
+            if($next.length && $next.find('.widget-title').length == 0){
+                $that.prependTo($next);
+            }
+            $parent.remove();
+        })
+
         $('.menu li a:empty', $sidebar_inner).each(function () {
             $(this).closest('li').remove();
         });
         $('.widget_pages > ul, .widget_archive > ul, .widget_categories > ul, .widget_product_categories > ul, .widget_meta > ul', $sidebar_inner).addClass('menu').closest('.widget').addClass('accordion-menu');
+        $('.wc-block-product-categories.is-list > ul', $sidebar_inner).addClass('menu').closest('.widget').addClass('accordion-menu');
+        $('.elementor-widget-wp-widget-categories', $sidebar_inner).addClass('widget accordion-menu').find('>.elementor-widget-container>ul').addClass('menu');
         $('.widget_nav_menu', $sidebar_inner).closest('.widget').addClass('accordion-menu');
         $('.widget_categories > ul li.cat-parent,.widget_product_categories li.cat-parent', $sidebar_inner).addClass('mm-item-has-sub');
         $('.menu li > ul', $sidebar_inner).each(function () {
@@ -1596,7 +1507,7 @@
     }
 
     LaStudio.core.DomLoadEvent = function () {
-        LaStudio.utils.validCache();
+
         $window.on('elementor/frontend/init', function () {
             if (typeof elementorFrontend !== "undefined" && typeof elementorFrontend.hooks !== "undefined") {
                 elementorFrontend.hooks.addAction('frontend/element_ready/toggle.default', function ($scope) {
@@ -1793,6 +1704,18 @@
 (function ($) {
     'use strict';
     $(function () {
+
+        $(document).on('click', '.elementor-widget[data-send2frm] .elementor-widget-container', function (e){
+            e.preventDefault();
+            var $parent = $(this).closest('.elementor-widget'),
+                _field_name = $parent.attr('data-field'),
+                _field_value = $parent.attr('data-value');
+
+            $('.elementor-widget[data-field="'+_field_name+'"]').removeClass('selected');
+            $parent.addClass('selected');
+            $('[name="'+_field_name+'"]').val(_field_value);
+        });
+
         $(document).on('lastudio-kit/carousel/init_success', function (e, data){
             LaStudio.core.initAll(data.swiperContainer);
         });

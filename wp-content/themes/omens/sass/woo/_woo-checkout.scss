@@ -136,3 +136,8 @@ form.checkout label {
 .wc-stripe-error li {
   margin-bottom: 0 !important;
 }
+p.woocommerce-thankyou-order-received {
+  text-align: center;
+  font-size: 1.25em;
+  color: green;
+}

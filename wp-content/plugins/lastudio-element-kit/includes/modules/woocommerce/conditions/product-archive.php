@@ -14,8 +14,8 @@ class Product_Archive extends ThemeBuilder\Conditions\Condition_Base {
 	private $post_taxonomies;
 
 	public function __construct( array $data = [] ) {
-		$taxonomies = get_object_taxonomies( $this->post_type, 'objects' );
-		$this->post_taxonomies = wp_filter_object_list( $taxonomies, [
+		$taxonomies = \get_object_taxonomies( $this->post_type, 'objects' );
+		$this->post_taxonomies = \wp_filter_object_list( $taxonomies, [
 			'public' => true,
 			'show_in_nav_menus' => true,
 		] );
@@ -56,6 +56,6 @@ class Product_Archive extends ThemeBuilder\Conditions\Condition_Base {
 	}
 
 	public function check( $args ) {
-		return is_shop() || is_product_taxonomy() || Module::is_product_search();
+		return \is_shop() || \is_product_taxonomy() || Module::is_product_search();
 	}
 }

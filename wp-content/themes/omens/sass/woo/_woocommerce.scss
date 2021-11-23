@@ -172,7 +172,7 @@ p.stars {
   margin: 0;
   list-style: none;
   padding: 0;
-
+  min-width: 140px;
   li {
     input[type="checkbox"],
     input[type="radio"] {
@@ -206,9 +206,8 @@ p.stars {
   }
 
   label {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     display: block;
-
     &.inline {
       display: inline;
     }
@@ -974,20 +973,12 @@ div#la_compare_table_wrapper2 {
 }
 
 form.track_order {
-  p {
-    text-align: center;
-    &:first-child{
-      font-style: italic;
-    }
-  }
-
   .form-row {
     width: 100%;
-
     label {
       text-align: left;
       color: $secondary-color;
-      font-weight: normal;
+      font-weight: 600;
     }
 
     .input-text {
@@ -996,11 +987,10 @@ form.track_order {
     }
     .button{
       height: 60px;
-      width: 180px;
+      width: 100%;
       text-transform: uppercase;
-      border-radius: 30px;
       background-color: $secondary-color;
-      margin-top: 30px;
+      font-weight: normal;
       &:hover{
         background-color: $primary-color;
       }
@@ -1058,7 +1048,7 @@ form.track_order {
       position: absolute;
       z-index: 1;
       height: 5px;
-      background-color: $primary-color;
+      background-color: $secondary-color;
     }
   }
   .price_slider_wrapper {

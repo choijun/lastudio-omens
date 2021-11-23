@@ -527,9 +527,11 @@ if ( ! class_exists( 'Cherry_X_Post_Meta' ) ) {
 
             if ( $new_meta_value && '' == $meta_value ) {
                 add_post_meta( $post_id, $meta_key, $new_meta_value, true );
-            } elseif ( $new_meta_value && $new_meta_value != $meta_value ) {
+            }
+            elseif ( $new_meta_value && $new_meta_value != $meta_value ) {
                 update_post_meta( $post_id, $meta_key, $new_meta_value );
-            } elseif ( empty( $new_meta_value ) && $meta_value ) {
+            }
+            elseif ( empty( $new_meta_value ) && $meta_value ) {
                 delete_post_meta( $post_id, $meta_key, $meta_value );
             }
         }
@@ -543,6 +545,10 @@ if ( ! class_exists( 'Cherry_X_Post_Meta' ) ) {
         public function save_meta_option( $post_id ) {
 
             foreach ( $this->args['fields'] as $key => $field ) {
+
+	            if ( !empty( $field['ignore_save'] ) ) {
+		            continue;
+	            }
 
                 if ( isset( $field['element'] ) && 'control' !== $field['element'] ) {
                     continue;

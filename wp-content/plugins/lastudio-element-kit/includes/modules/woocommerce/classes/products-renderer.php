@@ -10,7 +10,6 @@ class Products_Renderer extends Base_Products_Renderer {
 
 	private $is_added_product_filter = false;
 	const QUERY_CONTROL_NAME = 'query'; //Constraint: the class that uses the renderer, must use the same name
-	const DEFAULT_COLUMNS_AND_ROWS = 4;
 
     public static $displayed_ids = [];
 
@@ -62,17 +61,9 @@ class Products_Renderer extends Base_Products_Renderer {
 		return $results;
 	}
 
-	protected function get_limit(){
-        $settings = &$this->settings;
-        $rows = ! empty( $settings['rows'] ) ? $settings['rows'] : self::DEFAULT_COLUMNS_AND_ROWS;
-        $columns = ! empty( $settings['columns'] ) ? $settings['columns'] : self::DEFAULT_COLUMNS_AND_ROWS;
-
-        return intval( $columns * $rows );
-    }
-
 	protected function parse_query_args() {
 		$prefix = self::QUERY_CONTROL_NAME . '_';
-		$settings = &$this->settings;
+		$settings = $this->settings;
 
 		$query_args = [
 			'post_type' => 'product',

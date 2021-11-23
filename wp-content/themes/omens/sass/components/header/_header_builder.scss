@@ -115,48 +115,8 @@
   z-index: 5;
 }
 
-.menu-item-link-sub{
-  .lakit-nav-link-text{
-    &:before{
-      content: '';
-      border-left: 0 solid;
-      transition: padding .2s, border-color .2s;
-    }
-  }
-}
-.lakit-nav__item{
-  &:hover,
-  &.current-menu-item{
-    > .menu-item-link-sub{
-      color: $primary-color;
-      .lakit-nav-link-text{
-        &:before{
-          border-left-width: .25em;
-          padding-left: .8em;
-        }
-      }
-    }
-  }
-}
-.lakit-nav-wrap{
-  &:not(.lakit-active--mbmenu){
-    .lakit-nav--horizontal{
-      .lakit-nav__sub {
-        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
-        &.lakit-nav-depth-0{
-          margin-top: 10px;
-        }
-      }
-    }
-  }
-}
-
 .lakit-nav__sub {
-  padding: 15px;
-  .lakit-nav & {
-    width: 230px;
-  }
-  .lakit-nav-link-text{
+  .lakit-nav-link-inner{
     font-size: .875em;
   }
 }
@@ -165,7 +125,7 @@
 }
 
 @media(min-width: 767px){
-  .baker_menu_fullscreen {
+  .omens_menu_fullscreen {
     .lakit-nav--vertical-sub-right-side {
       position: relative;
       > .menu-item-has-children {
@@ -221,18 +181,18 @@
   }
 }
 @media(min-width: 767px) and (max-width: 1300px){
-  .baker_menu_fullscreen .lakit-nav--vertical-sub-right-side > .menu-item-has-children > .lakit-nav__sub {
+  .omens_menu_fullscreen .lakit-nav--vertical-sub-right-side > .menu-item-has-children > .lakit-nav__sub {
     width: 450px;
     padding-left: 50px;
     font-size: 18px;
   }
-  .baker_menu_fullscreen .lakit-nav--vertical-sub-right-side > .menu-item-has-children > .lakit-nav__sub .menu-item-link {
+  .omens_menu_fullscreen .lakit-nav--vertical-sub-right-side > .menu-item-has-children > .lakit-nav__sub .menu-item-link {
     padding: 5px;
   }
 }
 
 @media(max-width: 767px){
-  .baker_menu_fullscreen{
+  .omens_menu_fullscreen{
     .lakit-nav--vertical{
       .lakit-nav__sub{
         position: static;
@@ -255,4 +215,23 @@
       }
     }
   }
+}
+
+.lakit-hamburger-panel__toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.lakit-hamburger-panel__toggle-icon {
+  font-size: 20px;
+  line-height: 1;
+  color: white;
+}
+.lakit-hamburger-panel__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.lakit-hamburger-panel__toggle-icon + .lakit-hamburger-panel__toggle-label {
+  margin-left: 10px;
 }

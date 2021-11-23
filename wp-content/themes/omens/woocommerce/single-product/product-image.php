@@ -39,7 +39,7 @@ $wrapper_classes   = apply_filters(
 <div class="<?php echo esc_attr( implode( ' ', array_map( 'sanitize_html_class', $wrapper_classes ) ) ); ?>" data-columns="<?php echo esc_attr( $columns ); ?>" style="opacity: 0; transition: opacity .25s ease-in-out;">
     <div class="woocommerce-product-gallery__actions">
         <?php
-        $video_link = omens_get_post_meta($product->get_id(), 'product_video_url');
+        $video_link = get_post_meta($product->get_id(), '_la_product_video_url', true);
         if(!empty($video_link)){
             printf('<a class="video-link-popup la-popup" href="%s" rel="nofollow"><span><i class="lastudioicon-triangle-right"></i></span></a>', esc_url($video_link));
         }

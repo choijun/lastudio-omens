@@ -176,7 +176,12 @@ if(!class_exists('LaStudio_Kit')){
          *
          * @return string
          */
-        public function get_version() {
+        public function get_version( $basic = false ) {
+
+        	if($basic){
+		        return $this->version;
+	        }
+
             if(defined('LA_DEBUG') && LA_DEBUG){
                 return time();
             }

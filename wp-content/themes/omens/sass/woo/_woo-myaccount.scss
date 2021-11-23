@@ -268,12 +268,14 @@ form.lost_reset_password .form-row {
     }
   }
   .woocommerce-button{
-    border-radius: 30px;
     padding: 20px 40px;
     min-width: 170px;
     text-transform: uppercase;
     font-size: 1em;
-    margin-top: 30px;
+    margin-top: 20px;
+    width: 100%;
+    font-weight: normal;
+    line-height: 20px;
   }
 }
 
@@ -282,7 +284,7 @@ form.lost_reset_password .form-row {
   width: 670px;
   max-width: 100%;
   position: relative;
-  padding-top: 60px;
+  padding-top: 70px;
   overflow: hidden;
   p{
     margin-bottom: 15px;
@@ -302,16 +304,16 @@ form.lost_reset_password .form-row {
     left: 0;
     margin: 0;
     color: $three-color;
-    &:before{
-      content: '\ea6f';
-      @include lastudio-icon();
-      padding-right: 10px;
-      font-size: .8em;
-    }
+    //&:before{
+    //  content: '\ea6f';
+    //  @include lastudio-icon();
+    //  padding-right: 10px;
+    //  font-size: .8em;
+    //}
     + form{
       display: none;
-      border-top: 1px solid $three-color;
-      padding-top: 1.5em;
+      //border-top: 1px solid $three-color;
+      //padding-top: 1.5em;
     }
   }
 
@@ -328,8 +330,8 @@ form.lost_reset_password .form-row {
     }
   }
   >div.active>h2 {
-    font-size: 36px;
-    font-weight: 500;
+    font-size: 32px;
+    font-weight: 600;
     color: $secondary-color;
     cursor: default;
     &:before{
@@ -340,19 +342,41 @@ form.lost_reset_password .form-row {
     > h2{
       right: 0;
       left: auto;
-      &:before{
-        content: '\ea70';
+      //&:before{
+      //  content: '\ea70';
+      //}
+    }
+  }
+  a{
+    color: $primary-color;
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+  .lost_password{
+    a{
+      color: $three-color;
+      &:hover{
+        color: $primary-color;
       }
     }
   }
 }
-
-p.lost_password {
-  color: $primary-color;
-  a{
-    &:hover{
-      text-decoration: underline;
-    }
+p.lost_password,
+.wcr_resigter_link{
+  width: 50%;
+  float: left;
+  clear: none !important;
+  @media(max-width: 800px){
+    width: 100%;
+  }
+}
+.wcr_resigter_link{
+  span{
+    padding-right:5px;
+  }
+  @media(min-width: 800px){
+    text-align: right;
   }
 }
 
@@ -360,14 +384,11 @@ p.lost_password {
   .woocommerce-MyAccount-navigation li a{
     padding: 10px;
   }
-  #customer_login {
-    padding-top: 50px;
-  }
   #customer_login h2 {
     font-size: 26px;
   }
   #customer_login > div.active > h2 {
-    font-size: 30px;
+    font-size: 26px;
   }
 }
 
@@ -375,15 +396,6 @@ p.lost_password {
   .woocommerce-MyAccount-navigation li a{
     padding: 5px 8px;
     font-size: 14px;
-  }
-  #customer_login {
-    padding-top: 40px;
-  }
-  #customer_login h2 {
-    font-size: 20px;
-  }
-  #customer_login > div.active > h2 {
-    font-size: 24px;
   }
 }
 

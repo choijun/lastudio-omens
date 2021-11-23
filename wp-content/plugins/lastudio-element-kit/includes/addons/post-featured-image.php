@@ -49,15 +49,6 @@ class LaStudioKit_Post_Featured_Image extends LaStudioKit_Base {
             ]
         );
 
-        $this->add_control(
-            'preview',
-            [
-                'type' => Controls_Manager::RAW_HTML,
-                'raw' => get_the_post_thumbnail(),
-                'separator' => 'none',
-            ]
-        );
-
         $this->add_group_control(
             Group_Control_Image_Size::get_type(),
             [
@@ -163,6 +154,18 @@ class LaStudioKit_Post_Featured_Image extends LaStudioKit_Base {
             )
         );
 
+	    $this->add_control(
+		    'use_extra_image',
+		    array(
+			    'label'        => esc_html__( 'Use Extra Image', 'lastudio-kit' ),
+			    'type'         => Controls_Manager::SWITCHER,
+			    'label_on'     => esc_html__( 'Yes', 'lastudio-kit' ),
+			    'label_off'    => esc_html__( 'No', 'lastudio-kit' ),
+			    'return_value' => 'true',
+			    'default'      => ''
+		    )
+	    );
+
         $this->end_controls_section();
 
         $this->start_controls_section(
@@ -198,7 +201,7 @@ class LaStudioKit_Post_Featured_Image extends LaStudioKit_Base {
         $this->add_control(
             'custom_height',
             array(
-                'label'        => esc_html__( 'Enable Custom Image Height', 'lastudio' ),
+                'label'        => esc_html__( 'Enable Custom Image Height', 'lastudio-kit' ),
                 'type'         => Controls_Manager::SWITCHER,
                 'label_on'     => esc_html__( 'Yes', 'lastudio-kit' ),
                 'label_off'    => esc_html__( 'No', 'lastudio-kit' ),
@@ -341,10 +344,26 @@ class LaStudioKit_Post_Featured_Image extends LaStudioKit_Base {
 
     protected function render() {
 
+	    global $post;
+
+	    if( !$post instanceof \WP_Post){
+		    return;
+	    }
+
         $settings = $this->get_settings();
 
+        $use_extra_image = $this->get_settings_for_display('use_extra_image');
+
         $image_size = $settings['size_size'];
-        $featured_image = get_the_post_thumbnail( null, $image_size );
+
+        if($use_extra_image){
+	        $image_id = get_post_meta( $post->ID, '_la_bg', true );
+        }
+        else{
+	        $image_id = get_post_thumbnail_id($post->ID);
+        }
+
+	    $featured_image = wp_get_attachment_image($image_id, $image_size);
 
         if ( empty( $featured_image ) )
             return;
@@ -359,12 +378,12 @@ class LaStudioKit_Post_Featured_Image extends LaStudioKit_Base {
                 break;
 
             case 'file' :
-                $image_url = wp_get_attachment_image_src( get_post_thumbnail_id(), $image_size );
+                $image_url = wp_get_attachment_image_src( $image_id, $image_size );
                 $link = esc_url( $image_url[0] );
                 break;
 
             case 'post' :
-                $link = esc_url( get_the_permalink() );
+                $link = esc_url( get_the_permalink($post->ID) );
                 break;
 
             case 'home' :
@@ -389,59 +408,6 @@ class LaStudioKit_Post_Featured_Image extends LaStudioKit_Base {
         $html .= '</div>';
 
         echo $html;
-
-    }
-
-    protected function content_template() {
-
-        $image_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'large' );
-        ?>
-        <#
-        var featured_images = [];
-        <?php
-        $all_image_sizes = Group_Control_Image_Size::get_all_image_sizes();
-        foreach ( $all_image_sizes as $key => $value ) {
-            printf( 'featured_images[ "%1$s" ] = \'%2$s\';', $key, get_the_post_thumbnail( null, $key ) );
-        }
-        printf( 'featured_images[ "full" ] = \'%2$s\';', $key, get_the_post_thumbnail( null, 'full' ) );
-        ?>
-        var featured_image = featured_images[ settings.size_size ];
-
-        var link_url;
-        switch( settings.link_to ) {
-        case 'custom':
-        link_url = settings.link.url;
-        break;
-        case 'file':
-        link_url = '<?php echo esc_url( !empty($image_url[0]) ? $image_url[0] : '' ); ?>';
-        break;
-        case 'post':
-        link_url = '<?php echo esc_url( get_the_permalink() ); ?>';
-        break;
-        case 'home':
-        link_url = '<?php echo esc_url( get_home_url() ); ?>';
-        break;
-        case 'none':
-        default:
-        link_url = false;
-        }
-
-        var animation_class = '';
-        if ( '' !== settings.hover_animation ) {
-        animation_class = 'elementor-animation-' + settings.hover_animation;
-        }
-
-        var html = '<div class="lakit-post-featured-image ' + animation_class + '">';
-            if ( link_url ) {
-            html += '<a href="' + link_url + '">' + featured_image + '</a>';
-            } else {
-            html += featured_image;
-            }
-            html += '</div>';
-
-        print( html );
-        #>
-        <?php
 
     }
     
