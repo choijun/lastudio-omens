@@ -128,7 +128,7 @@
   margin-bottom: 6px;
 }
 
-.widget_recent_comments li.recentcomments .comment-author-link {
+.widget_recent_comments li.recentcomments a {
   font-weight: var(--theme-heading-font-weight);
   text-transform: capitalize;
 }

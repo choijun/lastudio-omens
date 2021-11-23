@@ -423,6 +423,8 @@ class LaStudioKit_Woo_Single_Product_Images extends LaStudioKit_Base {
 
         wc_get_template( 'single-product/product-image.php' );
 
+	    do_action('lastudiokit/woocommerce/product-images/render', $product, $this);
+
         // On render widget from Editor - trigger the init manually.
         if ( wp_doing_ajax() ) {
             ?>

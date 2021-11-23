@@ -114,7 +114,7 @@ if(!class_exists('Omens_Elementor_PostFormat_Content_Widget')){
 			$this->add_control(
 				'custom_height',
 				array(
-					'label'        => esc_html__( 'Enable Custom Image Height', 'lastudio' ),
+					'label'        => esc_html__( 'Enable Custom Image Height', 'omens' ),
 					'type'         => \Elementor\Controls_Manager::SWITCHER,
 					'label_on'     => esc_html__( 'Yes', 'omens' ),
 					'label_off'    => esc_html__( 'No', 'omens' ),

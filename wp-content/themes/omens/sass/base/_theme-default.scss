@@ -395,3 +395,52 @@ ol.wp-block-latest-comments,
 		max-height: calc(100vh - 100px - 46px);
 	}
 }
+
+#blog-entries{
+	.post_item-content-title {
+		margin-bottom: 10px;
+	}
+	.entry-meta,
+	.entry-excerpt{
+		color: #676767;
+	}
+	.post_item-thumbnail{
+		.post_item-thumbnail-figure {
+			width: auto;
+		}
+		img {
+			width: auto;
+			margin-left: 0;
+		}
+	}
+}
+.sidebar-container .widget-title {
+	border-bottom: 3px solid;
+	padding-bottom: 10px;
+	@media(max-width: 992px){
+		border-bottom-width: 2px;
+	}
+}
+
+.sidebar-container ~ .site-content--default .alignfull {
+	margin-left: 0;
+	margin-right: 0;
+}
+.site-content--default section#comments {
+	margin-top: 70px;
+}
+.site-content--default .post-tags {
+	margin-bottom: 30px;
+}
+.comment-list .trackback + .comment-container,
+.comment-list .pingback + .comment-container {
+	margin-top: 40px;
+}
+
+.comment-list .trackback,
+.comment-list .pingback {
+	margin-bottom: 5px;
+}
+.site-content--default .nav-links .current {
+	color: $primary-color;
+}

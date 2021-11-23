@@ -250,7 +250,6 @@ if(!class_exists('Omens_WooCommerce_Config')){
         public function add_extra_hook_to_product_item(){
             add_action('woocommerce_shop_loop_item_title', [ $this, 'add_category_into_product_loop' ], 5);
 	        add_action('woocommerce_shop_loop_item_title', [ $this, 'add_author_into_product_loop' ], 11);
-            add_action('woocommerce_before_shop_loop_item_title', [ $this, 'add_custom_badge_into_product_loop' ], 9);
 
 
             add_action('lastudio-kit/products/action/shop_loop_item_action_top', [ $this, 'add_quick_view_btn' ], 10);
@@ -270,48 +269,6 @@ if(!class_exists('Omens_WooCommerce_Config')){
             return;
             global $product;
             echo wc_get_product_category_list( $product->get_id(), '', '<div class="product_item--category-link">', '</div>' );
-        }
-
-        public function add_custom_badge_into_product_loop(){
-            global $product;
-            $availability = $product->get_availability();
-            if(!empty($availability['class']) && $availability['class'] == 'out-of-stock' && !empty($availability['availability'])){
-                printf('<span class="la-custom-badge badge-out-of-stock">%s</span>', esc_html($availability['availability']));
-            }
-            $product_badges = get_post_meta($product->get_id(), 'product_badges', true);
-            if(empty($product_badges)){
-                return;
-            }
-            $_tmp_badges = array();
-            foreach($product_badges as $badge){
-                if(!empty($badge['text'])){
-                    $_tmp_badges[] = $badge;
-                }
-            }
-            if(empty($_tmp_badges)){
-                return;
-            }
-            foreach($_tmp_badges as $i => $badge){
-                $attribute = array();
-                if(!empty($badge['bg'])){
-                    $attribute[] = 'background-color:' . esc_attr($badge['bg']);
-                }
-                if(!empty($badge['color'])){
-                    $attribute[] = 'color:' . esc_attr($badge['color']);
-                }
-                $el_class = ($i%2==0) ? 'odd' : 'even';
-                if(!empty($badge['el_class'])){
-                    $el_class .= ' ';
-                    $el_class .= $badge['el_class'];
-                }
-
-                echo sprintf(
-                    '<span class="la-custom-badge %1$s" style="%3$s"><span>%2$s</span></span>',
-                    esc_attr($el_class),
-                    esc_html($badge['text']),
-                    (!empty($attribute) ? esc_attr(implode(';', $attribute)) : '')
-                );
-            }
         }
 
         public function add_attribute_into_product_loop(){

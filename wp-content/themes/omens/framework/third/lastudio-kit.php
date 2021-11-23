@@ -116,10 +116,10 @@ add_action('elementor/element/lakit-portfolio/section_settings/before_section_en
 	$element->add_control(
 		'enable_portfolio_lightbox',
 		[
-			'label'     => esc_html__( 'Enable Lightbox', 'lastudio-kit' ),
+			'label'     => esc_html__( 'Enable Lightbox', 'omens' ),
 			'type'      => \Elementor\Controls_Manager::SWITCHER,
-			'label_on'  => esc_html__( 'Yes', 'lastudio-kit' ),
-			'label_off' => esc_html__( 'No', 'lastudio-kit' ),
+			'label_on'  => esc_html__( 'Yes', 'omens' ),
+			'label_off' => esc_html__( 'No', 'omens' ),
 			'default'   => '',
 			'return_value' => 'enable-pf-lightbox',
 			'prefix_class' => '',

@@ -11,7 +11,7 @@ add_filter('wpcf7_load_js', '__return_false');
 add_filter('wpcf7_load_css', '__return_false');
 
 add_action('wp_enqueue_scripts', function (){
-    wp_dequeue_style( 'wp-block-library' );
+    //wp_dequeue_style( 'wp-block-library' );
     wp_dequeue_style( 'wp-block-library-theme' );
     wp_dequeue_style( 'wc-block-style' ); // Remove WooCommerce block CSS
     wp_deregister_script('wp-embed');
@@ -27,6 +27,8 @@ add_filter('wpcf7_form_elements', function( $tags ) {
 });
 
 add_filter('omens/filter/js_dependencies', function ($dependencies){
+
+	return $dependencies;
 
     if(is_singular('page')){
         if (($key = array_search('omens-woo', $dependencies)) !== false) {

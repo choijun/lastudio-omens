@@ -11,8 +11,8 @@ function omens_child_get_cdn_url_theme_path(){
 }
 
 function omens_child_get_cdn_url(){
-    //return 'https://baker-lastudio.b-cdn.net/';
-    return 'https://baker.la-studioweb.com/';
+    //return 'https://omens-lastudio.b-cdn.net/';
+    return 'https://omens.la-studioweb.com/';
 }
 
 add_filter('pre_get_rocket_option_minify_google_fonts', function (){

@@ -361,8 +361,8 @@ if(!class_exists('Omens_Theme_Class')){
         public function admin_scripts() {
             // Load font icon style
             wp_enqueue_style( 'omens-font-lastudioicon', get_theme_file_uri( '/assets/css/lastudioicon.min.css' ), false, '1.0.0' );
-            if(!class_exists('LASF', false)) {
-                wp_enqueue_style( 'omens-fonts', $this->enqueue_google_fonts_url() , array(), null );
+            if(!function_exists('lastudio_kit')) {
+                wp_enqueue_style( 'omens-fonts', $this->enqueue_typekit_fonts_url() , array(), null );
             }
         }
 
@@ -381,8 +381,8 @@ if(!class_exists('Omens_Theme_Class')){
             // Load font icon style
             wp_enqueue_style( 'omens-font-lastudioicon', get_theme_file_uri ('/assets/css/lastudioicon'.$ext.'.css' ), false, $theme_version );
 
-            if(!class_exists('LASF', false)) {
-                wp_enqueue_style( 'omens-fonts', $this->enqueue_google_fonts_url() , array(), null );
+	        if(!function_exists('lastudio_kit')) {
+                wp_enqueue_style( 'omens-fonts', $this->enqueue_typekit_fonts_url() , array(), null );
             }
 
             wp_enqueue_style( 'omens-theme', get_parent_theme_file_uri('/style'.$ext.'.css'), false, $theme_version );
@@ -615,10 +615,6 @@ if(!class_exists('Omens_Theme_Class')){
                 $fonts[] = 'Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700';
             }
 
-            if ( 'off' !== _x( 'on', 'Rubik font: on or off', 'omens' ) ) {
-                $fonts[] = 'Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700';
-            }
-
             if ( $fonts ) {
                 $fonts_url = add_query_arg( array(
                     'family' => implode( '&family=', $fonts ),
@@ -626,6 +622,16 @@ if(!class_exists('Omens_Theme_Class')){
                 ), 'https://fonts.googleapis.com/css2' );
             }
             return esc_url_raw( $fonts_url );
+        }
+
+        public static function enqueue_typekit_fonts_url(){
+	        $fonts_url = '';
+
+	        if ( 'off' !== _x( 'on', 'Acumin Pro font: on or off', 'omens' ) ) {
+		        $fonts_url = '//use.typekit.net/ggv4mlu.css';
+	        }
+
+	        return esc_url_raw( $fonts_url );
         }
 
         public function render_extra_style(){

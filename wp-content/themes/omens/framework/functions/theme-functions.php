@@ -30,6 +30,9 @@ if (!function_exists('omens_body_classes')) {
         if(!is_active_sidebar($sidebar) || is_page_template(['templates/no-sidebar.php', 'templates/fullwidth.php'])){
             $classes[] = 'site-no-sidebar';
         }
+        elseif ( is_active_sidebar($sidebar) ){
+	        $classes[] = 'site-has-sidebar';
+        }
 
         if (is_singular('page')) {
             global $post;

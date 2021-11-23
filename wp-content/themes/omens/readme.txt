@@ -1,7 +1,7 @@
  === Omens ===
 Contributors: LA Studio
 Requires at least: WordPress 5.0
-Tested up to: WordPress 5.8.0, WooCommerce 5.5.2
+Tested up to: WordPress 5.8, WooCommerce 5.9
 Version: 1.0.0
 Tags: one-column, two-columns, three-columns, left-sidebar, right-sidebar, custom-background, custom-header, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, translation-ready
 Online documentation: http://docs.la-studioweb.com/omens/
@@ -29,7 +29,7 @@ Omens - Multipurpose Creative Theme
 Copyright 2015-2021 La-StudioWeb.com
 
 
------------- Version 1.0 Release [August 14, 2021]  ------------
+------------ Version 1.0 Release [November 24, 2021]  ------------
 * Release
 
 Initial release

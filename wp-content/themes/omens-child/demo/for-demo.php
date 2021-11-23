@@ -4,135 +4,96 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-add_filter('lastudio-kit/prepare-do-location', function ( $documents_by_conditions, $location ){
-    if(is_page(176)){
-        if($location == 'header'){
-            $documents_by_conditions = [
-                13 => $location
-            ];
-        }
-        elseif ($location == 'footer'){
-            $documents_by_conditions = [
-                365 => $location
-            ];
-        }
-    }
-    if(is_page(553)){
-        if($location == 'header'){
-            $documents_by_conditions = [
-                478 => $location
-            ];
-        }
-        elseif ($location == 'footer'){
-            $documents_by_conditions = [
-                378 => $location
-            ];
-        }
-    }
-    if(is_page(793)){
-        if($location == 'header'){
-            $documents_by_conditions = [
-                13 => $location
-            ];
-        }
-        elseif ($location == 'footer'){
-            $documents_by_conditions = [
-                365 => $location
-            ];
-        }
-    }
-    if(is_page(870)){
-        if($location == 'header'){
-            $documents_by_conditions = [
-                383 => $location
-            ];
-        }
-        elseif ($location == 'footer'){
-            $documents_by_conditions = [
-                1726 => $location
-            ];
-        }
-    }
-    if(is_page(1018)){
-        if($location == 'header'){
-            $documents_by_conditions = [
-                507 => $location
-            ];
-        }
-        elseif ($location == 'footer'){
-            $documents_by_conditions = [
-                1726 => $location
-            ];
-        }
-    }
-    if(is_page(1087)){
-        if($location == 'header'){
-            $documents_by_conditions = [
-                436 => $location
-            ];
-        }
-        elseif ($location == 'footer'){
-            $documents_by_conditions = [
-                1457 => $location
-            ];
-        }
-    }
-    if(is_page(1137)){
-        if($location == 'header'){
-            $documents_by_conditions = [
-                13 => $location
-            ];
-        }
-        elseif ($location == 'footer'){
-            $documents_by_conditions = [
-                365 => $location
-            ];
-        }
-    }
-    return $documents_by_conditions;
-}, 10, 2);
+/**   OVERRIDE Widget Base  **/
+add_action('elementor/element/section/section_layout/before_section_end', function ( $stack ){
+	$stack->update_control(
+		'html_tag',
+		[
+			'default' => 'div'
+		]
+	);
+});
 
-function omens_child_change_logo_n($src){
+add_filter('manage_posts_columns', 'posts_columns', 5);
+add_action('manage_posts_custom_column', 'posts_custom_columns', 5, 2);
 
-    if(is_page('cake-shop-03')){
-        $src =  get_theme_file_uri( '/images/logo-03.svg' );
-    }
-    elseif(is_page('cake-shop-05')){
-        $src =  get_theme_file_uri( '/images/logo-05.svg' );
-    }
-    elseif(is_page('cake-shop-fullscreen')){
-        $src =  get_theme_file_uri( '/images/logo-07.svg' );
-    }
-
-    return $src;
-}
-function omens_child_change_logo_t($src){
-    if(is_page('cake-shop-03')){
-        $src =  get_theme_file_uri( '/images/logo-03.svg' );
-    }
-    elseif(is_page('cake-shop-05')){
-        $src =  get_theme_file_uri( '/images/logo-05-2.svg' );
-    }
-    elseif(is_page('cake-shop-fullscreen')){
-        $src =  get_theme_file_uri( '/images/logo-07-2.svg' );
-    }
-    return $src;
+function posts_columns($defaults){
+	$defaults['lakit_post_thumbs'] = __('Thumbs');
+	return $defaults;
 }
 
-add_action('elementor/theme/before_do_header', function (){
-    add_filter('lastudio-kit/logo/attr/src', 'omens_child_change_logo_n', 20);
-    add_filter('lastudio-kit/logo/attr/src2x', 'omens_child_change_logo_t', 20);
-});
-add_action('elementor/theme/after_do_header', function (){
-    remove_filter('lastudio-kit/logo/attr/src', 'omens_child_change_logo_n', 20);
-    remove_filter('lastudio-kit/logo/attr/src2x', 'omens_child_change_logo_t', 20);
+function posts_custom_columns($column_name, $id){
+	if($column_name === 'lakit_post_thumbs'){
+		echo '<span>';
+		the_post_thumbnail( 'featured-thumbnail' );
+		echo '</span>';
+	}
+}
+
+add_action('admin_head', function (){
+	?>
+	<style>
+			.lakit_post_thumbs img {
+				width: 80px;
+				height: auto;
+			}
+	</style>
+	<?php
 });
 
-add_action('elementor/theme/before_do_footer', function (){
-    add_filter('lastudio-kit/logo/attr/src', 'omens_child_change_logo_n', 20);
-    add_filter('lastudio-kit/logo/attr/src2x', 'omens_child_change_logo_t', 20);
+
+add_action('elementor/widget/before_render_content', function ( $instance ){
+	if( is_admin() && class_exists('\WC_Query') && is_null( WC_Query::get_main_query() ) && is_woocommerce() ){
+		global $wp_query;
+		WC()->query->product_query($wp_query);
+	}
 });
-add_action('elementor/theme/after_do_footer', function (){
-    remove_filter('lastudio-kit/logo/attr/src', 'omens_child_change_logo_n', 20);
-    remove_filter('lastudio-kit/logo/attr/src2x', 'omens_child_change_logo_t', 20);
-});
+
+
+add_filter('get_post_metadata', function ( $check, $object_id, $meta_key, $single, $meta_type ){
+	if($single && $meta_key == '_wp_attachment_image_alt'){
+		return 'Omens - Multipurpose Creative Theme';
+	}
+	return $check;
+}, 10, 5);
+
+add_filter('lakit_breadcrumbs/page_title', function ( $title ){
+	if(is_singular('post')){
+		$post_format = get_post_format();
+		if(!empty($post_format) && $post_format !== 'standard'){
+			$title = sprintf('<h6 class="lakit-breadcrumbs__title">%s Post</h6>', ucfirst($post_format));
+		}
+		elseif (is_single('standard-post')) {
+			$title = '<h6 class="lakit-breadcrumbs__title">Standard Post</h6>';
+		}
+	}
+	return $title;
+}, 20, 1);
+
+add_filter('get_post_metadata', function ( $check, $object_id, $meta_key, $single, $meta_type ){
+
+	if( $single && $meta_key == '_la_product_badges' ) {
+		if( in_array($object_id, [5091,3087, 3076]) ){
+			$check = array(
+				array(
+					array(
+						'text' => 'hot',
+						'bg' => '#DE2440',
+					)
+				)
+			);
+		}
+		if( in_array($object_id, [2160, 3553, 3547]) ){
+			$check = array(
+				array(
+					array(
+						'text' => 'hot',
+						'bg' => '#DE2440',
+					)
+				)
+			);
+		}
+	}
+
+	return $check;
+}, 10, 5);

@@ -1,9 +1,9 @@
 :root,
 .block-editor__typewriter{
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "acumin-pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 16px;
   line-height: 1.8;
-  color: #555;
+  color: #676767;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale
 }
@@ -32,10 +32,10 @@
   line-height: inherit;
 }
 .editor-post-title__input{
-  font-weight: 400;
+  font-weight: 700;
   font-size: 36px;
-  color: #212121;
-  font-family: "Montaga", sans-serif;
+  color: #272727;
+  font-family: "acumin-pro", sans-serif;
 }
 .wp-block{
   max-width: 800px;
@@ -63,12 +63,12 @@ h3,
 h4,
 h5,
 h6{
-  font-weight: 400;
+  font-weight: 700;
   margin-top: 0;
   margin-bottom: 20px;
-  color: #212121;
+  color: #272727;
   line-height: 1.2;
-  font-family: "Montaga", sans-serif;
+  font-family: "acumin-pro", sans-serif;
 }
 h1{
   font-size: 36px
@@ -289,12 +289,12 @@ ul.wp-block-latest-posts.is-grid li{
   font-size: 1em;
 }
 .wp-block-button__link:hover {
-  background-color: #BC8157;
+  background-color: #FD6363;
 }
 .wp-block-button.is-style-squared .wp-block-button__link {
   border-radius: 0;
 }
 .wp-block-button.is-style-outline .wp-block-button__link:hover{
-  border-color: #BC8157;
-  color: #BC8157;
+  border-color: #FD6363;
+  color: #FD6363;
 }
