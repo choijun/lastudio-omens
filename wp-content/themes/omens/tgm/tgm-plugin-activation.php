@@ -45,9 +45,9 @@ if(!function_exists('omens_register_required_plugins')){
         $plugins[] = array(
             'name'     				=> esc_html_x('LA-Studio Element Kit for Elementor', 'admin-view', 'omens'),
             'slug'     				=> 'lastudio-element-kit',
-            'source'   				=> 'https://la-studioweb.com/file-resouces/shared/plugins/lastudio-element-kit_v1.1.0.zip',
+            'source'   				=> 'https://la-studioweb.com/file-resouces/shared/plugins/lastudio-element-kit_v1.1.3.zip',
             'required' 				=> true,
-            'version' 				=> '1.1.0'
+            'version' 				=> '1.1.3'
         );
 
 		$plugins[] = array(

@@ -4,6 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
+add_filter( 'big_image_size_threshold', '__return_false' );
+
 /**   OVERRIDE Widget Base  **/
 add_action('elementor/element/section/section_layout/before_section_end', function ( $stack ){
 	$stack->update_control(

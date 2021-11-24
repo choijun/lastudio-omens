@@ -51,6 +51,10 @@ if (!function_exists('omens_body_classes')) {
             $classes[] = 'site-loading';
             $classes[] = 'active_page_loading';
         }
+	    if(!function_exists('lastudio_kit')){
+	    	$classes[] = 'wp-default-theme';
+	    }
+
         // Return classes
         return $classes;
     }

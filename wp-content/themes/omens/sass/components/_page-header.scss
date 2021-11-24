@@ -2,11 +2,27 @@
   text-align: center;
   display: var(--page-title-display);
   .page-header-inner {
-    padding-top: 65px;
-    padding-bottom: 65px;
+    padding-top: 80px;
+    padding-bottom: 80px;
+    @media (max-width: 1279px){
+      padding-top: 60px;
+      padding-bottom: 60px;
+    }
   }
   .entry-title{
     margin: 0;
+    font-size: 66px;
+    line-height: 1.2em;
+    letter-spacing: -0.05em;
+    @media (max-width: 1279px){
+      font-size: 56px;
+    }
+    @media (max-width: 992px){
+      font-size: 46px;
+    }
+    @media (max-width: 767px){
+      font-size: 36px;
+    }
   }
 }
 /**

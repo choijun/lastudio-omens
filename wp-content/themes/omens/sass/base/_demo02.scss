@@ -353,6 +353,15 @@
 		}
 	}
 }
+
+.hamburger_menu_01 {
+	.lakit-nav-depth-0{
+		.current-menu-item > .menu-item-link-sub{
+			color: $primary-color
+		}
+	}
+}
+
 @media(min-width: 1200px) {
 	.hamburger_menu_01 {
 		.menu-item-link-top {
@@ -381,6 +390,7 @@
 					align-content: center;
 					padding-left: 60px;
 					position: absolute;
+					color: #cfcfcf;
 					.menu-item-link-sub {
 						justify-content: flex-start !important;
 					}
@@ -435,7 +445,8 @@
 		}
 		.lakit-nav--vertical-sub-bottom .lakit-nav__sub {
 			padding: 20px 0;
-			background-color: #00000040 !important;
+			background-color: rgba(#000, 25%) !important;
+			color: #a0a0a0;
 		}
 		.lakit-nav--vertical-sub-bottom .lakit-nav-depth-0 > .menu-item-has-children > .menu-item-link {
 			display: none;

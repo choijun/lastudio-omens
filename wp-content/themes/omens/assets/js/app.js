@@ -1504,6 +1504,7 @@
                 }catch (ex){}
             }
         });
+
     }
 
     LaStudio.core.DomLoadEvent = function () {
@@ -1644,6 +1645,11 @@
         LaStudio.core.initAll($(document));
         LaStudio.core.ElementClickEvent();
         LaStudio.core.Blog();
+
+        if($('.site-header--default').length){
+            LaStudio.core.Blog($('.site-header--default'))
+        }
+
         /**
          * WooCommerce
          */
