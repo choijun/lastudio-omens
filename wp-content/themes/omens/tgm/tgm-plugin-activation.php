@@ -22,8 +22,8 @@ if(!function_exists('omens_register_required_plugins')){
 
         $initial_required = array(
             'revslider' => array(
-                'source'    => 'https://la-studioweb.com/file-resouces/shared/plugins/revslider_v6.5.6.zip',
-                'version'   => '6.5.6'
+                'source'    => 'https://la-studioweb.com/file-resouces/shared/plugins/revslider_v6.5.11.zip',
+                'version'   => '6.5.11'
             ),
             'omens-demo-data' => array(
                 'source'    => 'https://la-studioweb.com/file-resouces/omens/plugins/omens-demo-data_v1.0.0.zip',
@@ -39,7 +39,7 @@ if(!function_exists('omens_register_required_plugins')){
             'name' 					=> esc_html_x('Elementor', 'admin-view', 'omens'),
             'slug' 					=> 'elementor',
             'required' 				=> true,
-            'version'				=> '3.4.1'
+            'version'				=> '3.4.8'
         );
 
         $plugins[] = array(
@@ -53,7 +53,7 @@ if(!function_exists('omens_register_required_plugins')){
 		$plugins[] = array(
 			'name'     				=> esc_html_x('WooCommerce', 'admin-view', 'omens'),
 			'slug'     				=> 'woocommerce',
-			'version'				=> '5.6.0',
+			'version'				=> '5.9.0',
 			'required' 				=> false
 		);
         

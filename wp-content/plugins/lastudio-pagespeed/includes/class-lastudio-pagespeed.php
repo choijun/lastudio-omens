@@ -342,6 +342,10 @@ class LaStudio_Pagespeed {
     		$canRewrite = false;
 		}
 
+		if(is_user_logged_in()){
+			$canRewrite = false;
+		}
+
 		return apply_filters('LaStudio_Pagespeed/filter/check_can_rewrite', $canRewrite);
 
 	}
