@@ -257,10 +257,10 @@ if(!function_exists('omens_add_custom_badge_for_product')){
             }
 
             echo sprintf(
-                '<span class="la-custom-badge %1$s" style="%3$s"><span>%2$s</span></span>',
+                '<span class="la-custom-badge %1$s" %3$s><span>%2$s</span></span>',
                 esc_attr($el_class),
                 esc_html($badge['text']),
-                (!empty($attribute) ? esc_attr(implode(';', $attribute)) : '')
+                (!empty($attribute) ? omens_render_style_attribute(implode(';', $attribute)) : '')
             );
         }
     }
@@ -363,8 +363,9 @@ if( !function_exists('omens_calculator_free_shipping_thresholds')){
                     } else {
                         $added_text = $text2;
                     }
+                    $css_inline = 'width: ' . $percent . '%';
                     $html = '<div class="' . esc_attr( $parse_class ) . '">';
-                    $html .= '<div class="la-loading-bar"><div class="load-percent" style="width:' . esc_attr( $percent ) . '%">';
+                    $html .= '<div class="la-loading-bar"><div class="load-percent"'. omens_render_style_attribute($css_inline) .'>';
                     $html .= '</div><span class="label-free-shipping">'.$added_text.'</span></div>';
                     $html .= '</div>';
                     echo ent2ncr( $html );

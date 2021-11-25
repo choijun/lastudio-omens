@@ -3,7 +3,7 @@ Contributors: LA Studio
 Requires at least: WordPress 5.0
 Tested up to: WordPress 5.8, WooCommerce 5.9
 Version: 1.0.0
-Tags: one-column, two-columns, three-columns, left-sidebar, right-sidebar, custom-background, custom-header, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, translation-ready
+Tags: Creative Agency, Business Agency, Financial & Loan Services, Logistic & Transport, BBQ Restaurant, Spa & Beauty, Repair Services, Online Courses, Charity & Non-profit, Studio Agency, Corporate, IT Solution,
 Online documentation: http://docs.la-studioweb.com/omens/
 
 == Description ==

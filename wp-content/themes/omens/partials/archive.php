@@ -73,7 +73,10 @@ $page_description = get_the_archive_description();
                 echo '</div>';
 
                 // Display post pagination
-                the_posts_pagination();
+	            the_posts_pagination([
+		            'prev_text'    => __( '&laquo;', 'omens' ),
+		            'next_text'    => __( '&raquo;', 'omens' ),
+	            ]);
 
                 wp_reset_postdata();
 

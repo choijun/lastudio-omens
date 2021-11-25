@@ -56,6 +56,22 @@ if ( ! function_exists( 'omens_render_variable' ) ) {
 }
 
 /**
+ * @param $inline_css
+ *
+ * @return string
+ */
+if ( !function_exists('omens_render_style_attribute') ){
+    function omens_render_style_attribute( $inline_css ) {
+        if(!empty($inline_css)){
+	        return sprintf(' %1$s="%2$s"', 'style', esc_attr( $inline_css ) );
+        }
+        else{
+            return '';
+        }
+    }
+}
+
+/**
  * @param $content
  * @param bool $autop
  *
@@ -237,10 +253,10 @@ if ( ! function_exists( 'omens_get_post_thumbnail_format' ) ) {
 					}
 
 					if(has_post_thumbnail()){
-						$format_output = sprintf('<div class="postformat-content postformat-content--standard postformat-content--quote" style="%3$s"><div class="postformat-content--inner">%4$s</div><div class="postformat-content--quote-inner"><div class="postformat-content-text">%1$s</div>%2$s</div></div>', esc_html( $_quote_text ), $_quote_cite, $_quote_style, get_the_post_thumbnail( $post_id, $thumbnail_size ) );
+						$format_output = sprintf('<div class="postformat-content postformat-content--standard postformat-content--quote" %3$s><div class="postformat-content--inner">%4$s</div><div class="postformat-content--quote-inner"><div class="postformat-content-text">%1$s</div>%2$s</div></div>', esc_html( $_quote_text ), $_quote_cite, omens_render_style_attribute($_quote_style), get_the_post_thumbnail( $post_id, $thumbnail_size ) );
                     }
 					else{
-						$format_output = sprintf( '<div class="postformat-content postformat-content--quote" style="%3$s"><div class="postformat-content--quote-inner"><div class="postformat-content-text">%1$s</div>%2$s</div></div>', esc_html( $_quote_text ), $_quote_cite, $_quote_style );
+						$format_output = sprintf( '<div class="postformat-content postformat-content--quote" %3$s><div class="postformat-content--quote-inner"><div class="postformat-content-text">%1$s</div>%2$s</div></div>', esc_html( $_quote_text ), $_quote_cite, omens_render_style_attribute($_quote_style) );
                     }
 
 					$flag_format_content = true;

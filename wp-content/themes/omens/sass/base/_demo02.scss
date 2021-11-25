@@ -281,7 +281,7 @@
 		letter-spacing: -0.03em;
 		font-weight: 600;
 		border-bottom: 2px solid;
-		padding-bottom: 22px;
+		padding-bottom: 20px;
 		line-height: 1;
 	}
 	.tagcloud {
@@ -306,10 +306,10 @@
 					background-color: #F9F9F9;
 				}
 				> a {
-					font-size: 1.125em;
-					@media(max-width: 992px) {
-						font-size: 1em;
-					}
+					//font-size: 1.125em;
+					//@media(max-width: 992px) {
+					//	font-size: 1em;
+					//}
 				}
 			}
 		}

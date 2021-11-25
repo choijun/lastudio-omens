@@ -129,8 +129,12 @@
 }
 
 .widget_recent_comments li.recentcomments a {
-  font-weight: var(--theme-heading-font-weight);
+  font-weight: 600;
   text-transform: capitalize;
+  color: $secondary-color;
+  &:hover{
+    color: $primary-color
+  }
 }
 
 .widget_rss ul a.rsswidget {
@@ -227,7 +231,7 @@
 .la_product_tag_cloud,
 .widget_product_tag_cloud,
 .elementor-widget-wp-widget-tag_cloud,
-.widget_tag_cloud {
+body:not(.wp-default-theme) .widget_tag_cloud {
   .tagcloud{
     font-size: 1em;
   }
