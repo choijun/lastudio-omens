@@ -38,7 +38,7 @@
         printf('<a class="%1$s" %2$s>', 'lakit-banner__link', $a_link_attribute);
         echo '<div class="lakit-banner__overlay"></div>';
         echo $img;
-        echo '<figcaption class="lakit-banner__content">';
+        echo '<div class="lakit-banner__content">';
             echo '<div class="lakit-banner__content-wrap">';
                 echo $this->_loop_item( array( 'item_title' ), '<' . $title_tag . ' class="lakit-banner__title">%s</' . $title_tag . '>' );
                 echo $this->_loop_item( array( 'item_text' ), '<div class="lakit-banner__text">%s</div>' );
@@ -46,7 +46,7 @@
                     echo sprintf('<button role="button" class="elementor-button lakit-carousel__item-button elementor-size-md">%1$s</button>', $item_settings['item_button_text']);
                 }
             echo '</div>';
-        echo '</figcaption>';
+        echo '</div>';
         printf( '</a>' );
 	?></figure>
     <?php endif; ?>

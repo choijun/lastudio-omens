@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
-	<meta charset="<?php bloginfo( 'charset' ); ?>">
+    <meta http-equiv="Content-Type" content="text/html; charset=<?php bloginfo( 'charset' ); ?>" />
 	<?php if ( ! current_theme_supports( 'title-tag' ) ) : ?>
 		<title><?php echo wp_get_document_title(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></title>
 	<?php endif; ?>
