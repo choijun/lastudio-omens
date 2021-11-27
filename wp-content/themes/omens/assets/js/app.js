@@ -1150,7 +1150,7 @@
                 } catch (e) {
                 }
             })
-            .on('click', '.la-popup:not(.elementor-widget):not([data-gallery-id]), .la-popup.elementor-widget a, a[lapopup], div[lapopup] a', function (e) {
+            .on('click', '.la-popup:not(.elementor-widget):not([data-gallery-id]), .la-popup.elementor-widget a, a[lapopup], div[lapopup] a, a[data-lapopup], div[data-lapopup] a', function (e) {
                 e.preventDefault();
                 var $that = $(this),
                     _href = LaStudio.global.parseVideo($that.attr('href')),

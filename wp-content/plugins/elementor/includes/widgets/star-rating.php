@@ -392,15 +392,16 @@ class Widget_Star_Rating extends Widget_Base {
 			}
 		}
 
-		$this->add_render_attribute( 'icon_wrapper', [
-			'class' => 'elementor-star-rating',
-			'title' => $textual_rating,
-			'itemtype' => 'http://schema.org/Rating',
-			'itemscope' => '',
-			'itemprop' => 'reviewRating',
-		] );
+//		$this->add_render_attribute( 'icon_wrapper', [
+//			'class' => 'elementor-star-rating',
+//			'title' => $textual_rating,
+//			'itemtype' => 'http://schema.org/Rating',
+//			'itemscope' => '',
+//			'itemprop' => 'reviewRating',
+//		] );
 
 		$schema_rating = '<span itemprop="ratingValue" class="elementor-screen-only">' . $textual_rating . '</span>';
+		$schema_rating = '';
 		$stars_element = '<div ' . $this->get_render_attribute_string( 'icon_wrapper' ) . '>' . $this->render_stars( $icon ) . ' ' . $schema_rating . '</div>';
 		?>
 
