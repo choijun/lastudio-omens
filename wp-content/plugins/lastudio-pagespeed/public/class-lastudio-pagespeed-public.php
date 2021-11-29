@@ -129,7 +129,16 @@ class LaStudio_Pagespeed_Public {
 	}
 
 	protected function get_primary_script_source(){
-		$content = file_get_contents(plugin_dir_path( __FILE__ ) . 'js/lastudio-pagespeed-public.js');
+
+		$cache_key = md5('lastudio-pagespeed-' . $this->version);
+
+		if( false && !empty(get_transient($cache_key)) ){
+			$content = get_transient($cache_key);
+		}
+		else{
+			$content = file_get_contents(plugin_dir_path( __FILE__ ) . 'js/lastudio-pagespeed-public.js');
+			set_transient( $cache_key, $content, WEEK_IN_SECONDS );
+		}
 
 		$config = [
 			'delay' => 4000,
@@ -141,7 +150,6 @@ class LaStudio_Pagespeed_Public {
 
 		$extra = 'var LaStudioPageSpeedConfigs=' . json_encode($config) . ';';
 		$content = $extra . $content;
-
 		$source = sprintf(
 			'<script %1$s %2$s>%3$s</script>',
 			$this->get_default_attributes(),

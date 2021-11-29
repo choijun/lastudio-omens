@@ -251,6 +251,7 @@ a.reset_variations {
 					left: 0;
 					width: auto;
 					padding: 0;
+					top: 10px;
 				}
 			}
 			.stock{
@@ -332,6 +333,9 @@ a.reset_variations {
 		> span {
 			display: block;
 			margin-bottom: .5em;
+			&.sku{
+				color: $secondary-color;
+			}
 		}
 		a{
 			color: $secondary-color;
@@ -446,7 +450,8 @@ a.reset_variations {
 			padding: 0 0 0 15px
 		}
 		.woocommerce-grouped-product-list-item__label {
-			color: $secondary-color
+			color: $secondary-color;
+			font-weight: 600
 		}
 		.add_to_cart_button {
 			padding: 10px;

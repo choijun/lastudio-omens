@@ -302,7 +302,7 @@ class LaStudio_Pagespeed {
 
         $request = new LaStudio_Pagespeed_Is_Method();
 
-		if (!$request->is_frontend()) {
+		if ( !$request->is_frontend() ) {
 			$canRewrite = false;
 		}
 
@@ -339,6 +339,14 @@ class LaStudio_Pagespeed {
         }
 
 		if(function_exists('is_checkout') && is_checkout()){
+    		$canRewrite = false;
+		}
+
+		if(function_exists('is_product') && is_product()){
+    		$canRewrite = false;
+		}
+
+		if(function_exists('is_cart') && is_cart()){
     		$canRewrite = false;
 		}
 

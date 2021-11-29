@@ -28,6 +28,8 @@ if( $show_image == 'yes' && has_post_thumbnail() ) {
     $post_classes[] = 'has-post-thumbnail';
 }
 
+$post_classes[] = 'cpt-' . get_post_type();
+
 if(filter_var($this->get_settings_for_display('enable_carousel'), FILTER_VALIDATE_BOOLEAN)){
     $post_classes[] = 'swiper-slide';
 }

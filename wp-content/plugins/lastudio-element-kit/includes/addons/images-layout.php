@@ -1322,8 +1322,8 @@ class LaStudioKit_Images_Layout extends LaStudioKit_Base {
         if(!empty($image_data)){
 	        $giflazy = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
 	        $giflazy = $image_data[0];
-            $srcset = sprintf('width="%d" height="%d" srcset="%s" style="--img-height:%dpx"', $image_data[1], $image_data[2], $giflazy, $image_data[2]);
-            return sprintf( apply_filters('lastudio-kit/images-layout/image-format', '<img src="%1$s" data-src="%2$s" alt="" loading="lazy" class="%3$s" %4$s>'), $giflazy, $image_data[0], 'lakit-images-layout__image-instance' , $srcset);
+            $srcset = sprintf('width="%1$d" height="%2$d" style="--img-height:%3$dpx"', $image_data[1], $image_data[2], $image_data[2]);
+            return sprintf( apply_filters('lastudio-kit/images-layout/image-format', '<img src="%1$s" alt="" loading="lazy" class="%3$s" %4$s>'), $giflazy, $image_data[0], 'lakit-images-layout__image-instance' , $srcset);
         }
 
         return '';

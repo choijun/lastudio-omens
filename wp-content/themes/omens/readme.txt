@@ -3,8 +3,8 @@ Contributors: LA Studio
 Requires at least: WordPress 5.0
 Tested up to: WordPress 5.8, WooCommerce 5.9
 Version: 1.0.0
-Tags: Creative Agency, Business Agency, Financial & Loan Services, Logistic & Transport, BBQ Restaurant, Spa & Beauty, Repair Services, Online Courses, Charity & Non-profit, Studio Agency, Corporate, IT Solution,
-Online documentation: http://docs.la-studioweb.com/omens/
+Tags: Creative Agency, Business Agency, Financial & Loan Services, Logistic & Transport, BBQ Restaurant, Spa & Beauty, Repair Services, Online Courses, Charity & Non-profit, Studio Agency, Corporate, IT Solution, Portfolio & Project, Medical & Healthcare, Shop
+documentation: http://docs.la-studioweb.com/omens/
 
 == Description ==
 

@@ -9,7 +9,7 @@
  * Plugin Name:       LaStudio PageSpeed
  * Plugin URI:        https://la-studioweb.com/plugins/lastudio-pagespeed/
  * Description:       LaStudio PageSpeed eliminate render-blocking Javascript. This gives 2x-5x increase in page load speed, as well as in relevant Google page speed metrics. And this plugin improves your page speed, even on top of your existing optimizations
- * Version:           1.0.4
+ * Version:           1.0.4.1
  * Requires at least: 5.0
  * Tested up to:      5.7
  * Requires PHP:      5.6
@@ -31,7 +31,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'LASTUDIO_PAGESPEED_VERSION', '1.0.4' );
+define( 'LASTUDIO_PAGESPEED_VERSION', '1.0.4.1' );
 
 /**
  * The code that runs during plugin activation.

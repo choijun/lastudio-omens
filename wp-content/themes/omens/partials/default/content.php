@@ -68,7 +68,7 @@ $title_tag = 'h2';
 				<?php the_excerpt(); ?>
             </div>
             <div class="entry-more">
-                <a href="<?php the_permalink(); ?>" class="button button-readmore"><?php echo esc_html__('Read more', 'omens'); ?></a>
+                <a href="<?php the_permalink(); ?>" class="button button-readmore"><?php echo get_post_type() === 'post' ? esc_html__('Read more', 'omens') : esc_html__('View more', 'omens'); ?></a>
             </div>
         </div>
     </div>

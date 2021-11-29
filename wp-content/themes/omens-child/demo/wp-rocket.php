@@ -63,6 +63,29 @@ function omens_child_find_gfonts($buffer){
             $buffer = str_replace('</head>', $tag . '</head>', $buffer);
         }
     }
+
+	$pattern_typekit = '<link(?:\s+(?:(?!href\s*=\s*)[^>])+)?(?:\s+href\s*=\s*([\'"])(?<url>(?:https?:)?\/\/use\.typekit\.net\/(?:(?!\1).)+)\1)(?:\s+[^>]*)?>';
+
+	preg_match_all( '/' . $pattern_typekit . '/Umsi', $buffer, $typekit_matches, PREG_SET_ORDER );
+
+	if ( empty( $typekit_matches ) ) {
+		return $buffer;
+	}
+	else{
+		foreach ($typekit_matches as $typekit_match){
+			if(empty($typekit_match[2])){
+				continue;
+			}
+			$typekit_url = $typekit_match[2];
+			$buffer = str_replace( $typekit_match[0], '', $buffer );
+			$tag = sprintf(
+				'<link rel="preload" href="%1$s" as="style"/><link rel="stylesheet" href="%1$s" />',
+				esc_url( $typekit_url )
+			);
+			$buffer = str_replace('</head>', $tag . '</head>', $buffer);
+		}
+	}
+
     return $buffer;
 }
 

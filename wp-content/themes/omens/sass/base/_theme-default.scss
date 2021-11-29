@@ -424,6 +424,9 @@ ol.wp-block-latest-comments,
 }
 .site-content--default .post-tags {
 	margin-bottom: 30px;
+	border-top: 1px solid #dedede;
+	border-bottom: 1px solid #dedede;
+	padding: 15px 0;
 }
 .comment-list .trackback + .comment-container,
 .comment-list .pingback + .comment-container {

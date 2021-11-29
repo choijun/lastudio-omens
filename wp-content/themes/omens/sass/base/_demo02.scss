@@ -576,3 +576,94 @@
 		-webkit-mask-image: -webkit-radial-gradient(white, black);
 	}
 }
+
+.comment-container .comment-container {
+	padding-left: 20px;
+}
+
+#blog-entries .post_item.type-product .entry-meta,
+.lakit-posts.querycpt--current_query .cpt-product .lakit-posts__meta {
+	display: none;
+}
+.site-content--default .post-tags .tag-label,
+.product_meta .sku,
+.product_meta .detail-content{
+	color: var(--theme-secondary-color);
+}
+.site-content--default .post-tags .tag-label{
+	font-weight: 600
+}
+
+.woocommerce-Reviews div#comments {
+	margin-bottom: 50px;
+}
+
+.entry-title + .archive-description {
+	margin-top: 20px;
+}
+
+@media(min-width: 1025px){
+	.site-header--default .site-navigation li.menu-item-has-children > a:after {
+		content: '\ea10';
+		font-family: 'LaStudioIcons';
+		font-size: .6em;
+		padding-left: 5px;
+		position: relative;
+		top: -1px;
+	}
+	.site-header--default .site-navigation li li.menu-item-has-children > a {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		&:after{
+			@include rotate(-90);
+			padding: 0;
+		}
+	}
+	.site-header--default .site-navigation li{
+		a > span{
+			position: relative;
+			&:after{
+				content: "";
+				position: absolute;
+				top: 100%;
+				border-bottom: 1px solid;
+				width: 0;
+				transition: width 0.3s;
+				left: 50%;
+				transform: translateX(-50%);
+			}
+		}
+		&.current-menu-parent,
+		&.current-menu-item,
+		&:hover{
+			> a{
+				color: $primary-color
+			}
+		}
+		&.current-menu-parent,
+		&.current-menu-item,
+		&:hover{
+			> a > span:after{
+				width: 100%;
+			}
+		}
+	}
+	.site-header--default .site-navigation ul ul{
+		background-color: $secondary-color;
+		color: #959595;
+		font-size: 14px;
+		ul{
+			background-color: #3C3C3C;
+		}
+		li{
+			&.current-menu-parent,
+			&.current-menu-item,
+			&:hover{
+				> a{
+					color: #fff;
+				}
+			}
+		}
+	}
+}

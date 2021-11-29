@@ -68,7 +68,7 @@ if(!function_exists('omens_add_pageloader_icon')){
                 if(($img = omens_get_theme_mod('page_preloader_custom')) && !empty($img) ){
                     add_filter('omens/filter/enable_image_lazyload', '__return_false', 10000);
                     add_filter('wp_lazy_loading_enabled', '__return_false', 10000);
-                    echo '<div class="la-image-loading spinner-custom"><div class="content"><div class="la-loader"><img src="'.esc_url($img).'" width="50" height="50" alt="'.esc_attr(get_bloginfo('display')).'"/></div><div class="la-loader-ss"></div></div></div>';
+                    echo '<div class="la-image-loading spinner-custom"><div class="content"><div class="la-loader"><img data-no-lazy="true" src="'.esc_url($img).'" width="50" height="50" alt="'.esc_attr(get_bloginfo('display')).'"/></div><div class="la-loader-ss"></div></div></div>';
                     omens_deactive_filter('omens/filter/enable_image_lazyload', '__return_false', 10000);
                     omens_deactive_filter('wp_lazy_loading_enabled', '__return_false', 10000);
                 }

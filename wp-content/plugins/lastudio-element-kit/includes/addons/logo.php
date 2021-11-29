@@ -505,7 +505,7 @@ class LaStudioKit_Logo extends LaStudioKit_Base {
             '%1$s%2$s%3$s',
             $width ? ' width="' . $width . '"' : '',
             $height ? ' height="' . $height . '"' : '',
-            ''
+            'data-no-lazy="true"'
         );
 
         $logo1 = sprintf( $format, esc_url( $image_src ), get_bloginfo( 'name' ), $attrs );

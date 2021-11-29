@@ -108,6 +108,9 @@ class LaStudio_Pagespeed_Is_Method {
 		if (defined('REST_REQUEST')) {
 			return true;
 		}
+		if(!empty($_GET['wc-api'])){
+			return true;
+		}
 		$rest_prefix = trailingslashit( rest_get_url_prefix() );
 		return  isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], $rest_prefix) !== false;
 	}

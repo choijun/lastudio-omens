@@ -234,6 +234,7 @@ body:not(.logged-in) p.comment-notes{
 	font-size: 14px;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	padding-bottom: 10px;
+	margin-bottom: 20px;
 }
 .comment-form .logged-in-as{
 	font-size: 0.875em;
@@ -429,4 +430,13 @@ p.no-comments{
 	.comment-list .children .children{
 		margin-left: 10px;
 	}
+}
+.woocommerce-Reviews .woocommerce-Reviews-title,
+.woocommerce-Reviews .comment-respond .comment-reply-title{
+	font-size: var(--theme-h4-font-size);
+	letter-spacing: -0.01em;
+}
+
+.woocommerce-Reviews .comment-respond .comment-reply-title {
+	margin-bottom: 10px;
 }

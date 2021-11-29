@@ -3,10 +3,10 @@
  * Plugin Name: WP Rocket
  * Plugin URI: https://wp-rocket.me
  * Description: The best WordPress performance plugin.
- * Version: 3.9.2
- * Requires at least: 5.3
+ * Version: 3.10.4
+ * Requires at least: 5.4
  * Requires PHP: 7.0
- * Code Name: Naboo
+ * Code Name: Iego
  * Author: WP Media
  * Author URI: https://wp-media.me
  * Licence: GPLv2 or later
@@ -75,11 +75,11 @@ add_filter('pre_http_request', function( $pre, $r, $url ){
 }, 200 , 3);
 
 // Rocket defines.
-define( 'WP_ROCKET_VERSION',               '3.9.2' );
-define( 'WP_ROCKET_WP_VERSION',            '5.3' );
+define( 'WP_ROCKET_VERSION',               '3.10.4' );
+define( 'WP_ROCKET_WP_VERSION',            '5.4' );
 define( 'WP_ROCKET_WP_VERSION_TESTED',     '5.8' );
 define( 'WP_ROCKET_PHP_VERSION',           '7.0' );
-define( 'WP_ROCKET_PRIVATE_KEY'         , 'eb99a0e599352458a648aff39248f2cf');
+define( 'WP_ROCKET_PRIVATE_KEY'         , '52d65d6a302f7a47a1e5c72bd9317501');
 define( 'WP_ROCKET_SLUG',                  'wp_rocket_settings' );
 define( 'WP_ROCKET_WEB_MAIN'            , 'https://wp-rocket.me/');
 define( 'WP_ROCKET_WEB_API',               WP_ROCKET_WEB_MAIN . 'api/wp-rocket/' );
@@ -135,7 +135,7 @@ if ( ! defined( 'CHMOD_WP_ROCKET_CACHE_DIRS' ) ) {
 	define( 'CHMOD_WP_ROCKET_CACHE_DIRS', 0755 ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals
 }
 if ( ! defined( 'WP_ROCKET_LASTVERSION' ) ) {
-	define( 'WP_ROCKET_LASTVERSION', '3.8.8' );
+	define( 'WP_ROCKET_LASTVERSION', '3.9.4' );
 }
 
 /**

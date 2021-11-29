@@ -30,6 +30,8 @@ $header_nav_menu = wp_nav_menu( [
             wp_nav_menu( [
                 'theme_location' => 'main-nav',
                 'container'      => false,
+                'link_before'    => '<span>',
+                'link_after'     => '</span>',
             ] );
             ?>
         </nav>

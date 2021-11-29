@@ -2421,7 +2421,11 @@
 
             // START MegaMenu
             $(document).trigger('lastudiokit/frontend/megamenu:setposition', [ $scope.find('.lakit-nav--enable-megamenu').first() ]);
-            $(window).on('resize', function (){
+            $(window).on('resize load', function (){
+                $(document).trigger('lastudiokit/frontend/megamenu:setposition', [ $scope.find('.lakit-nav--enable-megamenu').first() ]);
+            });
+
+            document.querySelector('body').addEventListener('LaStudioPageSpeed:Loaded', function (e){
                 $(document).trigger('lastudiokit/frontend/megamenu:setposition', [ $scope.find('.lakit-nav--enable-megamenu').first() ]);
             })
             // END MegaMenu

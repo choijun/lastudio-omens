@@ -1408,7 +1408,11 @@
 
     LaStudio.core.OnLoadEvent = function () {
         $body.removeClass('site-loading body-loading').addClass('body-loaded');
+        try{
+            Pace.stop();
+        }catch (e) {
 
+        }
         $('.force-active-object-fit').each(function () {
             $body.trigger('lastudio-prepare-object-fit', [$(this)]);
         });
@@ -1725,5 +1729,6 @@
         $(document).on('lastudio-kit/carousel/init_success', function (e, data){
             LaStudio.core.initAll(data.swiperContainer);
         });
+
     });
 })(jQuery);

@@ -1,1 +1,249 @@
-.m23-frm-booking .wpcf7-submit{background-image:url(https://omens.la-studioweb.com/wp-content/uploads/2021/09/arrow-right-white.svg);background-repeat:no-repeat;background-position:center;background-size:40px;font-size:0;width:130px}@media (max-width:1600px){.m23-frm-booking .wpcf7-submit{background-size:30px;width:100px}}@media (max-width:1280px){.m23-frm-booking .wpcf7-submit{background-size:20px;height:51px}}@media (max-width:992px){.m23-frm-booking .wpcf7-submit{width:80px}}@media (max-width:767px){.m23-frm-booking .wpcf7-submit{width:100%}}body.page-id-1507{--theme-primary-color:#FD7729}.elementor-lakit-portfolio .preset-list-2 .lakit-posts__inner-content-inner{width:535px;max-width:100%}.elementor-lakit-portfolio .preset-list-2 .lakit-posts__item:nth-child(2n) .lakit-posts__inner-content{justify-content:flex-end}section#comments{padding-top:50px}.elementor-lakit-post-content .wp-block-image.alignfull img,.elementor-lakit-post-content .wp-block-image.alignwide img{max-height:620px;object-fit:cover}.page-content .wp-block-image.alignfull img,.page-content .wp-block-image.alignwide img{max-height:620px;object-fit:cover}.page-content>h3{margin-bottom:20px;margin-top:30px}.page-content>figure.wp-block-image{margin-top:60px;margin-bottom:60px}.wp-block-cover.has-background-dim{margin-top:50px;margin-bottom:50px}.wp-block-cover.has-background-dim .has-large-font-size{width:80%;font-size:var(--theme-h1-font-size);font-weight:600;line-height:1.3;margin:0 auto 1em}.wp-block-cover.has-background-dim .has-small-font-size{font-size:16px}.wp-block-cover.has-background-dim .has-small-font-size:after{content:"";display:block;width:50px;border-bottom:2px solid;margin:10px auto 0}.wp-block-spacer+.wp-block-image figure.alignleft{margin-right:35px}.wp-block-spacer+.wp-block-image+p{margin-bottom:25px}p.linetop{font-size:14px;color:#272727;border-top:2px solid #E0E0E0;display:inline-block;padding-top:7px;margin-top:10px}.wp-block-gallery ul.blocks-gallery-grid{width:100%}.place-order .button,.wc-proceed-to-checkout .button{padding-bottom:22px}ul.wc_payment_methods input[type=radio]+label:before,ul.woocommerce-shipping-methods input[type=radio]+label:before{top:4px}.products-grid-7 .product_item--inner{position:relative}body.ltr .la-custom-badge.custom-hot{background-color:var(--theme-primary-color);color:#fff;text-transform:uppercase;border-radius:0;padding:5px 40px 5px 30px;line-height:20px;right:auto;left:-20px;font-family:var(--theme-heading-font-family)}body.ltr .la-custom-badge.custom-hot:after{position:absolute;border-top:15px solid transparent;border-bottom:15px solid transparent;border-right:15px solid #fff;right:0;content:"";top:0}body.ltr .la-custom-badge.custom-hot:before{content:"";left:0;top:100%;border-left:20px solid transparent;border-top:10px solid var(--theme-secondary-color);height:0;width:0;position:absolute}.lastudio-countdown-timer{display:flex;justify-content:space-around;text-align:center;width:360px;max-width:90%;margin:0 auto}.lastudio-countdown-timer__separator{display:none}.lastudio-countdown-timer__item-value{font-size:36px;font-weight:500;color:#C2943A;line-height:1}.lastudio-countdown-timer__item-label{font-weight:500;color:#C1C1C1;font-size:14px}.lastudio-countdown-timer__item{padding:0 10px}.lastudio-countdown--inprod.elementor-lastudio-countdown-timer{margin-bottom:30px}@media (max-width:992px){.lastudio-countdown-timer__item-value{font-size:26px}}.lakit-nav__sub.lakit-nav-depth-0 .lakit-nav__sub{background-color:#3C3C3C!important}.lakit-nav--horizontal>.menu-item>a>.lakit-nav-arrow{margin-top:0.35em}.rs-waction i.lastudioicon-left-arrow,.rs-waction i.lastudioicon-right-arrow{margin-top:-0.2em}body.page-id-2273{--e-global-color-4ca9ecb:#49D6B0;--lakit-primary-color:#49D6B0;--theme-primary-color:#49D6B0;--theme-link-hover-color:#49D6B0;--lakit-pagination-link-hover-bg-color:#49D6B0}
+/*
+Template:       omens
+Theme Name:     Omens Child
+Theme URI:      http://themeforest.net/user/LaStudio/portfolio?ref=LaStudio
+Author:         LA Studio
+Author URI:     http://themeforest.net/user/LaStudio?ref=LaStudio
+Description:    Omens - Multipurpose Creative Theme
+Version:        1.0.0
+Requires at least: 4.4
+Requires PHP: 5.6
+Tags:           Creative Agency, Business Agency, Financial & Loan Services, Logistic & Transport, BBQ Restaurant, Spa & Beauty, Repair Services, Online Courses, Charity & Non-profit, Studio Agency, Corporate, IT Solution, Portfolio & Project, Medical & Healthcare, Shop
+License: 		    GNU General Public License
+License URI: 	  licence/GPL.txt
+Text Domain:    omens-child
+Domain Path:    /languages/
+*/
+.m23-frm-booking .wpcf7-submit {
+  background-image: url(https://omens.la-studioweb.com/wp-content/uploads/2021/09/arrow-right-white.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 40px;
+  font-size: 0;
+  width: 130px;
+}
+@media (max-width: 1600px) {
+  .m23-frm-booking .wpcf7-submit {
+    background-size: 30px;
+    width: 100px;
+  }
+}
+@media (max-width: 1280px) {
+  .m23-frm-booking .wpcf7-submit {
+    background-size: 20px;
+    height: 51px;
+  }
+}
+@media (max-width: 992px) {
+  .m23-frm-booking .wpcf7-submit {
+    width: 80px;
+  }
+}
+@media (max-width: 767px) {
+  .m23-frm-booking .wpcf7-submit {
+    width: 100%;
+  }
+}
+
+body.page-id-1507 {
+  --theme-primary-color: #FD7729;
+}
+
+.elementor-lakit-portfolio .preset-list-2 .lakit-posts__inner-content-inner {
+  width: 535px;
+  max-width: 100%;
+}
+.elementor-lakit-portfolio .preset-list-2 .lakit-posts__item:nth-child(2n) .lakit-posts__inner-content {
+  justify-content: flex-end;
+}
+
+section#comments {
+  padding-top: 50px;
+}
+
+.elementor-lakit-post-content .wp-block-image.alignfull img,
+.elementor-lakit-post-content .wp-block-image.alignwide img {
+  max-height: 620px;
+  object-fit: cover;
+}
+
+.page-content .wp-block-image.alignfull img,
+.page-content .wp-block-image.alignwide img {
+  max-height: 620px;
+  object-fit: cover;
+}
+.page-content > h3 {
+  margin-bottom: 20px;
+  margin-top: 30px;
+}
+.page-content > figure.wp-block-image {
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
+
+.wp-block-cover.has-background-dim {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.wp-block-cover.has-background-dim .has-large-font-size {
+  width: 80%;
+  font-size: var(--theme-h1-font-size);
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 0 auto 1em;
+}
+
+.wp-block-cover.has-background-dim .has-small-font-size {
+  font-size: 16px;
+}
+
+.wp-block-cover.has-background-dim .has-small-font-size:after {
+  content: "";
+  display: block;
+  width: 50px;
+  border-bottom: 2px solid;
+  margin: 10px auto 0;
+}
+
+.wp-block-spacer + .wp-block-image figure.alignleft {
+  margin-right: 35px;
+}
+
+.wp-block-spacer + .wp-block-image + p {
+  margin-bottom: 25px;
+}
+
+p.linetop {
+  font-size: 14px;
+  color: #272727;
+  border-top: 2px solid #E0E0E0;
+  display: inline-block;
+  padding-top: 7px;
+  margin-top: 10px;
+}
+
+.wp-block-gallery ul.blocks-gallery-grid {
+  width: 100%;
+}
+
+.place-order .button,
+.wc-proceed-to-checkout .button {
+  padding-bottom: 22px;
+}
+
+ul.wc_payment_methods input[type=radio] + label:before,
+ul.woocommerce-shipping-methods input[type=radio] + label:before {
+  top: 4px;
+}
+
+.products-grid-7 .product_item--inner {
+  position: relative;
+}
+
+body.ltr .la-custom-badge.custom-hot {
+  background-color: var(--theme-primary-color);
+  color: #fff;
+  text-transform: uppercase;
+  border-radius: 0;
+  padding: 5px 40px 5px 30px;
+  line-height: 20px;
+  right: auto;
+  left: -20px;
+  font-family: var(--theme-heading-font-family);
+}
+
+body.ltr .la-custom-badge.custom-hot:after {
+  position: absolute;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-right: 15px solid #fff;
+  right: 0;
+  content: "";
+  top: 0;
+}
+
+body.ltr .la-custom-badge.custom-hot:before {
+  content: "";
+  left: 0;
+  top: 100%;
+  border-left: 20px solid transparent;
+  border-top: 10px solid var(--theme-secondary-color);
+  height: 0;
+  width: 0;
+  position: absolute;
+}
+
+.lastudio-countdown-timer {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  width: 360px;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.lastudio-countdown-timer__separator {
+  display: none;
+}
+
+.lastudio-countdown-timer__item-value {
+  font-size: 36px;
+  font-weight: 500;
+  color: #C2943A;
+  line-height: 1;
+}
+
+.lastudio-countdown-timer__item-label {
+  font-weight: 500;
+  color: #C1C1C1;
+  font-size: 14px;
+}
+
+.lastudio-countdown-timer__item {
+  padding: 0 10px;
+}
+
+.lastudio-countdown--inprod.elementor-lastudio-countdown-timer {
+  margin-bottom: 30px;
+}
+
+@media (max-width: 992px) {
+  .lastudio-countdown-timer__item-value {
+    font-size: 26px;
+  }
+}
+.lakit-nav__sub.lakit-nav-depth-0 .lakit-nav__sub {
+  background-color: #3C3C3C !important;
+}
+
+.lakit-nav--horizontal > .menu-item > a > .lakit-nav-arrow {
+  margin-top: 0.35em;
+}
+
+.rs-waction i.lastudioicon-right-arrow,
+.rs-waction i.lastudioicon-left-arrow {
+  margin-top: -0.2em;
+}
+
+/** m23 **/
+body.page-id-2273 {
+  --e-global-color-4ca9ecb: #49D6B0;
+  --lakit-primary-color: #49D6B0;
+  --theme-primary-color: #49D6B0;
+  --theme-link-hover-color: #49D6B0;
+  --lakit-pagination-link-hover-bg-color: #49D6B0;
+}
+
+body.page-id-2281,
+body.page-id-2279,
+body.page-id-2273,
+body.page-id-2271,
+body.page-id-1981,
+body.page-id-1979,
+body.page-id-1507,
+body.page-id-990,
+body.page-id-585,
+body.page-id-60 {
+  --theme-body-font-family: "Poppins";
+}

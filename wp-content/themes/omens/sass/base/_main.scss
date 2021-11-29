@@ -153,7 +153,6 @@ em {
 }
 
 body {
-
 	font-family: $body-font-family;
 	font-size: var(--theme-body-font-size);
 	line-height: var(--theme-body-line-height);
@@ -163,7 +162,7 @@ body {
 	overflow-wrap: break-word;
 	word-wrap: break-word;
 	background-color: $body-bg-color;
-
+	overflow-x: hidden;
 	&,
 	.lastudio-kit{
 

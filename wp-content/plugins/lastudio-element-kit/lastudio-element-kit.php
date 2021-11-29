@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       LA-Studio Element Kit for Elementor
  * Description:       This plugin helps you to add custom size units into padding/setting of common widgets for Elementor
- * Version:           1.1.3
+ * Version:           1.1.3.1
  * Author:            LA-Studio
  * Author URI:        https://la-studioweb.com/
  * License:           GPL-2.0+
@@ -58,7 +58,7 @@ if(!class_exists('LaStudio_Kit')){
          *
          * @var string
          */
-        private $version = '1.1.3';
+        private $version = '1.1.3.1';
 
         /**
          * Framework component

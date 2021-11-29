@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Omens\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-23 16:52+0000\n"
+"POT-Creation-Date: 2021-11-29 19:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -31,7 +31,7 @@ msgstr ""
 msgid "\"%1$s\" has been removed from wishlist"
 msgstr ""
 
-#: framework/functions/helpers.php:117
+#: framework/functions/helpers.php:133
 #, php-format
 msgid "%s "
 msgstr ""
@@ -41,7 +41,15 @@ msgstr ""
 msgid "%s Created by LaStudio"
 msgstr ""
 
-#: framework/functions/helpers.php:96
+#: partials/archive.php:77 partials/search.php:48
+msgid "&laquo;"
+msgstr ""
+
+#: partials/archive.php:78 partials/search.php:49
+msgid "&raquo;"
+msgstr ""
+
+#: framework/functions/helpers.php:112
 msgid "(Edit)"
 msgstr ""
 
@@ -59,11 +67,11 @@ msgstr ""
 msgid "[icon]Spend [amount] to get Free Shipping"
 msgstr ""
 
-#: functions.php:698 functions.php:716
+#: functions.php:696 functions.php:714
 msgid "Accent"
 msgstr ""
 
-#: functions.php:632
+#: functions.php:630
 msgctxt "Acumin Pro font: on or off"
 msgid "on"
 msgstr ""
@@ -72,12 +80,12 @@ msgstr ""
 msgid "Add to cart"
 msgstr ""
 
-#: framework/woocommerce/woocommerce-helpers.php:415
+#: framework/woocommerce/woocommerce-helpers.php:416
 msgctxt "admin-view"
 msgid "Add Badge"
 msgstr ""
 
-#: framework/woocommerce/woocommerce-helpers.php:423
+#: framework/woocommerce/woocommerce-helpers.php:424
 msgctxt "admin-view"
 msgid "Badge Text"
 msgstr ""
@@ -87,17 +95,17 @@ msgctxt "admin-view"
 msgid "Contact Form 7"
 msgstr ""
 
-#: framework/woocommerce/woocommerce-helpers.php:429
+#: framework/woocommerce/woocommerce-helpers.php:430
 msgctxt "admin-view"
 msgid "Custom Badge Background Color"
 msgstr ""
 
-#: framework/woocommerce/woocommerce-helpers.php:435
+#: framework/woocommerce/woocommerce-helpers.php:436
 msgctxt "admin-view"
 msgid "Custom Badge Text Color"
 msgstr ""
 
-#: framework/woocommerce/woocommerce-helpers.php:414
+#: framework/woocommerce/woocommerce-helpers.php:415
 msgctxt "admin-view"
 msgid "Custom Badges"
 msgstr ""
@@ -107,7 +115,7 @@ msgctxt "admin-view"
 msgid "Elementor"
 msgstr ""
 
-#: framework/woocommerce/woocommerce-helpers.php:404
+#: framework/woocommerce/woocommerce-helpers.php:405
 msgctxt "admin-view"
 msgid "Enable Custom Badges"
 msgstr ""
@@ -117,7 +125,7 @@ msgctxt "admin-view"
 msgid "Envato Market"
 msgstr ""
 
-#: framework/woocommerce/woocommerce-helpers.php:441
+#: framework/woocommerce/woocommerce-helpers.php:442
 msgctxt "admin-view"
 msgid "Extra CSS class for badge"
 msgstr ""
@@ -137,7 +145,7 @@ msgctxt "admin-view"
 msgid "Main Navigation"
 msgstr ""
 
-#: framework/woocommerce/woocommerce-helpers.php:406
+#: framework/woocommerce/woocommerce-helpers.php:407
 msgctxt "admin-view"
 msgid "No Change"
 msgstr ""
@@ -147,7 +155,7 @@ msgctxt "admin-view"
 msgid "Omens Package Demo Data"
 msgstr ""
 
-#: framework/woocommerce/woocommerce-helpers.php:407
+#: framework/woocommerce/woocommerce-helpers.php:408
 msgctxt "admin-view"
 msgid "Override"
 msgstr ""
@@ -157,7 +165,7 @@ msgctxt "admin-view"
 msgid "pale pink"
 msgstr ""
 
-#: framework/woocommerce/woocommerce-helpers.php:408
+#: framework/woocommerce/woocommerce-helpers.php:409
 msgctxt "admin-view"
 msgid "Remove Existing Data"
 msgstr ""
@@ -384,7 +392,7 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: functions.php:601
+#: functions.php:599
 msgid "Default Sidebar"
 msgstr ""
 
@@ -412,15 +420,15 @@ msgstr ""
 msgid "Display add-to-cart, wishlist, compare buttons on the mobile"
 msgstr ""
 
-#: framework/woocommerce/woocommerce-helpers.php:501
+#: framework/woocommerce/woocommerce-helpers.php:502
 msgid "Don’t have account ?"
 msgstr ""
 
-#: framework/functions/helpers.php:138
+#: framework/functions/helpers.php:154
 msgid "edit"
 msgstr ""
 
-#: framework/functions/helpers.php:165
+#: framework/functions/helpers.php:181
 msgid "Email"
 msgstr ""
 
@@ -428,8 +436,16 @@ msgstr ""
 msgid "Enable Crossfade Image Effect"
 msgstr ""
 
+#: framework/third/elementor/postformat-widget.php:117
+msgid "Enable Custom Image Height"
+msgstr ""
+
 #: framework/configs/options.php:611
 msgid "Enable Free shipping amount notice"
+msgstr ""
+
+#: framework/third/lastudio-kit.php:119
+msgid "Enable Lightbox"
 msgstr ""
 
 #: framework/configs/options.php:641
@@ -539,17 +555,17 @@ msgctxt "front-view"
 msgid "Add to wishlist"
 msgstr ""
 
-#: functions.php:506 functions.php:519
+#: functions.php:504 functions.php:517
 msgctxt "front-view"
 msgid "An error occurred ,Please try again !"
 msgstr ""
 
-#: functions.php:511 functions.php:516
+#: functions.php:509 functions.php:514
 msgctxt "front-view"
 msgid "An error occurred, Please try again !"
 msgstr ""
 
-#: functions.php:502
+#: functions.php:500
 msgctxt "front-view"
 msgid "Back"
 msgstr ""
@@ -559,7 +575,7 @@ msgctxt "front-view"
 msgid "Choose an option"
 msgstr ""
 
-#: functions.php:525
+#: functions.php:523
 msgctxt "front-view"
 msgid "Continue Shopping"
 msgstr ""
@@ -569,17 +585,17 @@ msgctxt "front-view"
 msgid "Go to home"
 msgstr ""
 
-#: functions.php:505
+#: functions.php:503
 msgctxt "front-view"
 msgid "has been added to comparison list."
 msgstr ""
 
-#: functions.php:515
+#: functions.php:513
 msgctxt "front-view"
 msgid "has been added to your cart"
 msgstr ""
 
-#: functions.php:510
+#: functions.php:508
 msgctxt "front-view"
 msgid "has been added to your wishlist."
 msgstr ""
@@ -591,7 +607,7 @@ msgid ""
 "searching can help."
 msgstr ""
 
-#: functions.php:520
+#: functions.php:518
 msgctxt "front-view"
 msgid "It seems we can’t find what you’re looking for, please try again !"
 msgstr ""
@@ -601,27 +617,27 @@ msgctxt "front-view"
 msgid "Next"
 msgstr ""
 
-#: functions.php:524
+#: functions.php:522
 msgctxt "front-view"
 msgid "Please enter Comment !"
 msgstr ""
 
-#: functions.php:522
+#: functions.php:520
 msgctxt "front-view"
 msgid "Please enter Email Address !"
 msgstr ""
 
-#: functions.php:521
+#: functions.php:519
 msgctxt "front-view"
 msgid "Please enter Name !"
 msgstr ""
 
-#: functions.php:523
+#: functions.php:521
 msgctxt "front-view"
 msgid "Please select a rating !"
 msgstr ""
 
-#: framework/functions/helpers.php:322
+#: framework/functions/helpers.php:338
 msgctxt "front-view"
 msgid "Posted in"
 msgstr ""
@@ -652,12 +668,12 @@ msgctxt "front-view"
 msgid "Search for:"
 msgstr ""
 
-#: functions.php:528
+#: functions.php:526
 msgctxt "front-view"
 msgid "Show Less"
 msgstr ""
 
-#: functions.php:527
+#: functions.php:525
 msgctxt "front-view"
 msgid "Show More +"
 msgstr ""
@@ -667,22 +683,22 @@ msgctxt "front-view"
 msgid "Sort by"
 msgstr ""
 
-#: functions.php:514
+#: functions.php:512
 msgctxt "front-view"
 msgid "View Cart"
 msgstr ""
 
-#: functions.php:504
+#: functions.php:502
 msgctxt "front-view"
 msgid "View List Compare"
 msgstr ""
 
-#: functions.php:509
+#: functions.php:507
 msgctxt "front-view"
 msgid "View List Wishlist"
 msgstr ""
 
-#: functions.php:529
+#: functions.php:527
 msgctxt "front-view"
 msgid "View More"
 msgstr ""
@@ -694,7 +710,7 @@ msgctxt "front-view"
 msgid "View Wishlist"
 msgstr ""
 
-#: functions.php:526
+#: functions.php:524
 msgctxt "front-view"
 msgid ""
 "We are sorry, but this feature is available only if cookies are enabled on "
@@ -955,7 +971,7 @@ msgstr ""
 msgid "N/A"
 msgstr ""
 
-#: framework/functions/helpers.php:163
+#: framework/functions/helpers.php:179
 msgid "Name (required)"
 msgstr ""
 
@@ -963,6 +979,7 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
+#: framework/third/lastudio-kit.php:122
 #: framework/third/elementor/postformat-widget.php:120
 msgid "No"
 msgstr ""
@@ -1042,11 +1059,11 @@ msgstr ""
 msgid "Per Row Allow"
 msgstr ""
 
-#: framework/functions/helpers.php:95
+#: framework/functions/helpers.php:111
 msgid "Pingback:"
 msgstr ""
 
-#: functions.php:616
+#: functions.php:614
 msgctxt "Poppins font: on or off"
 msgid "on"
 msgstr ""
@@ -1080,7 +1097,7 @@ msgstr ""
 msgid "Price"
 msgstr ""
 
-#: functions.php:686 functions.php:704
+#: functions.php:684 functions.php:702
 msgid "Primary"
 msgstr ""
 
@@ -1173,7 +1190,7 @@ msgstr ""
 msgid "Search results for: "
 msgstr ""
 
-#: functions.php:690 functions.php:708
+#: functions.php:688 functions.php:706
 msgid "Secondary"
 msgstr ""
 
@@ -1254,7 +1271,7 @@ msgstr ""
 msgid "Sidebar - Shop"
 msgstr ""
 
-#: framework/woocommerce/woocommerce-helpers.php:501
+#: framework/woocommerce/woocommerce-helpers.php:502
 msgid "Sign up now"
 msgstr ""
 
@@ -1304,7 +1321,7 @@ msgstr ""
 msgid "Tagged: "
 msgstr ""
 
-#: functions.php:694 functions.php:712
+#: functions.php:692 functions.php:710
 msgid "Text"
 msgstr ""
 
@@ -1427,7 +1444,11 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: framework/functions/helpers.php:167
+#: partials/default/content.php:71
+msgid "View more"
+msgstr ""
+
+#: framework/functions/helpers.php:183
 msgid "Website"
 msgstr ""
 
@@ -1446,7 +1467,7 @@ msgstr ""
 msgid "Weight"
 msgstr ""
 
-#: functions.php:603
+#: functions.php:601
 msgid ""
 "Widgets in this area will be displayed in the left or right sidebar area if "
 "you choose the Left or Right Sidebar layout."
@@ -1471,6 +1492,7 @@ msgctxt "yearly archives date format"
 msgid "Y"
 msgstr ""
 
+#: framework/third/lastudio-kit.php:121
 #: framework/third/elementor/postformat-widget.php:119
 msgid "Yes"
 msgstr ""
@@ -1484,7 +1506,7 @@ msgstr ""
 msgid "Your Comment Here..."
 msgstr ""
 
-#: framework/functions/helpers.php:126
+#: framework/functions/helpers.php:142
 msgid "Your comment is awaiting moderation."
 msgstr ""
 

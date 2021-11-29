@@ -1299,9 +1299,11 @@ p.form-row {
   }
 
   .open-advanced-shop-filter{
-    overflow: hidden;
+    body.omens-body{
+      overflow: hidden;
+    }
     .elementor-location-header .elementor-top-section{
-      z-index: 2;
+      z-index: 3;
     }
     .la-advanced-product-filters {
       @include translate2d(0,0);
